@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     environment:
-      CC_TEST_REPORTER_ID: e219675325125b7fc3db7d48dae7529cac1669bd67b91dec86b6ffd4850c3770
+      CC_TEST_REPORTER_ID: d1101fcdba41b05f7eb0d4e9cc2df081bc5cdc94b6ca8e9800a28eaec88b4cec
       TEST_REPORT_PATH: "test_results"
     docker:
       - image: circleci/ruby:2.4-node
