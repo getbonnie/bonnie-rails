@@ -1,0 +1,9 @@
+panel 'Social networks' do
+  data.social_networks.each do |social_network|
+    attributes_table_for social_network do
+      row social_network.type_of do |item|
+        link_to item.value, item.value, target: '_blank'
+      end
+    end
+  end
+end

@@ -1,0 +1,58 @@
+checks:
+  argument-count:
+    enabled: false
+  complex-logic:
+    config:
+      threshold: 7
+  complex-logic:
+    config:
+      threshold: 8
+  file-lines:
+    enabled: false
+  method-complexity:
+    config:
+      threshold: 7
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
+engines:
+  rubocop:
+    enabled: true
+    checks:
+     Rubocop/Metrics/ClassLength:
+       enabled: false
+  brakeman:
+    enabled: true
+  eslint:
+    enabled: false
+  csslint:
+    enabled: false
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby:
+      - javascript:
+ratings:
+  paths:
+  - "app/**"
+  - "**.rb"
+exclude_paths:
+  - "app/admin/"
+  - "app/lib/push_lib.rb"
+  - "app/models/stat.rb"
+  - "app/scripts/"
+  - "app/workers/"
+  - "config/"
+  - "coverage/"
+  - "db/"
+  - "public/javascripts"
+  - "test/"
+  - "vendor/"

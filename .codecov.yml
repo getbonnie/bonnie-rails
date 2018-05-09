@@ -1,0 +1,13 @@
+codecov:
+  branch: master
+
+coverage:
+  notify:
+    slack:
+      default:
+        branches: null
+        flags: null
+        only_pulls: false
+        paths: null
+        threshold: 1%
+        url: "https://hooks.slack.com/services/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"

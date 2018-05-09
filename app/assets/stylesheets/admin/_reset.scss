@@ -1,0 +1,475 @@
+
+// Library
+//=============================================================================
+%ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+%reset-background {
+  background: none;
+}
+
+%reset-shadow {
+  box-shadow: none;
+  text-shadow: none;
+}
+
+%reset-shape {
+  border: 0;
+  border-radius: 0;
+}
+
+%reset-all {
+  @extend %reset-shadow;
+  @extend %reset-background;
+  @extend %reset-shape;
+}
+
+%heading {
+  @extend %reset-all;
+  background-color: $color-heading;
+  border: 0;
+  border-bottom: 1px solid $color-heading-dark;
+  border-top: 1px solid $white;
+  color: $color-heading-darker;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: .8px;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+%heading-white {
+  @extend %heading;
+  background-color: $white;
+}
+
+%heading-dark-light {
+  @extend %heading;
+  background-color: darken($color-heading, 5%);
+  border-bottom: 1px solid $color-heading-dark;
+}
+
+%heading-dark {
+  @extend %heading;
+  background-color: $color-heading-darker;
+  border-bottom: 1px solid darken($color-heading-darker, 10%);
+  color: $white;
+}
+
+%button {
+  @extend %reset-all;
+  background-color: $color-cta;
+  border: 1px solid lighten($color-cta, 5%);
+  border-radius: 5px;
+  border-bottom-color: darken($color-cta, 10%);
+  color: $color-cta-text;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: .3px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: darken($color-cta, 5%) !important;
+    background-image: none !important;
+  }
+}
+
+%button-light {
+  @extend %button;
+  background-color: $color-cta-light;
+  border: 1px solid lighten($color-cta-light, 5%);
+  border-bottom-color: darken($color-cta-light, 10%);
+  color: $color-cta-light-text;
+
+  &:hover {
+    background-color: darken($color-cta-light, 5%) !important;
+    background-image: none !important;
+    color: $color-cta-light-text;
+  }
+}
+
+
+// Basic
+//=============================================================================
+a:visited,
+a:link,
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: $color-background;
+  color: $color-text;
+  font-family: $font-classic;
+  font-size: $font-size-classic;
+}
+
+
+// Global
+//=============================================================================
+#active_admin_content {
+  padding: 10px 30px 30px;
+}
+
+.form_content_margin {
+  margin-left: 20%;
+}
+
+
+// Forms
+//=============================================================================
+form {
+  fieldset > ol > li fieldset:not(.has_many_fields) {
+    ol {
+      li {
+        padding: 10px;
+      }
+
+      padding: 0;
+    }
+  }
+
+  fieldset > ol > li fieldset:not(.has_many_fields) ol {
+    padding: 0;
+  }
+
+  fieldset {
+
+    ol > li.has_many_container .has_many_fields {
+      border: 1px solid $color-heading-dark;
+    }
+
+    &.inputs {
+      @extend %reset-shadow;
+      background-color: rgba($white, .5);
+    }
+
+    ol > li label {
+      padding-top: 10px;
+    }
+
+    ol > li.boolean label {
+      padding-top: 0;
+    }
+
+    legend span {
+      @extend %reset-all;
+      @extend %heading-dark;
+      border-width: 0 0 1px;
+      padding: 10px;
+    }
+  }
+
+  input[type="date" i],
+  input[type="datetime-local" i],
+  input[type="month" i],
+  input[type="time" i],
+  input[type="week" i],
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=number],
+  input[type=url],
+  input[type=tel],
+  input[type=date],
+  input[type=time],
+  textarea,
+  select {
+    -webkit-appearance: none;
+    background-color: $color-input;
+    border: 1px solid $color-input-border;
+    border-radius: 5px;
+    color: $color-text;
+    font-family: $font-classic;
+    font-size: 1em;
+    padding: 10px;
+  }
+
+
+  input[type="date" i],
+  input[type="datetime-local" i],
+  input[type="month" i],
+  input[type="time" i],
+  input[type="week" i],
+  input[type=date],
+  input[type=time] {
+    width: 200px;
+  }
+
+  select {
+    border-left: 3px solid $color-cta;
+    border-radius: 2px;
+  }
+}
+
+
+// Buttons
+//=============================================================================
+#title_bar .action_items span.action_item > a,
+#title_bar .action_items span.action_item > .dropdown_menu > a,
+form input[type=submit] {
+  @extend %button;
+}
+
+form fieldset.buttons li.cancel a,
+form fieldset.actions li.cancel a,
+form.filter_form a.clear_filters_btn {
+  @extend %button-light;
+}
+
+a.button.has_many_remove,
+a.button.has_many_add {
+  color: $color-cta;
+  background: none;
+  border: 0;
+  font-size: 10px;
+  padding: 5px 10px;
+
+  &:hover {
+    color: $color-cta-text;
+  }
+}
+
+a.button,
+a:link.button,
+a:visited.button,
+input[type=submit],
+input[type=button],
+button {
+  @extend %button;
+}
+
+
+// Comments
+//=============================================================================
+.comments {
+  form {
+
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=number],
+    input[type=url],
+    input[type=tel],
+    input[type=date],
+    input[type=time],
+    textarea {
+      font-size: $font-size-classic;
+      width: calc(100% - 22px);
+    }
+
+    .actions {
+      margin: 0;
+    }
+
+    &.active_admin_comment {
+      margin: 0;
+      max-width: none;
+      margin-bottom: 20px;
+
+      .active_admin_comment_meta {
+        width: auto;
+        float: none;
+        margin-bottom: 10px;
+      }
+
+      .active_admin_comment_body {
+        background-color: $color-input;
+        border-radius: 5px;
+        margin: 0;
+        padding: 15px;
+
+        p:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+
+// Sidebar
+//=============================================================================
+.show #sidebar {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+// Header
+//=============================================================================
+#header {
+  background: $color-header-background;
+  border-bottom: 1px solid darken($color-header-background, 10%);
+
+  a:link,
+  a {
+    @extend %reset-shadow;
+    color: rgba($color-header-link, .7);
+  }
+
+  ul.tabs > li {
+    &:hover > a {
+      background-color: darken($color-header-background, 10%);
+      border-radius: 5px;
+    }
+    &.has_nested:hover > a {
+      border-color: darken($color-header-background, 10%);
+      background-color: darken($color-header-background, 10%);
+    }
+
+    ul {
+      @extend %reset-shadow;
+      background-color: darken($color-header-background, 10%);
+      color: $color-header-link;
+    }
+
+    &.has_nested.current > a,
+    &.current > a {
+      background-color: darken($color-header-background, 20%);
+      border-radius: 5px;
+    }
+  }
+}
+
+
+// Title bar
+//=============================================================================
+#title_bar {
+  @extend %reset-all;
+  border: 0;
+
+  .breadcrumb {
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    @extend %reset-shadow;
+    font-size: 1.6em;
+    font-weight: 500;
+  }
+}
+
+
+// Table
+//=============================================================================
+tr.row th {
+  @extend %reset-shadow;
+}
+
+.status_tag {
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.attributes_table {
+  table {
+    margin-bottom: 0;
+
+    tr:last-child td,
+    tr:last-child th {
+      border-bottom: 0;
+    }
+  }
+}
+
+.panel,
+.index_table {
+  @extend %reset-shadow;
+  background-color: $color-table;
+}
+
+table.index_table th,
+.panel > h3,
+.section > h3,
+.sidebar_section > h3 {
+  @extend %heading;
+
+  &:first-child,
+  &:last-child {
+    border-left: 0;
+    border-right: 0;
+  }
+
+  &.sorted-asc,
+  &.sorted-desc {
+    @extend %heading-dark-light;
+    border-top: 1px solid lighten($color-heading-darker, 40%);
+  }
+}
+
+
+// Tabs
+//=============================================================================
+.table_tools {
+  margin: 0;
+
+  .scopes {
+    display: flex;
+    margin-bottom: 20px;
+
+    .scope {
+      float: none;
+
+      a {
+        @extend %reset-all;
+        background-color: $white;
+        font-family: $font-classic;
+        padding: 7px;
+
+        &:hover {
+          @extend %reset-all;
+          background-color: $color-heading-dark;
+          box-shadow: inset 0 0 3px rgba($black, .2);
+        }
+      }
+
+      &:first-child a {
+        padding-left: 15px;
+        border-radius: 5px 0 0 5px;
+      }
+
+      &:last-child a {
+        padding-right: 15px;
+        border-radius: 0 5px 5px 0;
+      }
+
+      &.selected a {
+        background-color: darken($color-heading, 15%);
+        color: $white;
+
+        .count {
+          color: $white;
+        }
+
+        &:hover {
+          background-color: $color-heading-darker;
+        }
+      }
+    }
+  }
+}
+
+
+// Flash
+//=============================================================================
+.flashes {
+  text-align: center;
+}
+
+body.logged_in .flash.flash_notice {
+  border-radius: 20px;
+  background-image: none;
+  background-color: $green-shamrock;
+  color: $white;
+  display: inline-block;
+  margin: 0 auto 20px;
+  text-shadow: none;
+}

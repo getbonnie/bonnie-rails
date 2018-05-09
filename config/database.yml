@@ -1,0 +1,33 @@
+# POSTGRESQL
+
+default: &default
+  adapter: postgresql
+  database: <%= ENV["POSTGRESQL_ADDON_DB"] %>
+  encoding: unicode
+  host: <%= ENV["POSTGRESQL_ADDON_HOST"] %>
+  password: <%= ENV["POSTGRESQL_ADDON_PASSWORD"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  port: <%= ENV["POSTGRESQL_ADDON_PORT"] %>
+  username: <%= ENV["POSTGRESQL_ADDON_USER"] %>
+
+development:
+  <<: *default
+  database: bonnie_development
+  host: localhost
+  username: postgres
+  password: toto
+  port: 5432
+
+test:
+  <<: *default
+  database: bonnie_test
+  host: localhost
+  username: postgres
+  password: toto
+  port: 5432
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

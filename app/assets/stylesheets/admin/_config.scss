@@ -1,0 +1,54 @@
+
+// Locals
+//=============================================================================
+$black: #333332;
+$white: #fff;
+$grey-athens: #f2f3f6;
+$grey-athens-dark: #e4e5e8;
+$grey-athens-blue: #ebedf2;
+$grey-manatee: #858ca0;
+$grey-gainsboro: #ddd;
+$yellow-pearl: #fffbf2;
+$blue-dodger: #38a2ff;
+$red-coral: #f34;
+$green-shamrock: #2dd565;
+
+$purple-royal: #813baf;
+$gray: #939393;
+$gray-alto: #d6d6d6;
+$gray-concrete: #f3f3f3;
+$blue-royal: #5033f5;
+$blue-azure: #0089ff;
+$blue-dodger: #38a2ff;
+$blue-picton: #40ddef;
+$yellow-lightning: #fabe19;
+$yellow-dandelion: #fed95e;
+$yellow-dandelion: #fed95e;
+$yellow-bright-sun: #ffe733;
+
+// Global configuration (all variables are mandatory)
+//=============================================================================
+$font-size-classic: 13px;
+$font-classic: -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+
+$color-background: $grey-athens-blue;
+$color-text: $black;
+$color-header-background: $purple-royal;
+$color-header-link: $white;
+$color-cta: $blue-dodger;
+$color-cta-light: #eee;
+$color-cta-text: $white;
+$color-cta-light-text: $grey-manatee;
+$color-heading: $grey-athens;
+$color-heading-dark: $grey-athens-dark;
+$color-heading-darker: $grey-manatee;
+$color-table: $white;
+$color-input: $white;
+$color-input-border: $grey-gainsboro;
+
+%box-shadow {
+  box-shadow: 0 0 5px rgba($black, .3);
+}

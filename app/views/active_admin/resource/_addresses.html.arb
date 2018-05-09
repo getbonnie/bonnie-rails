@@ -1,0 +1,10 @@
+panel 'Addresses' do
+  data.addresses.each do |address|
+    attributes_table_for address do
+      row address.type_of do |item|
+        uri = "https://www.google.fr/maps/place/#{CGI.escape(item.complete)}"
+        link_to item.complete, uri, target: '_blank'
+      end
+    end
+  end
+end
