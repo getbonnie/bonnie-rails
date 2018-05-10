@@ -16,13 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints(->(req) { req.host.match(/^(api|api-dev)?\.bobonn\.(here|io)$/) }) do
+  constraints(->(req) { req.host.match(/^(api|api-dev)?\.getbonnie\.(here|io)$/) }) do
     namespace :api, path: '/' do
       namespace :v1 do
-        # put :accept_discussion, path: '/discussions/:id/accept', to: 'discussions#accept'
-        # post :auth, path: '/auth', to: 'google#auth'
+        post :auth, path: '/auth', to: 'auth#check'
         get :me, path: '/me', to: 'users#me'
-        # resources :themes, only: %i[index]
       end
     end
   end
