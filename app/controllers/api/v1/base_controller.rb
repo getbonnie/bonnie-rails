@@ -5,7 +5,7 @@ class Api::V1::BaseController < Api::BaseController
   protected
 
   def current_user
-    @user_id.nil? ? @current_user : User.find_by(id: @user_id)
+    @user_id.nil? ? @current_user : User.find(@user_id)
   end
 
   # Validates the token and user and sets the @current_user scope
