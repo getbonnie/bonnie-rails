@@ -1,0 +1,32 @@
+.component-question {
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  padding: 20px;
+  width: 375px;
+
+  .coqu-label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .coqu-sticker {
+    .coqu-image {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 100px;
+      width: 100px;
+    }
+  }
+
+  .coqu-question {
+    flex-grow: 1;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 28px;
+    padding-right: 10px;
+    text-align: left;
+  }
+}
+

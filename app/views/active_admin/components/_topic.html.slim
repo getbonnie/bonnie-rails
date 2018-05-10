@@ -3,7 +3,7 @@
 
   .component-topic style="background-color: #{color};"
     - if topic.sticker.attached?
-      .coto-sticker
-        = image_tag topic.sticker
+      .cotu-sticker
+        .cotu-image style="background-image: url(#{url_for(topic.sticker)});" class='coqu-image'
     .coto-title #{topic.name}
     .coto-content #{topic.content}

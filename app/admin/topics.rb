@@ -15,7 +15,7 @@ ActiveAdmin.register Topic do
     id_column
     column :sticker do |item|
       if item.sticker.attached?
-        image_tag item.sticker.variant(combine_options: VariantLib.inside(30))
+        image_tag item.sticker.variant(VariantLib.inside(30))
       end
     end
     column :name do |item|
@@ -47,6 +47,12 @@ ActiveAdmin.register Topic do
         status_tag item.status if item.status
       end
       row :uuid
+    end
+
+    panel 'Questions' do
+      topic.questions.each do |question|
+        render partial: 'active_admin/components/question', locals: { question: question }
+      end
     end
   end
 
