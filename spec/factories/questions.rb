@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :question do
     category
     topic
+    classification
 
     sequence :short do |n|
       "short #{n}"
@@ -11,10 +12,6 @@ FactoryBot.define do
       "long #{n}"
     end
 
-    sequence :question do |n|
-      "question #{n}"
-    end
-
-    state 'active'
+    status 'active'
   end
 end

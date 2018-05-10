@@ -4,6 +4,6 @@ FactoryBot.define do
     question
     user
 
-    state 'active'
+    status 'active'
   end
 end

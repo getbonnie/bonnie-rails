@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_08_075025) do
+ActiveRecord::Schema.define(version: 2018_05_10_130727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,10 +71,18 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.string "name"
     t.string "color"
     t.integer "questions_count", default: 0, null: false
-    t.string "state"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["state"], name: "index_categories_on_state"
+    t.index ["status"], name: "index_categories_on_status"
+  end
+
+  create_table "classifications", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_classifications_on_status"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -83,13 +91,13 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.bigint "comment_id"
     t.bigint "emotion_id"
     t.bigint "user_id"
-    t.string "state"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["emotion_id"], name: "index_comments_on_emotion_id"
     t.index ["reaction_id"], name: "index_comments_on_reaction_id"
-    t.index ["state"], name: "index_comments_on_state"
+    t.index ["status"], name: "index_comments_on_status"
     t.index ["user_id"], name: "index_comments_on_user_id"
     t.index ["uuid"], name: "index_comments_on_uuid", unique: true
   end
@@ -104,22 +112,22 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
 
   create_table "emotions", force: :cascade do |t|
     t.string "name"
-    t.string "state"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["state"], name: "index_emotions_on_state"
+    t.index ["status"], name: "index_emotions_on_status"
   end
 
   create_table "flags", force: :cascade do |t|
     t.string "flagable_type"
     t.bigint "flagable_id"
     t.bigint "user_id"
-    t.string "type_of"
-    t.string "state"
+    t.integer "type"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["flagable_type", "flagable_id"], name: "index_flags_on_flagable_type_and_flagable_id"
-    t.index ["state"], name: "index_flags_on_state"
+    t.index ["status"], name: "index_flags_on_status"
     t.index ["user_id"], name: "index_flags_on_user_id"
   end
 
@@ -134,7 +142,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "type_of"
+    t.integer "type"
     t.bigint "user_id"
     t.bigint "user_id_from"
     t.string "message"
@@ -160,12 +168,13 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.string "short"
     t.string "long"
     t.string "question"
-    t.string "state"
+    t.integer "status"
     t.integer "reactions_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "classification_id"
     t.index ["category_id"], name: "index_questions_on_category_id"
-    t.index ["state"], name: "index_questions_on_state"
+    t.index ["status"], name: "index_questions_on_status"
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["uuid"], name: "index_questions_on_uuid", unique: true
   end
@@ -177,12 +186,12 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.bigint "emotion_id"
     t.integer "comments_count", default: 0, null: false
     t.integer "plays", default: 0, null: false
-    t.string "state"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["emotion_id"], name: "index_reactions_on_emotion_id"
     t.index ["question_id"], name: "index_reactions_on_question_id"
-    t.index ["state"], name: "index_reactions_on_state"
+    t.index ["status"], name: "index_reactions_on_status"
     t.index ["user_id"], name: "index_reactions_on_user_id"
     t.index ["uuid"], name: "index_reactions_on_uuid", unique: true
   end
@@ -192,22 +201,23 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.integer "questions_count", default: 0, null: false
     t.string "name"
     t.string "content"
-    t.string "state"
+    t.integer "status"
     t.string "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag"
     t.index ["category_id"], name: "index_topics_on_category_id"
-    t.index ["state"], name: "index_topics_on_state"
+    t.index ["status"], name: "index_topics_on_status"
     t.index ["uuid"], name: "index_topics_on_uuid", unique: true
   end
 
   create_table "users", force: :cascade do |t|
     t.uuid "uuid"
     t.string "name"
-    t.string "state"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["state"], name: "index_users_on_state"
+    t.index ["status"], name: "index_users_on_status"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
@@ -220,6 +230,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
   add_foreign_key "notifications", "users"
   add_foreign_key "notifications", "users", column: "user_id_from"
   add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "classifications"
   add_foreign_key "questions", "topics"
   add_foreign_key "reactions", "emotions"
   add_foreign_key "reactions", "questions"

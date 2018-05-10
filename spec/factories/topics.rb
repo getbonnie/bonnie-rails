@@ -4,6 +4,6 @@ FactoryBot.define do
       "tag #{n}"
     end
 
-    state 'active'
+    status 'active'
   end
 end

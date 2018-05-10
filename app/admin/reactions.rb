@@ -1,12 +1,14 @@
 #
 ActiveAdmin.register Reaction do
+  menu priority: 3
+
   permit_params :user_id,
                 :question_id,
                 :emotion_id,
-                :state,
+                :status,
                 :sound
 
-  filter :state, as: :select, collection: proc { Reaction.states }
+  filter :status, as: :select, collection: proc { Reaction.statuses }
 
   index do
     id_column
@@ -21,8 +23,8 @@ ActiveAdmin.register Reaction do
       div item.question.short
       div audio_tag(url_for(item.sound), controls: true) if item.sound.attached?
     end
-    column :state do |item|
-      status_tag item.state if item.state
+    column :status do |item|
+      status_tag item.status if item.status
     end
     actions
   end
@@ -39,8 +41,8 @@ ActiveAdmin.register Reaction do
           audio_tag(url_for(item.sound), controls: true)
         end
       end
-      row :state do |item|
-        status_tag item.state if item.state
+      row :status do |item|
+        status_tag item.status if item.status
       end
       row :uuid
     end
@@ -52,7 +54,7 @@ ActiveAdmin.register Reaction do
       f.input :user_id, as: :select, collection: User.all.map { |i| [i.name, i.id] }, include_blank: false
       f.input :question_id, as: :select, collection: Question.all.map { |i| [i.short, i.id] }, include_blank: false
       f.input :emotion_id, as: :select, collection: Emotion.all.map { |i| [i.name, i.id] }, include_blank: false
-      f.input :state, as: :select, collection: Question.states, include_blank: false
+      f.input :status, as: :select, collection: Question.statuses.keys, include_blank: false
     end
     f.actions
   end

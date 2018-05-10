@@ -9,21 +9,17 @@ class User < ApplicationRecord
   has_many :notification_from, class_name: 'Notification', foreign_key: :user_id_from, inverse_of: :user_target, dependent: :destroy
   has_one_attached :avatar
 
-  STATES = %i[
-    pending
-    active
-    suspended
-    deleted
-  ].freeze
+  enum status: {
+    pending: 0,
+    active: 1,
+    suspended: -1,
+    deleted: -2
+  }.freeze
 
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
-    self.state ||= 'pending'
-  end
-
-  def self.states
-    STATES
+    self.status ||= :pending
   end
 end

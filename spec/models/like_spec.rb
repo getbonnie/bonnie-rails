@@ -4,10 +4,6 @@ require 'rails_helper'
 RSpec.describe Like, type: :model do
   subject { described_class.new }
 
-  it 'has likable class' do
-    expect(Like.likable_types.size).to be > 1
-  end
-
   it 'is not valid without valid attributes' do
     expect(subject).to_not be_valid
   end

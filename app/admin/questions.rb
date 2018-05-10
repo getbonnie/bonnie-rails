@@ -1,14 +1,15 @@
 #
 ActiveAdmin.register Question do
+  menu priority: 2
+
   permit_params :short,
                 :long,
-                :question,
                 :topic_id,
                 :category_id,
-                :state
+                :status
 
   filter :short_contains
-  filter :state, as: :select, collection: proc { Question.states }
+  filter :status, as: :select, collection: proc { Question.statuses }
 
   index do
     id_column
@@ -24,8 +25,8 @@ ActiveAdmin.register Question do
     column :topic do |item|
       status_tag item.topic.name if item.topic
     end
-    column :state do |item|
-      status_tag item.state if item.state
+    column :status do |item|
+      status_tag item.status if item.status
     end
     actions
   end
@@ -39,10 +40,9 @@ ActiveAdmin.register Question do
       end
       row :short
       row :long
-      row :question
       row :tags do |item|
         status_tag item.category.name if item.category
-        status_tag item.state if item.state
+        status_tag item.status if item.status
       end
       row :uuid
     end
@@ -54,8 +54,7 @@ ActiveAdmin.register Question do
       f.input :category_id, as: :select, collection: Category.all.map { |i| [i.name, i.id] }
       f.input :short, input_html: { maxlength: 60 }
       f.input :long, as: :text, input_html: { rows: 3 }
-      f.input :question, as: :text, input_html: { rows: 3 }
-      f.input :state, as: :select, collection: Question.states, include_blank: false
+      f.input :status, as: :select, collection: Question.statuses.keys, include_blank: false
     end
     f.actions
   end

@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :emotion do
+  factory :classification do
     sequence :name do |n|
-      "emotion #{n}"
+      "classification #{n}"
     end
 
     status 'active'

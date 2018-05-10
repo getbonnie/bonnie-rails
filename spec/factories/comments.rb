@@ -4,6 +4,6 @@ FactoryBot.define do
     emotion
     user
 
-    state 'active'
+    status 'active'
   end
 end
