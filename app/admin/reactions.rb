@@ -1,5 +1,7 @@
 #
 ActiveAdmin.register Reaction do
+  menu priority: 3
+
   permit_params :user_id,
                 :question_id,
                 :emotion_id,

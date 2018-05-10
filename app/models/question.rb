@@ -4,6 +4,7 @@ class Question < ApplicationRecord
 
   belongs_to :topic
   belongs_to :category, optional: true
+  belongs_to :classification, optional: true
   has_many :reactions, dependent: :destroy
 
   enum status: {

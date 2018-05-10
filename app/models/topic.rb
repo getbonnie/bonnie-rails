@@ -8,7 +8,7 @@ class Topic < ApplicationRecord
   enum status: {
     pending: 0,
     active: 1,
-    suspended: -1,
+    archived: -1,
     deleted: -2
   }.freeze
 
