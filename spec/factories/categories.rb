@@ -5,6 +5,6 @@ FactoryBot.define do
     end
 
     color '#ffffff'
-    state 'active'
+    status 'active'
   end
 end

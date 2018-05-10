@@ -5,38 +5,26 @@ class Flag < ApplicationRecord
   belongs_to :user
   belongs_to :flagable, polymorphic: true
 
-  TYPES = %i[
-    behavior
-    spam
-  ].freeze
+  enum type: {
+    behavior: 1,
+    spam: 1
+  }.freeze
 
-  STATES = %i[
-    pending
-    moderated
-  ].freeze
+  enum status: {
+    pending: 0,
+    moderated: 1
+  }.freeze
 
-  FLAGABLE_TYPES = %i[
+  FLAGABLE_TYPES = %w[
     Reaction
     Comment
   ].freeze
 
-  validates :flagable_type, inclusion: { in: FLAGABLE_TYPES.map(&:to_s) }
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
-  validates :type_of, allow_nil: true, inclusion: { in: TYPES.map(&:to_s) }
+  validates :flagable_type, inclusion: { in: FLAGABLE_TYPES }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
+  validates :type, allow_nil: true, inclusion: { in: types }
 
   def default_values
-    self.state ||= 'pending'
-  end
-
-  def self.types
-    TYPES
-  end
-
-  def self.states
-    STATES
-  end
-
-  def self.flagable_types
-    FLAGABLE_TYPES
+    self.status ||= :pending
   end
 end

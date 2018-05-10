@@ -8,20 +8,16 @@ class Comment < ApplicationRecord
   belongs_to :comment, optional: true
   has_many :comments, dependent: :destroy
 
-  STATES = %i[
-    pending
-    active
-    deleted
-  ].freeze
+  enum status: {
+    pending: 0,
+    active: 1,
+    deleted: -1
+  }
 
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
-    self.state ||= 'pending'
-  end
-
-  def self.states
-    STATES
+    self.status ||= :pending
   end
 end

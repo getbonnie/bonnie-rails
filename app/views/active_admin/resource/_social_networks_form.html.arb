@@ -1,6 +1,0 @@
-f.has_many :social_networks, allow_destroy: true, new_record: '+ Add network' do |a|
-  a.inputs :social_network do
-    a.input :type_of, as: :select, collection: SocialNetwork.types, include_blank: false
-    a.input :value
-  end
-end

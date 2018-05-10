@@ -1,9 +1,0 @@
-f.has_many :addresses, allow_destroy: true, new_record: '+ Add address' do |a|
-  a.inputs :address do
-    a.input :type_of, as: :select, collection: Address.types, include_blank: false
-    a.input :street
-    a.input :city
-    a.input :zip_code
-    a.input :country, as: :country, priority_countries: %w[FR US GB DE]
-  end
-end

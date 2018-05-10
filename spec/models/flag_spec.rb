@@ -4,18 +4,6 @@ require 'rails_helper'
 RSpec.describe Flag, type: :model do
   subject { described_class.new }
 
-  it 'has states' do
-    expect(Flag.states.size).to be > 1
-  end
-
-  it 'has types' do
-    expect(Flag.types.size).to be > 1
-  end
-
-  it 'has flagable class' do
-    expect(Flag.flagable_types.size).to be > 1
-  end
-
   it 'is not valid without valid attributes' do
     expect(subject).to_not be_valid
   end
@@ -27,6 +15,6 @@ RSpec.describe Flag, type: :model do
     expect(subject).to be_valid
 
     subject.save!
-    expect(subject.state).to eq('pending')
+    expect(subject.pending?).to be true
   end
 end
