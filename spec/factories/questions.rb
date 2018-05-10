@@ -11,10 +11,6 @@ FactoryBot.define do
       "long #{n}"
     end
 
-    sequence :question do |n|
-      "question #{n}"
-    end
-
-    state 'active'
+    status 'active'
   end
 end

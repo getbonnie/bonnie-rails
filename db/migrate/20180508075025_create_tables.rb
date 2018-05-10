@@ -4,9 +4,9 @@ class CreateTables < ActiveRecord::Migration[5.2]
     create_table :users do |t|
       t.uuid :uuid
       t.string :name
-      t.string :state
+      t.integer :status
       t.timestamps
-      t.index :state
+      t.index :status
       t.index :uuid, unique: true
     end
 
@@ -23,13 +23,12 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.bigint :category_id
       t.string :short
       t.string :long
-      t.string :question
-      t.string :state
+      t.integer :status
       t.integer :reactions_count, default: 0, null: false
       t.timestamps
       t.index :topic_id
       t.index :category_id
-      t.index :state
+      t.index :status
       t.index :uuid, unique: true
     end
 
@@ -40,12 +39,12 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.bigint :emotion_id
       t.integer :comments_count, default: 0, null: false
       t.integer :plays, default: 0, null: false
-      t.string :state
+      t.integer :status
       t.timestamps
       t.index :emotion_id
       t.index :question_id
       t.index :user_id
-      t.index :state
+      t.index :status
       t.index :uuid, unique: true
     end
 
@@ -55,13 +54,13 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.bigint :comment_id
       t.bigint :emotion_id
       t.bigint :user_id
-      t.string :state
+      t.integer :status
       t.timestamps
       t.index :reaction_id
       t.index :comment_id
       t.index :emotion_id
       t.index :user_id
-      t.index :state
+      t.index :status
       t.index :uuid, unique: true
     end
 
@@ -70,19 +69,19 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.integer :questions_count, default: 0, null: false
       t.string :name
       t.string :content
-      t.string :state
+      t.integer :status
       t.string :category_id
       t.timestamps
-      t.index :state
+      t.index :status
       t.index :category_id
       t.index :uuid, unique: true
     end
 
     create_table :emotions do |t|
       t.string :name
-      t.string :state
+      t.integer :status
       t.timestamps
-      t.index :state
+      t.index :status
     end
 
     create_table :plays do |t|
@@ -101,15 +100,15 @@ class CreateTables < ActiveRecord::Migration[5.2]
     create_table :flags do |t|
       t.references :flagable, polymorphic: true
       t.bigint :user_id
-      t.string :type_of
-      t.string :state
+      t.integer :type
+      t.integer :status
       t.timestamps
       t.index :user_id
-      t.index :state
+      t.index :status
     end
 
     create_table :notifications do |t|
-      t.string :type_of
+      t.integer :type
       t.bigint :user_id
       t.bigint :user_id_from
       t.string :message
@@ -122,9 +121,9 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :color
       t.integer :questions_count, default: 0, null: false
-      t.string :state
+      t.integer :status
       t.timestamps
-      t.index :state
+      t.index :status
     end
 
     add_foreign_key :devices, :users

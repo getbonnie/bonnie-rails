@@ -3,9 +3,9 @@ ActiveAdmin.register Topic do
   permit_params :name,
                 :content,
                 :sticker,
-                :state
+                :status
 
-  filter :state, as: :select, collection: proc { Topic.states }
+  filter :status, as: :select, collection: proc { Topic.statuses }
 
   index do
     id_column
@@ -17,8 +17,8 @@ ActiveAdmin.register Topic do
     column :name do |item|
       auto_link item, item.name
     end
-    column :state do |item|
-      status_tag item.state if item.state
+    column :status do |item|
+      status_tag item.status if item.status
     end
     column :questions_count
     actions
@@ -33,8 +33,8 @@ ActiveAdmin.register Topic do
       end
       row :name
       row :content
-      row :state do |item|
-        status_tag item.state if item.state
+      row :status do |item|
+        status_tag item.status if item.status
       end
       row :uuid
     end
@@ -44,8 +44,8 @@ ActiveAdmin.register Topic do
     f.inputs do
       f.input :sticker, as: :file
       f.input :name
-      f.input :content, input_html: { type: "text" }
-      f.input :state, as: :select, collection: Topic.states, include_blank: false
+      f.input :content, input_html: { type: :text }
+      f.input :status, as: :select, collection: Topic.statuses.keys, include_blank: false
     end
     f.actions
   end

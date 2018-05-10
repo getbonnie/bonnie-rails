@@ -1,18 +1,18 @@
 #
 ActiveAdmin.register User do
   permit_params :name,
-                :state
+                :status
 
   filter :name_contains
-  filter :state, as: :select, collection: proc { User.states }
+  filter :status, as: :select, collection: proc { User.statuses }
 
   index do
     id_column
     column :name do |item|
       auto_link item, item.name
     end
-    column :state do |item|
-      status_tag item.state if item.state
+    column :status do |item|
+      status_tag item.status if item.status
     end
     actions
   end
@@ -20,8 +20,8 @@ ActiveAdmin.register User do
   show do
     attributes_table do
       row :name
-      row :state do |item|
-        status_tag item.state if item.state
+      row :status do |item|
+        status_tag item.status if item.status
       end
       row :uuid
     end
@@ -30,7 +30,7 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.input :name
-      f.input :state, as: :select, collection: User.states, include_blank: false
+      f.input :status, as: :select, collection: User.statuses.keys, include_blank: false
     end
     f.actions
   end

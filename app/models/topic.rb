@@ -5,23 +5,19 @@ class Topic < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_one_attached :sticker
 
-  STATES = %i[
-    pending
-    active
-    suspended
-    deleted
-  ].freeze
+  enum status: {
+    pending: 0,
+    active: 1,
+    suspended: -1,
+    deleted: -2
+  }.freeze
 
   validates :name, presence: true
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
-    self.state ||= 'pending'
-  end
-
-  def self.states
-    STATES
+    self.status ||= :pending
   end
 
   def questions_count

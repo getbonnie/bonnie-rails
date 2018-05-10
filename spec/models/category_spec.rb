@@ -4,10 +4,6 @@ require 'rails_helper'
 RSpec.describe Category, type: :model do
   subject { described_class.new }
 
-  it 'has states' do
-    expect(Category.states.size).to be > 1
-  end
-
   it 'is not valid without valid attributes' do
     expect(subject).to_not be_valid
   end
@@ -18,7 +14,7 @@ RSpec.describe Category, type: :model do
     expect(subject).to be_valid
 
     subject.save!
-    expect(subject.state).to eq('active')
+    expect(subject.active?).to be true
   end
 
   it 'check question counter' do

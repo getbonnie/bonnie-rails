@@ -8,22 +8,16 @@ class Reaction < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one_attached :sound
 
-  STATES = %i[
-    pending
-    active
-    deleted
-  ].freeze
+  enum status: {
+    pending: 0,
+    active: 1,
+    deleted: -1
+  }.freeze
 
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
-
-  scope :active, -> { where(state: :active) }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
-    self.state ||= 'pending'
-  end
-
-  def self.states
-    STATES
+    self.status ||= :pending
   end
 end

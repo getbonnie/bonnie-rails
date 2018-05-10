@@ -4,20 +4,16 @@ class Category < ApplicationRecord
 
   has_many :questions, dependent: :destroy
 
-  STATES = %i[
-    active
-    deleted
-  ].freeze
+  enum status: {
+    active: 1,
+    deleted: -1
+  }
 
   validates :name, :color, presence: true
-  validates :state, allow_nil: true, inclusion: { in: STATES.map(&:to_s) }
+  validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
-    self.state ||= 'active'
-  end
-
-  def self.states
-    STATES
+    self.status ||= :active
   end
 
   def questions_count
