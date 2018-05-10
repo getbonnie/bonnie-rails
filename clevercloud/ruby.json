@@ -1,6 +1,6 @@
 {
   "deploy" : {
-    "rakegoals": ["db:migrate:reset", "db:seed"]
+    "rakegoals": ["db:migrate", "db:seed"]
     // "sidekiq":  [
     //   "./config/sidekiq.yml"
     // ]
