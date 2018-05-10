@@ -1,5 +1,7 @@
 #
 ActiveAdmin.register Topic do
+  menu priority: 1
+
   permit_params :name,
                 :content,
                 :sticker,

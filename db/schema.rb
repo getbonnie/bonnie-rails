@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_08_075025) do
+ActiveRecord::Schema.define(version: 2018_05_10_130727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_categories_on_status"
+  end
+
+  create_table "classifications", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_classifications_on_status"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -164,6 +172,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.integer "reactions_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "classification_id"
     t.index ["category_id"], name: "index_questions_on_category_id"
     t.index ["status"], name: "index_questions_on_status"
     t.index ["topic_id"], name: "index_questions_on_topic_id"
@@ -196,6 +205,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
     t.string "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag"
     t.index ["category_id"], name: "index_topics_on_category_id"
     t.index ["status"], name: "index_topics_on_status"
     t.index ["uuid"], name: "index_topics_on_uuid", unique: true
@@ -220,6 +230,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_075025) do
   add_foreign_key "notifications", "users"
   add_foreign_key "notifications", "users", column: "user_id_from"
   add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "classifications"
   add_foreign_key "questions", "topics"
   add_foreign_key "reactions", "emotions"
   add_foreign_key "reactions", "questions"

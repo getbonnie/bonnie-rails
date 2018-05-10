@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :question do
     category
     topic
+    classification
 
     sequence :short do |n|
       "short #{n}"

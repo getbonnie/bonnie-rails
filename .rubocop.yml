@@ -3,6 +3,7 @@ AllCops:
   - 'bin/*'
   - 'app/lib/*'
   - 'app/channels/**/*'
+  - 'app/spec/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

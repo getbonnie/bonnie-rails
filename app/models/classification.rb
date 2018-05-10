@@ -1,13 +1,10 @@
 #
-class Emotion < ApplicationRecord
+class Classification < ApplicationRecord
   before_save :default_values
 
-  has_many :comments, dependent: :destroy
-  has_many :reactions, dependent: :destroy
-  has_one_attached :illustration
+  has_many :questions, dependent: :destroy
 
   enum status: {
-    pending: 0,
     active: 1,
     deleted: -1
   }.freeze
@@ -16,10 +13,10 @@ class Emotion < ApplicationRecord
   validates :status, allow_nil: true, inclusion: { in: statuses }
 
   def default_values
-    self.status ||= :pending
+    self.status ||= :active
   end
 
   def questions_count
-    Question.active.where(category_id: id).count
+    Question.active.where(classification_id: id).count
   end
 end
