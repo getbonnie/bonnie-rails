@@ -10,9 +10,9 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
-@import 'admin/config';
-@import 'admin/reset';
-@import 'admin/common';
+@import 'active_admin/config';
+@import 'active_admin/reset';
+@import 'active_admin/common';
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:

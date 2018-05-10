@@ -1,0 +1,9 @@
+- if topic.present?
+  - color = topic.category && topic.category.color ? topic.category.color : '#000'
+
+  .component-topic style="background-color: #{color};"
+    - if topic.sticker.attached?
+      .coto-sticker
+        = image_tag topic.sticker
+    .coto-title #{topic.name}
+    .coto-content #{topic.content}

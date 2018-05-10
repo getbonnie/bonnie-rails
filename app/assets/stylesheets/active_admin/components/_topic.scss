@@ -1,0 +1,27 @@
+.component-topic {
+  border-radius: 10px 10px 0 0;
+  color: white;
+  padding: 15px;
+  width: 375px;
+
+  .coto-sticker {
+    text-align: center;
+
+    img {
+      height: auto;
+      width: 150px;
+    }
+  }
+
+  .coto-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .coto-content {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
