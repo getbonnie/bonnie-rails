@@ -19,7 +19,11 @@ class Emotion < ApplicationRecord
     self.status ||= :pending
   end
 
-  def questions_count
-    Question.active.where(category_id: id).count
+  def reactions_count
+    Reaction.active.where(emotion_id: id).count
+  end
+
+  def comments_count
+    Comment.active.where(emotion_id: id).count
   end
 end

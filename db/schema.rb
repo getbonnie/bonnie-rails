@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_10_130727) do
+ActiveRecord::Schema.define(version: 2018_05_10_151608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,7 +167,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_130727) do
     t.bigint "category_id"
     t.string "short"
     t.string "long"
-    t.string "question"
     t.integer "status"
     t.integer "reactions_count", default: 0, null: false
     t.datetime "created_at", null: false
@@ -217,6 +216,12 @@ ActiveRecord::Schema.define(version: 2018_05_10_130727) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone"
+    t.string "ref_firebase"
+    t.boolean "notify_comments"
+    t.boolean "notify_likes"
+    t.boolean "notify_features"
+    t.boolean "notify_ads"
     t.index ["status"], name: "index_users_on_status"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

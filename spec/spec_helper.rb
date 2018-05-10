@@ -1,3 +1,4 @@
+require 'webmock/rspec'
 require 'simplecov'
 SimpleCov.start
 
@@ -43,6 +44,32 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+  end
+
+  config.before(:each) do
+    stub_request(
+      :any, %r{.*googleapis.com\/identitytoolkit\/v3\/relyingparty\/getAccountInfo.*}
+    ).to_return(
+      status: 200,
+      body: {
+        isNewUser: true,
+        providerId: 'phone',
+        operationType: 'signIn',
+        user: {
+          displayName: nil,
+          email: nil,
+          emailVerified: false,
+          isAnonymous: false,
+          phoneNumber: 'phoneNumber',
+          photoURL: nil,
+          refreshToken: 'refreshToken',
+          uid: 'uid'
+        }
+      }.to_json,
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
