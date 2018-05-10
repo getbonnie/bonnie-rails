@@ -28,6 +28,7 @@ group :test do
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'webmock'
 end
 
 group :development, :test do
