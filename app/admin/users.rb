@@ -4,6 +4,7 @@ ActiveAdmin.register User do
 
   permit_params :name,
                 :status,
+                :avatar,
                 :notify_likes,
                 :notify_comments,
                 :notify_features,
@@ -14,9 +15,14 @@ ActiveAdmin.register User do
 
   index do
     id_column
+    column :avatar do |item|
+      render partial: 'active_admin/components/avatar', locals: { avatar: item.avatar, size: :s }
+    end
     column :name do |item|
       auto_link item, item.name
     end
+    column 'Reactions', :reactions_count
+    column 'Comments', :comments_count
     column :status do |item|
       status_tag item.status if item.status
     end
@@ -41,6 +47,7 @@ ActiveAdmin.register User do
 
   form do |f|
     f.inputs do
+      f.input :avatar, as: :file
       f.input :name
       f.input :status, as: :select, collection: User.statuses.keys, include_blank: false
       f.input :notify_likes

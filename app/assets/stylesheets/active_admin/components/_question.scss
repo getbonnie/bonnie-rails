@@ -8,13 +8,29 @@
   .coqu-content {
     flex-grow: 1;
     padding-right: 10px;
-  }
 
-  .coqu-tag {
-    color: white;
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
+    .coqu-tag {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .coqu-question {
+      color: white;
+      display: block;
+      font-size: 26px;
+      font-weight: bold;
+      line-height: 28px;
+      text-align: left;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .coqu-sticker {
@@ -25,14 +41,6 @@
       height: 100px;
       width: 100px;
     }
-  }
-
-  .coqu-question {
-    color: white;
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 28px;
-    text-align: left;
   }
 }
 

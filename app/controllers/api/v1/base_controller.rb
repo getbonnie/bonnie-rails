@@ -12,7 +12,8 @@ class Api::V1::BaseController < Api::BaseController
   def authenticate_request!
     # Bypass for env != production
     @user_id = request.headers['user']
-    return nil if @user_id && !Rails.env.production?
+    # return nil if @user_id && !Rails.env.production?
+    return nil if @user_id # Authorize bypass for every env during dev.
 
     # Check payload
     return invalid_authentication if check_payload

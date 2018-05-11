@@ -21,7 +21,8 @@ ActiveAdmin.register Emotion do
     column :status do |item|
       status_tag item.status if item.status
     end
-    column :questions_count
+    column 'Reactions', :reactions_count
+    column 'Comments', :comments_count
     actions
   end
 
