@@ -1,0 +1,79 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api.getbonnie.com'
+    description: Production server
+  - url: 'https://api-dev.getbonnie.com'
+    description: Staging server
+info:
+  description: >-
+    All API routes for the app Bonnie.
+  version: 1.0.0
+  title: Bonnie API
+  termsOfService: http://getbonnie.com/terms/
+  contact:
+    name: Kevin Kuipers
+    email: kevin@getbonnie.com
+paths:
+  /reactions:
+    post:
+      tags:
+        - reactions
+      operationId: createReaction
+      summary: Create a new reaction.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionPost'
+      responses:
+        '200':
+          description: Return the reaction inserted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reaction'
+components:
+  schemas:
+    # =========================================================================
+    # Reactions
+    # =========================================================================
+    Reaction:
+      example:
+        {
+          "data": {
+              "uuid": "{uuid}",
+              "emotion_id": 1,
+              "sound": "{url}"
+          }
+        }
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        sound:
+          type: string
+        emotion_id:
+          type: integer
+    ReactionPost:
+      example:
+        {
+          "reaction": {
+            "question_uuid": "{uuid}",
+            "emotion_id": 1,
+            "sound": "{base64}"
+          }
+        }
+      required:
+        - question_uuid
+        - emotion_id
+        - sound
+      properties:
+        question_uuid:
+          type: string
+          format: uuid
+        sound:
+          type: string
+          format: byte
+        emotion_id:
+          type: integer
