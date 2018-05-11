@@ -17,9 +17,9 @@ RSpec.describe Category, type: :model do
     expect(subject.active?).to be true
   end
 
-  it 'check question counter' do
-    question = create(:question)
+  it 'check topic counter' do
+    topic = create(:topic)
 
-    expect(question.category.questions_count).to eq(1)
+    expect(topic.category.topics_count).to eq(1)
   end
 end

@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :question do
-    category
     topic
     classification
 

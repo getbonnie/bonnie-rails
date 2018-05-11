@@ -2,7 +2,7 @@
 class Category < ApplicationRecord
   before_save :default_values
 
-  has_many :questions, dependent: :destroy
+  has_many :topics, dependent: :destroy
 
   enum status: {
     active: 1,
@@ -16,7 +16,7 @@ class Category < ApplicationRecord
     self.status ||= :active
   end
 
-  def questions_count
-    Question.active.where(category_id: id).count
+  def topics_count
+    Topic.active.where(category_id: id).count
   end
 end

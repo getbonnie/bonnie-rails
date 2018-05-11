@@ -1,0 +1,10 @@
+- if question.present?
+  - color = question.topic.category.color
+
+  .component-question-small style="background-color: #{color};"
+    a.coqus-question href="#{question_path(question.id)}"
+      .coqus-tag ##{question.topic.tag}
+      | #{question.long}
+    - if question.topic.sticker.attached?
+      .coqus-sticker
+        .coqus-image style="background-image: url(#{url_for(question.topic.sticker)});" class='coqu-image'
