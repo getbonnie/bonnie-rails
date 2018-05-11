@@ -5,10 +5,33 @@
   padding: 15px;
   width: 290px;
 
-  .coqus-tag {
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
+  .coqus-content {
+    flex-grow: 1;
+    padding-right: 10px;
+
+    .coqus-tag {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .coqus-question {
+      color: white;
+      display: block;
+      font-size: 16px;
+      line-height: 18px;
+      text-align: left;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
   }
 
   .coqus-sticker {
@@ -19,15 +42,6 @@
       height: 50px;
       width: 50px;
     }
-  }
-
-  .coqus-question {
-    color: white;
-    flex-grow: 1;
-    font-size: 16px;
-    line-height: 18px;
-    padding-right: 10px;
-    text-align: left;
   }
 }
 

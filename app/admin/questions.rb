@@ -16,7 +16,7 @@ ActiveAdmin.register Question do
     column :question do |item|
       render partial: 'active_admin/components/question_small', locals: { question: item }
     end
-    column :reactions_count
+    column 'Reactions', :reactions_count
     column :tags do |item|
       status_tag item.classification.name if item.classification
     end

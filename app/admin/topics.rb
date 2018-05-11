@@ -28,7 +28,7 @@ ActiveAdmin.register Topic do
       status_tag item.status if item.status
       status_tag item.category.name if item.category
     end
-    column :questions_count
+    column 'Questions', :questions_count
     actions
   end
 

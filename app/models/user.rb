@@ -22,4 +22,12 @@ class User < ApplicationRecord
     self.uuid ||= SecureRandom.uuid
     self.status ||= :pending
   end
+
+  def reactions_count
+    Reaction.active.where(user_id: id).count
+  end
+
+  def comments_count
+    Comment.active.where(user_id: id).count
+  end
 end
