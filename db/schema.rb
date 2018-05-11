@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_10_151608) do
+ActiveRecord::Schema.define(version: 2018_05_11_003948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_151608) do
   create_table "questions", force: :cascade do |t|
     t.uuid "uuid"
     t.bigint "topic_id"
-    t.bigint "category_id"
     t.string "short"
     t.string "long"
     t.integer "status"
@@ -172,7 +171,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_151608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "classification_id"
-    t.index ["category_id"], name: "index_questions_on_category_id"
     t.index ["status"], name: "index_questions_on_status"
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["uuid"], name: "index_questions_on_uuid", unique: true
@@ -234,7 +232,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_151608) do
   add_foreign_key "flags", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "notifications", "users", column: "user_id_from"
-  add_foreign_key "questions", "categories"
   add_foreign_key "questions", "classifications"
   add_foreign_key "questions", "topics"
   add_foreign_key "reactions", "emotions"
