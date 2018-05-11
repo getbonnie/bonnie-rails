@@ -38,20 +38,4 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     uuid = JSON.parse(response.body).dig('data', 'uuid')
     expect(uuid).to eq(user.uuid)
   end
-
-  # it 'logs with JWT' do
-  #   user = create(:user)
-  #   user.uuid
-  #   request.headers['Authorization'] = "Bearer #{jwt}"
-  #   payload = {
-  #     auth: {
-  #       uid: 'uid',
-  #       id_token: 'id_token'
-  #     }
-  #   }
-  #   post :check, params: payload
-
-  #   expect(User.first.ref_firebase).to eq('uid')
-  #   expect(User.first.phone).to eq('phoneNumber')
-  # end
 end
