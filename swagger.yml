@@ -1,0 +1,62 @@
+swagger: '2.0'
+info:
+  description: API in Rails for Bonnie
+  version: 1.0.0
+  title: Bonnie API
+  contact:
+    email: kevin@getbonnie.com
+host: api.getbonnie.com
+basePath: /api/v1
+schemes:
+  - https
+
+# =============================================================================
+# Paths
+# =============================================================================
+paths:
+  /reactions:
+    post:
+      tags:
+        - reactions
+      summary: Create a reaction
+      parameters:
+        - name: reaction
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ReactionPost'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Reaction'
+
+# =============================================================================
+# Definitions
+# =============================================================================
+definitions:
+
+  # ===========================================================================
+  # Reactions
+  # ===========================================================================
+  Reaction:
+    type: object
+    properties:
+      uuid:
+        type: string
+      sound:
+        type: string
+      emotion:
+        type: integer
+  ReactionPost:
+    type: object
+    properties:
+      question_uuid:
+        type: string
+      emotion_id:
+        type: integer
+      sound:
+        type: string
+
