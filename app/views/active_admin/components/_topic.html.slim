@@ -1,0 +1,9 @@
+- if topic.present?
+  - color = topic.category && topic.category.color ? topic.category.color : '#000'
+
+  .component-topic style="background-color: #{color};"
+    - if topic.sticker.attached?
+      .cotu-sticker
+        .cotu-image style="background-image: url(#{url_for(topic.sticker)});" class='coqu-image'
+    .coto-title #{topic.name}
+    .coto-content #{topic.content}

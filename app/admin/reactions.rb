@@ -14,7 +14,7 @@ ActiveAdmin.register Reaction do
     id_column
     column :topic do |item|
       if item.question&.topic && item.question.topic.sticker.attached?
-        image_tag item.question.topic.sticker.variant(combine_options: VariantLib.inside(30))
+        image_tag item.question.topic.sticker.variant(VariantLib.inside(30))
       end
     end
     column :emotion

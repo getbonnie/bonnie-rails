@@ -12,7 +12,7 @@ ActiveAdmin.register Emotion do
     id_column
     column do |item|
       if item.illustration.attached?
-        image_tag item.illustration.variant(combine_options: VariantLib.inside(30))
+        image_tag item.illustration.variant(VariantLib.inside(30))
       end
     end
     column :name do |item|
@@ -29,7 +29,7 @@ ActiveAdmin.register Emotion do
     attributes_table do
       if emotion.illustration.attached?
         row :illustration do |item|
-          div image_tag item.illustration.variant(combine_options: VariantLib.inside(100))
+          div image_tag item.illustration.variant(VariantLib.inside(100))
         end
       end
       row :name

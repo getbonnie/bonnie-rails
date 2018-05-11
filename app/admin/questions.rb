@@ -16,7 +16,7 @@ ActiveAdmin.register Question do
     id_column
     column :topic do |item|
       if item&.topic && item.topic.sticker.attached?
-        image_tag item.topic.sticker.variant(combine_options: VariantLib.inside(30))
+        image_tag item.topic.sticker.variant(VariantLib.inside(30))
       end
     end
     column :question do |item|
@@ -37,7 +37,7 @@ ActiveAdmin.register Question do
     attributes_table do
       if question&.topic && question.topic.sticker.attached?
         row :topic do |item|
-          image_tag item.topic.sticker.variant(combine_options: VariantLib.inside(100))
+          image_tag item.topic.sticker.variant(VariantLib.inside(100))
         end
       end
       row :short

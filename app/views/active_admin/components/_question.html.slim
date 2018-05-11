@@ -1,0 +1,10 @@
+- if question.present?
+  - color = question.topic.category.color
+
+  .component-question style="background-color: #{color};"
+    .coqu-question
+      .coqu-label Ils réagissent à...
+      | #{question.long}
+    - if question.topic.sticker.attached?
+      .coqu-sticker
+        .coqu-image style="background-image: url(#{url_for(question.topic.sticker)});" class='coqu-image'

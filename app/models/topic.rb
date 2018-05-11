@@ -2,6 +2,7 @@
 class Topic < ApplicationRecord
   before_save :default_values
 
+  belongs_to :category, optional: true
   has_many :questions, dependent: :destroy
   has_one_attached :sticker
 
