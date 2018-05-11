@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_11_003948) do
+ActiveRecord::Schema.define(version: 2018_05_11_123233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 2018_05_11_003948) do
     t.boolean "notify_likes"
     t.boolean "notify_features"
     t.boolean "notify_ads"
+    t.datetime "last_connected_at"
     t.index ["status"], name: "index_users_on_status"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

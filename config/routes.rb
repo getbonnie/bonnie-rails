@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         post :auth, path: '/auth', to: 'auth#check'
         get :me, path: '/me', to: 'users#me'
         resources :emotions, only: %i[index]
+        resources :reactions, only: %i[create]
       end
     end
   end
