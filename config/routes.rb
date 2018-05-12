@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         get :me, path: '/me', to: 'users#me'
         resources :emotions, only: %i[index]
         resources :reactions, only: %i[create show]
+        resources :topics, only: %i[index]
       end
     end
   end
