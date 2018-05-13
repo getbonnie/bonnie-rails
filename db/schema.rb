@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_11_123233) do
+ActiveRecord::Schema.define(version: 2018_05_13_144004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2018_05_11_123233) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "length"
     t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["emotion_id"], name: "index_comments_on_emotion_id"
     t.index ["reaction_id"], name: "index_comments_on_reaction_id"
@@ -186,6 +187,7 @@ ActiveRecord::Schema.define(version: 2018_05_11_123233) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "length"
     t.index ["emotion_id"], name: "index_reactions_on_emotion_id"
     t.index ["question_id"], name: "index_reactions_on_question_id"
     t.index ["status"], name: "index_reactions_on_status"
@@ -203,6 +205,7 @@ ActiveRecord::Schema.define(version: 2018_05_11_123233) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tag"
+    t.datetime "published_at"
     t.index ["category_id"], name: "index_topics_on_category_id"
     t.index ["status"], name: "index_topics_on_status"
     t.index ["uuid"], name: "index_topics_on_uuid", unique: true
@@ -221,6 +224,10 @@ ActiveRecord::Schema.define(version: 2018_05_11_123233) do
     t.boolean "notify_features"
     t.boolean "notify_ads"
     t.datetime "last_connected_at"
+    t.date "birthdate"
+    t.string "city"
+    t.decimal "latitude", precision: 10, scale: 8
+    t.decimal "longitude", precision: 11, scale: 8
     t.index ["status"], name: "index_users_on_status"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

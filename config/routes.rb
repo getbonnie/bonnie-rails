@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       namespace :v1 do
         post :auth, path: '/auth', to: 'auth#check'
         get :me, path: '/me', to: 'users#me'
+        put :me, path: '/me', to: 'users#update'
         resources :emotions, only: %i[index]
         resources :reactions, only: %i[create show]
         resources :topics, only: %i[index]

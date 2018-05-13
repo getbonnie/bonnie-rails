@@ -5,6 +5,8 @@ ActiveAdmin.register User do
   permit_params :name,
                 :status,
                 :avatar,
+                :city,
+                :birthdate,
                 :notify_likes,
                 :notify_comments,
                 :notify_features,
@@ -32,6 +34,13 @@ ActiveAdmin.register User do
   show do
     attributes_table do
       row :name
+      row :birthdate
+      row :city do |item|
+        span item.city
+        if item.latitude && item.longitude
+          span "(Latitude: #{item.latitude} Longitude: #{item.longitude})"
+        end
+      end
       row :status do |item|
         status_tag item.status if item.status
       end
@@ -41,6 +50,9 @@ ActiveAdmin.register User do
         status_tag 'features' if item.notify_features
         status_tag 'ads' if item.notify_ads
       end
+      row :jwt do |item|
+        JwtTokenLib.encode(uuid: item.uuid)
+      end
       row :uuid
     end
   end
@@ -49,6 +61,8 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :avatar, as: :file
       f.input :name
+      f.input :birthdate, start_year: Time.now.utc.year - 90, as: :date_picker
+      f.input :city
       f.input :status, as: :select, collection: User.statuses.keys, include_blank: false
       f.input :notify_likes
       f.input :notify_comments
