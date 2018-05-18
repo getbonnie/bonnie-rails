@@ -1,6 +1,7 @@
 #
 class Category < ApplicationRecord
   before_save :default_values
+  after_commit :upload_cache
 
   has_many :topics, dependent: :destroy
 

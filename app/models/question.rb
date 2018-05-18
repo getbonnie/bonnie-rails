@@ -1,6 +1,7 @@
 #
 class Question < ApplicationRecord
   before_save :default_values
+  after_commit :upload_cache
 
   belongs_to :topic
   belongs_to :category, optional: true

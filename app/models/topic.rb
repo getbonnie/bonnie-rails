@@ -1,6 +1,7 @@
 #
 class Topic < ApplicationRecord
   before_save :default_values
+  after_commit :upload_cache
 
   belongs_to :category, optional: true
   has_many :questions, dependent: :destroy
