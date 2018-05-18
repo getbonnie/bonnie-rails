@@ -38,6 +38,8 @@ class GoogleCloud
   end
 
   def upload_cache
+    return if Rails.env.test?
+
     data = Api::V1::GoogleCloud::CacheSerializer.new({}).as_json
 
     instance = @firestore.col('cache').doc('libraries')
