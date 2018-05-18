@@ -1,11 +1,10 @@
 #
 class Api::V1::Topics::TopicSerializer < Api::BaseSerializer
-  belongs_to :category, serializer: Api::V1::Categories::CategorySerializer
-
-  attributes  :uuid,
+  attributes  :id,
               :name,
               :content,
-              :tag
+              :tag,
+              :category_id
 
   attribute :sticker do
     Rails.application.routes.url_helpers.rails_blob_url(object.sticker) if object.sticker.attachment

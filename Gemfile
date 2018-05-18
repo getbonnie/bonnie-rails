@@ -9,6 +9,7 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'country_select'
 gem 'devise', '~> 4.4.3'
+gem 'google-cloud-firestore'
 gem 'httparty'
 gem 'image_processing', '~> 1.2'
 gem 'jwt', '~> 2.1.0'

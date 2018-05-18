@@ -1,6 +1,6 @@
 #
 class Api::V1::Reactions::ReactionSerializer < Api::BaseSerializer
-  # belongs_to :question, serializer: Api::V3::Users::UserSmallItemSerializer
+  # belongs_to :question, serializer: Api::V1::Users::UserSmallItemSerializer
 
   attributes  :uuid,
               :emotion_id

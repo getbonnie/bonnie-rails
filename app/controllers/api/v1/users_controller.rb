@@ -26,7 +26,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     api_error(status: 404, errors: 'User missing') and return false unless user
 
     user.update(user_params)
-    api_error(status: 404, errors: 'User missing') and return false unless user
+    api_error(status: 500, errors: user.errors) and return false unless user.valid?
 
     render  json: user,
             root: :data,
