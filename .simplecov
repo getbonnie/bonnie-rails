@@ -11,7 +11,9 @@ SimpleCov.start 'rails' do
   add_filter('/app/controllers/root_controller.rb')
   add_filter('/app/lib')
   add_filter('/app/models/admin_user.rb')
+  add_filter('/app/models/google_cloud.rb')
   add_filter('/app/serializers/api/error_serializer.rb')
+  add_filter('/app/serializers/api/v1/google_cloud')
   add_group 'Models', 'app/models'
   add_group 'Controllers', 'app/controllers'
   add_group 'Serializers', 'app/serializers'

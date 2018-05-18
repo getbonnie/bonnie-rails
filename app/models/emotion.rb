@@ -1,6 +1,7 @@
 #
 class Emotion < ApplicationRecord
   before_save :default_values
+  after_commit :upload_cache
 
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
