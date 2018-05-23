@@ -1,6 +1,6 @@
 #
 class Api::V1::Topics::TopicSerializer < Api::BaseSerializer
-  attributes  :id,
+  attributes  :uuid,
               :name,
               :content,
               :tag,

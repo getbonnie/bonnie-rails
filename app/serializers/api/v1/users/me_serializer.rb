@@ -1,9 +1,14 @@
 #
-class Api::V1::Users::UserSerializer < Api::BaseSerializer
+class Api::V1::Users::MeSerializer < Api::BaseSerializer
   attributes  :uuid,
               :name,
+              :status,
               :city,
-              :birthdate
+              :birthdate,
+              :notify_ads,
+              :notify_comments,
+              :notify_features,
+              :notify_likes
 
   attribute :avatar do
     if object.avatar.attachment

@@ -1,9 +1,12 @@
 #
 class Api::V1::Reactions::ReactionSerializer < Api::BaseSerializer
-  # belongs_to :question, serializer: Api::V1::Users::UserSmallItemSerializer
+  belongs_to :question, serializer: Api::V1::Questions::QuestionSerializer
+  belongs_to :user, serializer: Api::V1::Users::UserSerializer
 
   attributes  :uuid,
-              :emotion_id
+              :emotion_id,
+              :likes_count,
+              :comments_count
 
   attribute :sound do
     Rails.application.routes.url_helpers.rails_blob_url(object.sound) if object.sound.attachment

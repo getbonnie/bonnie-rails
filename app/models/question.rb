@@ -14,12 +14,19 @@ class Question < ApplicationRecord
     deleted: -1
   }.freeze
 
+  enum kind: {
+    classic: 1,
+    trend: 2
+  }.freeze
+
   validates :short, presence: true
   validates :status, allow_nil: true, inclusion: { in: statuses }
+  validates :kind, allow_nil: true, inclusion: { in: kinds }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
     self.status ||= :pending
+    self.kind ||= :classic
   end
 
   def reactions_count

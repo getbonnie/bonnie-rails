@@ -6,7 +6,10 @@ class Reaction < ApplicationRecord
   belongs_to :user
   belongs_to :emotion
   has_many :comments, dependent: :destroy
+  has_many :likes, as: :likable, dependent: :destroy, inverse_of: :likable
   has_one_attached :sound
+  delegate :count, to: :likes, prefix: true
+  delegate :count, to: :comments, prefix: true
 
   enum status: {
     pending: 0,

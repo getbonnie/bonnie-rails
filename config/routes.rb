@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         get :me, path: '/me', to: 'users#me'
         put :me, path: '/me', to: 'users#update'
         resources :reactions, only: %i[create show]
+        resources :users, only: %i[show]
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_13_144004) do
+ActiveRecord::Schema.define(version: 2018_05_23_150917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 2018_05_13_144004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "classification_id"
+    t.integer "kind"
     t.index ["status"], name: "index_questions_on_status"
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["uuid"], name: "index_questions_on_uuid", unique: true
@@ -201,7 +202,7 @@ ActiveRecord::Schema.define(version: 2018_05_13_144004) do
     t.string "name"
     t.string "content"
     t.integer "status"
-    t.string "category_id"
+    t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tag"
