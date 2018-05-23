@@ -32,4 +32,13 @@ RSpec.describe Api::V1::ReactionsController, type: :controller do
     get :create, params: payload
     expect(response.status).to eq(200)
   end
+
+  it 'gets reaction with success' do
+    user = create(:user)
+    reaction = create(:reaction)
+
+    request.headers[:user] = user.id
+    get :show, params: { id: reaction.uuid }
+    expect(response.status).to eq(200)
+  end
 end

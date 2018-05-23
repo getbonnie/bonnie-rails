@@ -4,12 +4,14 @@ ActiveAdmin.register Question do
 
   permit_params :short,
                 :long,
+                :kind,
                 :topic_id,
                 :classification_id,
                 :status
 
   filter :short_contains
   filter :status, as: :select, collection: proc { Question.statuses }
+  filter :kind, as: :select, collection: proc { Question.kinds }
 
   index do
     id_column
@@ -22,6 +24,7 @@ ActiveAdmin.register Question do
     end
     column :status do |item|
       status_tag item.status if item.status
+      status_tag item.kind if item.kind
     end
     actions
   end
@@ -36,6 +39,7 @@ ActiveAdmin.register Question do
       row :tags do |item|
         status_tag item.classification.name if item.classification
         status_tag item.status if item.status
+        status_tag item.kind if item.kind
       end
       row :uuid
     end
@@ -47,6 +51,7 @@ ActiveAdmin.register Question do
       f.input :classification_id, as: :select, collection: Classification.all.map { |i| [i.name, i.id] }
       f.input :short, input_html: { maxlength: 60 }
       f.input :long, as: :text, input_html: { rows: 3 }
+      f.input :kind, as: :select, collection: Question.kinds.keys, include_blank: false
       f.input :status, as: :select, collection: Question.statuses.keys, include_blank: false
     end
     f.actions

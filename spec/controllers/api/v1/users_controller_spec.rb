@@ -7,13 +7,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     expect(response.status).to eq(401)
   end
 
-  it 'succeed with valid header' do
+  it 'succeed me with valid header' do
     user = create(:user)
+    user.avatar.attach(fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png'))
     emotion = create(:emotion)
     create(:reaction, emotion_id: emotion.id)
 
     request.headers[:user] = user.id
     get :me
+    expect(response.status).to eq(200)
+  end
+
+  it 'get success' do
+    user = create(:user)
+    emotion = create(:emotion)
+    create(:reaction, emotion_id: emotion.id)
+
+    request.headers[:user] = user.id
+    get :show, params: { id: create(:user).id }
     expect(response.status).to eq(200)
   end
 
@@ -25,7 +36,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         name: 'changed_name',
         birthdate: '13/11/1976',
         latitude: '1',
-        longitude: '2'
+        longitude: '2',
+        avatar: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png')
       }
     }
     request.headers[:user] = user.id

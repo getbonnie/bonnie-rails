@@ -20,11 +20,11 @@ class Api::V1::ReactionsController < Api::V1::BaseController
             serializer: Api::V1::Reactions::ReactionSerializer
   end
 
-  # def show
-  #   reaction = Reaction.find_by(uuid: params[:id])
+  def show
+    reaction = Reaction.find_by(uuid: params[:id])
 
-  #   render  json: reaction,
-  #           root: :data,
-  #           serializer: Api::V1::Reactions::ReactionSerializer
-  # end
+    render  json: reaction,
+            root: :data,
+            serializer: Api::V1::Reactions::ReactionSerializer
+  end
 end
