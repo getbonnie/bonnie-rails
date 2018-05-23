@@ -38,7 +38,7 @@ RSpec.describe Api::V1::ReactionsController, type: :controller do
     reaction = create(:reaction)
 
     request.headers[:user] = user.id
-    get :show, params: { id: reaction.uuid }
+    get :show, params: { uuid: reaction.uuid }
     expect(response.status).to eq(200)
   end
 end
