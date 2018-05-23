@@ -17,6 +17,16 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     expect(response.status).to eq(200)
   end
 
+  it 'get success' do
+    user = create(:user)
+    emotion = create(:emotion)
+    create(:reaction, emotion_id: emotion.id)
+
+    request.headers[:user] = user.id
+    get :show, params: { id: create(:user).id }
+    expect(response.status).to eq(200)
+  end
+
   it 'updates' do
     user = create(:user)
 
