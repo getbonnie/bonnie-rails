@@ -41,4 +41,12 @@ RSpec.describe Api::V1::ReactionsController, type: :controller do
     get :show, params: { uuid: reaction.uuid }
     expect(response.status).to eq(200)
   end
+
+  it 'fails getting reaction' do
+    user = create(:user)
+
+    request.headers[:user] = user.id
+    get :show, params: { uuid: 'random' }
+    expect(response.status).to eq(404)
+  end
 end

@@ -21,7 +21,10 @@ class Api::V1::ReactionsController < Api::V1::BaseController
   end
 
   def show
-    reaction = Reaction.find_by(uuid: params[:uuid])
+    reaction = Reaction.active.find_by(uuid: params[:uuid])
+    unless reaction
+      api_error(status: 404, errors: 'Reaction missing') and return false
+    end
 
     render  json: reaction,
             root: :data,
