@@ -12,22 +12,29 @@ Rails.application.routes.draw do
 
   constraints(->(req) { req.host.match(/^(dev\.)getbonnie\.(here|com)$/) }) do
     namespace :landing, path: '/' do
-      get :root, path: '/', to: 'welcome#root'
+      get '/', to: 'welcome#root', as: :root
     end
   end
 
   constraints(->(req) { req.host.match(/^(api|api-dev)?\.getbonnie\.(here|io)$/) }) do
     namespace :api, path: '/' do
       namespace :v1 do
-        post :auth, path: '/auth', to: 'auth#check'
-        get :me, path: '/me', to: 'users#me'
-        put :me, path: '/me', to: 'users#update'
-        resources :reactions, only: %i[create show]
-        resources :users, only: %i[show]
+        post '/auth', to: 'auth#check', as: :auth
+        get '/comments/reaction/:uuid', to: 'comments#index_reactions', as: :comment_reactions
+        post '/comments/reaction/:uuid', to: 'comments#create_reaction', as: :comment_reaction
+        post '/likes/reaction/:uuid', to: 'likes#reaction', as: :like_reaction
+        post '/plays/comment/:uuid', to: 'plays#comment', as: :play_comment
+        post '/plays/reaction/:uuid', to: 'plays#reaction', as: :play_reaction
+        get '/me', to: 'users#me', as: :me
+        put '/me', to: 'users#update', as: :update_me
+        post '/reactions', to: 'reactions#create', as: :create_reaction
+        get '/reactions/:uuid', to: 'reactions#show', as: :get_reaction
+        get '/users/:uuid', to: 'users#show', as: :user
+        get '/users/:uuid/reactions', to: 'users#reactions', as: :user_reactions
       end
     end
   end
 
   # Neutral root for heat
-  get :heat, path: '/', to: 'root#index'
+  get '/', to: 'root#index', as: :heat
 end

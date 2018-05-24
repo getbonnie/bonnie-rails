@@ -1,10 +1,9 @@
 #
 class Api::V1::UsersController < Api::V1::BaseController
-  def show
-    user = User.find_by(id: params[:id])
-    api_error(status: 404, errors: 'User missing') and return false unless user
+  before_action :fetch_user, only: %i[show questions reactions]
 
-    render  json: user,
+  def show
+    render  json: @user,
             root: :data,
             serializer: Api::V1::Users::UserSerializer,
             scope: pass_scope
@@ -32,7 +31,6 @@ class Api::V1::UsersController < Api::V1::BaseController
       :notify_likes,
       :avatar
     )
-
     user = User.find_by(id: current_user.id)
     api_error(status: 404, errors: 'User missing') and return false unless user
 
@@ -43,5 +41,24 @@ class Api::V1::UsersController < Api::V1::BaseController
             root: :data,
             serializer: Api::V1::Users::UserSerializer,
             scope: pass_scope
+  end
+
+  def reactions
+    page = params.fetch(:page, 1)
+    per = params.fetch(:per, 10)
+    reactions = @user.reactions.order(created_at: :desc).page(page).per(per)
+
+    render  json: reactions,
+            root: :data,
+            each_serializer: Api::V1::Reactions::ReactionSerializer,
+            meta: meta_attributes(reactions),
+            scope: pass_scope
+  end
+
+  private
+
+  def fetch_user
+    @user = User.find_by(uuid: params.fetch(:uuid))
+    api_error(status: 404, errors: 'User missing') and return false unless @user
   end
 end

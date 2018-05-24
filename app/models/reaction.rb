@@ -7,6 +7,7 @@ class Reaction < ApplicationRecord
   belongs_to :emotion
   has_many :comments, dependent: :destroy
   has_many :likes, as: :likable, dependent: :destroy, inverse_of: :likable
+  has_many :plays, as: :playable, dependent: :destroy, inverse_of: :playable
   has_one_attached :sound
   delegate :count, to: :likes, prefix: true
   delegate :count, to: :comments, prefix: true

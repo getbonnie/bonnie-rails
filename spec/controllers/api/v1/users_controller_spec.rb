@@ -20,11 +20,18 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   it 'get success' do
     user = create(:user)
-    emotion = create(:emotion)
-    create(:reaction, emotion_id: emotion.id)
 
     request.headers[:user] = user.id
-    get :show, params: { id: create(:user).id }
+    get :show, params: { uuid: create(:user).uuid }
+    expect(response.status).to eq(200)
+  end
+
+  it 'get reactions' do
+    user = create(:user)
+    create_list(:reaction, 3, user_id: user.id)
+
+    request.headers[:user] = user.id
+    get :reactions, params: { uuid: create(:user).uuid }
     expect(response.status).to eq(200)
   end
 
