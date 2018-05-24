@@ -3,7 +3,7 @@ class Api::V1::LikesController < Api::V1::BaseController
   def reaction
     reaction = Reaction.active
                        .where.not(user_id: current_user.id)
-                       .find_by(uuid: params[:uuid])
+                       .find_by(uuid: params.fetch(:uuid))
     unless reaction
       api_error(status: 404, errors: 'Reaction missing') and return false
     end

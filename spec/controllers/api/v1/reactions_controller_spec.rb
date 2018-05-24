@@ -25,11 +25,12 @@ RSpec.describe Api::V1::ReactionsController, type: :controller do
     payload = {
       reaction: {
         question_uuid: question.uuid,
-        emotion_id: emotion.id
+        emotion_id: emotion.id,
+        sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
       }
     }
     request.headers[:user] = user.id
-    get :create, params: payload
+    post :create, params: payload
     expect(response.status).to eq(200)
   end
 

@@ -31,7 +31,6 @@ class Api::V1::UsersController < Api::V1::BaseController
       :notify_likes,
       :avatar
     )
-
     user = User.find_by(id: current_user.id)
     api_error(status: 404, errors: 'User missing') and return false unless user
 
@@ -59,7 +58,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def fetch_user
-    @user = User.find_by(uuid: params[:uuid])
+    @user = User.find_by(uuid: params.fetch(:uuid))
     api_error(status: 404, errors: 'User missing') and return false unless @user
   end
 end

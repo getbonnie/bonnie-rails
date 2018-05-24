@@ -1,15 +1,17 @@
 #
-class Api::V1::Reactions::ReactionSerializer < Api::BaseSerializer
-  belongs_to :question, serializer: Api::V1::Questions::QuestionSerializer
+class Api::V1::Comments::CommentSerializer < Api::BaseSerializer
   belongs_to :user, serializer: Api::V1::Users::UserSerializer
 
   attributes  :uuid,
               :emotion_id,
-              :likes_count,
-              :comments_count
+              :created_at
 
   attribute :sound do
     Rails.application.routes.url_helpers.rails_blob_url(object.sound) if object.sound.attachment
+  end
+
+  attribute :in_reply_to do
+    object.comment.user.name if object.comment_id.present?
   end
 
   attribute :played do
