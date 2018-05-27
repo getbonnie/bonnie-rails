@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_23_150917) do
+ActiveRecord::Schema.define(version: 2018_05_27_185817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,11 +119,24 @@ ActiveRecord::Schema.define(version: 2018_05_23_150917) do
     t.index ["status"], name: "index_emotions_on_status"
   end
 
+  create_table "feeds", force: :cascade do |t|
+    t.uuid "uuid"
+    t.string "feedable_type"
+    t.bigint "feedable_id"
+    t.integer "kind"
+    t.integer "status"
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feedable_type", "feedable_id"], name: "index_feeds_on_feedable_type_and_feedable_id"
+    t.index ["status"], name: "index_feeds_on_status"
+  end
+
   create_table "flags", force: :cascade do |t|
     t.string "flagable_type"
     t.bigint "flagable_id"
     t.bigint "user_id"
-    t.integer "type"
+    t.integer "kind"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

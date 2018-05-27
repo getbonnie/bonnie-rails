@@ -5,7 +5,8 @@ class Api::V1::Reactions::ReactionBasicSerializer < Api::BaseSerializer
   attributes  :uuid,
               :emotion_id,
               :likes_count,
-              :comments_count
+              :comments_count,
+              :created_at
 
   attribute :sound do
     Rails.application.routes.url_helpers.rails_blob_url(object.sound) if object.sound.attachment

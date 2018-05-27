@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         post '/auth', to: 'auth#check', as: :auth
         get '/comments/reaction/:uuid', to: 'comments#index_reactions', as: :comment_reactions
         post '/comments/reaction/:uuid', to: 'comments#create_reaction', as: :comment_reaction
+        get '/feeds', to: 'feeds#index', as: :feeds
         post '/likes/reaction/:uuid', to: 'likes#reaction', as: :like_reaction
         post '/plays/comment/:uuid', to: 'plays#comment', as: :play_comment
         post '/plays/reaction/:uuid', to: 'plays#reaction', as: :play_reaction
