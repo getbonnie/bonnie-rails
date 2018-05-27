@@ -3,11 +3,14 @@ class Api::V1::CommentsController < Api::V1::BaseController
   before_action :load_reaction, only: %i[index_reactions create_reaction]
 
   def index_reactions
-    comments = @reaction.comments.active.order(id: :desc)
+    page = params.fetch(:page, 1)
+    per = params.fetch(:per, 10)
+    comments = @reaction.comments.active.order(id: :desc).page(page).per(per)
 
     render  json: comments,
             root: :data,
             each_serializer: Api::V1::Comments::CommentSerializer,
+            meta: meta_attributes(comments),
             scope: pass_scope
   end
 

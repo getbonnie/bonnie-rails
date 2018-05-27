@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         post '/plays/reaction/:uuid', to: 'plays#reaction', as: :play_reaction
         get '/me', to: 'users#me', as: :me
         put '/me', to: 'users#update', as: :update_me
+        get '/questions/:uuid/reactions', to: 'questions#reactions', as: :question_reactions
         post '/reactions', to: 'reactions#create', as: :create_reaction
         get '/reactions/:uuid', to: 'reactions#show', as: :get_reaction
         get '/topics/:uuid', to: 'topics#show', as: :show_topic
