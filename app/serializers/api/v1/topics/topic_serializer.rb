@@ -1,5 +1,7 @@
 #
 class Api::V1::Topics::TopicSerializer < Api::BaseSerializer
+  has_many :questions, serializer: Api::V1::Questions::QuestionBasicSerializer
+
   attributes  :uuid,
               :name,
               :content,
