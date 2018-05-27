@@ -12,6 +12,7 @@ RSpec.describe Flag, type: :model do
     subject.user_id = create(:user).id
     subject.flagable_id = create(:reaction).id
     subject.flagable_type = 'Reaction'
+    subject.kind = 'spam'
     expect(subject).to be_valid
 
     subject.save!

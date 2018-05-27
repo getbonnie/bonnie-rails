@@ -5,7 +5,7 @@ class Flag < ApplicationRecord
   belongs_to :user
   belongs_to :flagable, polymorphic: true
 
-  enum type: {
+  enum kind: {
     behavior: 1,
     spam: 1
   }.freeze
@@ -22,7 +22,7 @@ class Flag < ApplicationRecord
 
   validates :flagable_type, inclusion: { in: FLAGABLE_TYPES }
   validates :status, allow_nil: true, inclusion: { in: statuses }
-  validates :type, allow_nil: true, inclusion: { in: types }
+  validates :kind, allow_nil: true, inclusion: { in: kinds }
 
   def default_values
     self.status ||= :pending

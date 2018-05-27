@@ -7,6 +7,7 @@ class Question < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :classification, optional: true
   has_many :reactions, dependent: :destroy
+  has_many :feeds, as: :feedable, dependent: :destroy, inverse_of: :feedable
 
   enum status: {
     pending: 0,
