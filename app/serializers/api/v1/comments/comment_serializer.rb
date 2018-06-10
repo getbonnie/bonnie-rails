@@ -1,5 +1,6 @@
 #
 class Api::V1::Comments::CommentSerializer < Api::BaseSerializer
+  belongs_to :in_reply_to, serializer: Api::V1::Comments::CommentSerializer
   belongs_to :user, serializer: Api::V1::Users::UserSerializer
 
   attributes  :uuid,
@@ -12,11 +13,11 @@ class Api::V1::Comments::CommentSerializer < Api::BaseSerializer
     end
   end
 
-  attribute :in_reply_to do
-    object.comment.user.name if object.comment_id.present?
-  end
-
   attribute :played do
     object.plays.where(user_id: current_user.id).first.present?
+  end
+
+  def in_reply_to
+    object.comment if object.comment_id.present?
   end
 end

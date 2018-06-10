@@ -51,5 +51,5 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  Rails.application.routes.default_url_options[:host] = 'api.getbonnie.here:3000'
+  Rails.application.routes.default_url_options[:host] = 'api.pew.here:3000'
 end

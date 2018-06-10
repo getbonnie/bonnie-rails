@@ -14,7 +14,7 @@ jobs:
       - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: bonnie_test
+          POSTGRES_DB: pew_test
           POSTGRES_PASSWORD: toto
     working_directory: ~/circleci-rails # directory where steps will run
     steps:
