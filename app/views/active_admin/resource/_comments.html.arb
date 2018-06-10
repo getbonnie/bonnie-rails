@@ -1,0 +1,27 @@
+panel 'Comments' do
+  table_for data.comments do
+    column :comment do |item|
+      div do
+        span item.emotion.name
+        span auto_link item, item.user.name
+      end
+      div audio_tag(url_for(item.sound), controls: true) if item.sound.attached?
+    end
+    column :in_reply_to do |item|
+      if item.comment
+        div do
+          span auto_link item.comment.user, "@#{item.comment.user.name}"
+          span " - ##{item.comment.id}"
+        end
+      end
+    end
+    column :likes, :likes_count
+    column :plays, :plays_count
+    column :created_at do |item|
+      time_ago(item.created_at)
+    end
+    column :status do |item|
+      status_tag item.status if item.status
+    end
+  end
+end
