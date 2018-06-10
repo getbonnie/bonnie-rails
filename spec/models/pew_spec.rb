@@ -11,6 +11,7 @@ RSpec.describe Pew, type: :model do
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
     subject.emotion_id = create(:emotion).id
+    subject.duration = 100
     expect(subject).to be_valid
 
     subject.save!

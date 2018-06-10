@@ -21,7 +21,8 @@ class Api::V1::CommentsController < Api::V1::BaseController
       pew_id: @pew.id,
       comment_id: @comment_id,
       emotion_id: @comment_params.fetch(:emotion_id),
-      sound: @comment_params.fetch(:sound)
+      duration: @comment_params.fetch(:duration),
+      sound: @comment_params.fetch(:sound, nil)
     }
     comment = Comment.create(payload)
 
@@ -48,10 +49,12 @@ class Api::V1::CommentsController < Api::V1::BaseController
     @comment_params = params.require(:comment).permit(
       :sound,
       :comment_uuid,
-      :emotion_id
+      :emotion_id,
+      :duration
     ).tap do |i|
-      i.require(:sound)
+      i.require(:sound) unless Rails.env.development?
       i.require(:emotion_id)
+      i.require(:duration)
     end
 
     comment_uuid = @comment_params.fetch(:comment_uuid, nil)
