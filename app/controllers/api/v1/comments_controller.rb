@@ -29,6 +29,12 @@ class Api::V1::CommentsController < Api::V1::BaseController
     api_error(status: 500, errors: comment.errors) and return false unless
       comment.valid?
 
+    # Update count
+    pew = comment.pew
+    pew.update(
+      comments_count: Comment.where(pew: pew).count
+    )
+
     render  json: comment,
             root: :data,
             serializer: Api::V1::Comments::CommentSerializer,
