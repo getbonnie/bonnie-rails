@@ -23,4 +23,16 @@ RSpec.describe Api::V1::LikesController, type: :controller do
 
     expect(comment.reload.likes_count).to eq(1)
   end
+
+  it 'destroys' do
+    user = create(:user)
+    like = create(:like, likable: create(:pew), user: user)
+
+    request.headers[:user] = user.id
+    delete :delete, params: { type: 'pew', uuid: like.likable.uuid }
+
+    expect(response.status).to eq(200)
+
+    expect(like.likable.reload.likes_count).to eq(0)
+  end
 end
