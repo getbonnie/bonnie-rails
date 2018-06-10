@@ -1,6 +1,7 @@
 #
 class Comment < ApplicationRecord
   before_save :default_values
+  after_commit :recount
 
   belongs_to :user
   belongs_to :emotion
@@ -22,5 +23,12 @@ class Comment < ApplicationRecord
   def default_values
     self.uuid ||= SecureRandom.uuid
     self.status ||= :active
+  end
+
+  def recount
+    # Update count
+    pew.update(
+      comments_count: Comment.active.where(pew: pew).count
+    )
   end
 end

@@ -8,3 +8,17 @@
     }
   }
 }
+
+.status_tag {
+  &.pending {
+    background-color: LightSlateGrey;
+  }
+
+  &.active {
+    background-color: YellowGreen;
+  }
+
+  &.deleted {
+    background-color: OrangeRed;
+  }
+}

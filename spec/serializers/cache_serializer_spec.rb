@@ -4,7 +4,6 @@ require 'rails_helper'
 RSpec.describe 'CacheSerializer' do
   it 'is valid' do
     emotions = create_list(:emotion, 3)
-    emotions.first.illustration.attach(fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png'))
 
     data = Api::V1::GoogleCloud::CacheSerializer.new({}).to_hash
 
