@@ -1,6 +1,6 @@
 #
 class Api::V1::Comments::CommentSerializer < Api::BaseSerializer
-  belongs_to :in_reply_to, serializer: Api::V1::Comments::CommentSerializer
+  belongs_to :in_reply_to, serializer: Api::V1::Comments::ReplySerializer
   belongs_to :user, serializer: Api::V1::Users::UserSerializer
 
   attributes  :uuid,

@@ -16,16 +16,17 @@ class Api::V1::PewsController < Api::V1::BaseController
   end
 
   def create
-    pew_params = params.require(:pew).permit(:emotion_id, :sound).tap do |i|
+    pew_params = params.require(:pew).permit(
+      :emotion_id,
+      :sound,
+      :duration
+    ).tap do |i|
       i.require(:emotion_id)
-      i.require(:sound)
+      i.require(:duration)
+      i.require(:sound) unless Rails.env.development?
     end
 
-    payload = {
-      emotion_id: pew_params.fetch(:emotion_id),
-      sound: pew_params.fetch(:sound),
-      user_id: current_user.id
-    }
+    payload = pew_params.merge(user_id: current_user.id)
 
     pew = Pew.create(payload)
     api_error(status: 500, errors: 'Error during creation') and return false unless

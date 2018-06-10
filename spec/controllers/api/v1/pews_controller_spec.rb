@@ -27,6 +27,7 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     payload = {
       pew: {
         emotion_id: create(:emotion).id,
+        duration: 100,
         sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
       }
     }
