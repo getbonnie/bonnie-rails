@@ -1,6 +1,6 @@
 #
 class Api::V1::LikesController < Api::V1::BaseController
-  before_action :fetch_source, only: %i[create]
+  before_action :fetch_source, only: %i[create delete]
 
   def create
     payload = {
@@ -12,10 +12,20 @@ class Api::V1::LikesController < Api::V1::BaseController
     api_error(status: 500, errors: like.errors) and return false unless
       like.valid?
 
-    # Update count
-    like.likable.update(
-      likes_count: Like.where(likable: @object).count
-    )
+    render json: { data: true }
+  end
+
+  def delete
+    payload = {
+      user_id: current_user.id,
+      likable: @object
+    }
+    like = Like.find_by(payload)
+
+    api_error(status: 500, errors: 'Like missing') and return false unless
+      like.present?
+
+    like.destroy
 
     render json: { data: true }
   end
