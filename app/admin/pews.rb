@@ -13,11 +13,21 @@ ActiveAdmin.register Pew do
 
   index do
     id_column
-    column :emotion
-    column :hashtag
+    column :hashtag do |item|
+      "##{item.hashtag}"
+    end
     column :pew do |item|
-      div item.user.name
+      div do
+        span item.emotion.name
+        span auto_link item, item.user.name
+      end
       div audio_tag(url_for(item.sound), controls: true) if item.sound.attached?
+    end
+    column :likes, :likes_count
+    column :plays, :plays_count
+    column :comments, :comments_count
+    column :created_at do |item|
+      time_ago(item.created_at)
     end
     column :status do |item|
       status_tag item.status if item.status
@@ -45,6 +55,8 @@ ActiveAdmin.register Pew do
       row :plays_count
       row :uuid
     end
+
+    render partial: 'comments', locals: { data: pew }
   end
 
   form do |f|
