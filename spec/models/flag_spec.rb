@@ -10,8 +10,7 @@ RSpec.describe Flag, type: :model do
 
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
-    subject.flagable_id = create(:reaction).id
-    subject.flagable_type = 'Reaction'
+    subject.flagable = create(:pew)
     subject.kind = 'spam'
     expect(subject).to be_valid
 

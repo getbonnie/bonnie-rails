@@ -6,31 +6,31 @@ RSpec.describe Api::V1::PlaysController, type: :controller do
     comment = create(:comment)
 
     request.headers[:user] = create(:user).id
-    post :comment, params: { uuid: comment.uuid }
+    post :create, params: { type: 'comment', uuid: comment.uuid }
 
     expect(response.status).to eq(200)
   end
 
   it 'plays comment with error' do
     request.headers[:user] = create(:user).id
-    post :comment, params: { uuid: 'Error' }
+    post :create, params: { type: 'comment', uuid: 'Error' }
 
-    expect(response.status).to eq(404)
+    expect(response.status).to eq(500)
   end
 
-  it 'plays reaction successfully' do
-    reaction = create(:reaction)
+  it 'plays pew successfully' do
+    pew = create(:pew)
 
     request.headers[:user] = create(:user).id
-    post :reaction, params: { uuid: reaction.uuid }
+    post :create, params: { type: 'pew', uuid: pew.uuid }
 
     expect(response.status).to eq(200)
   end
 
-  it 'plays reaction with error' do
+  it 'plays pew with error' do
     request.headers[:user] = create(:user).id
-    post :reaction, params: { uuid: 'Error' }
+    post :create, params: { type: 'pew', uuid: 'Error' }
 
-    expect(response.status).to eq(404)
+    expect(response.status).to eq(500)
   end
 end

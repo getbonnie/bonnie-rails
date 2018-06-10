@@ -1,7 +1,6 @@
 FactoryBot.define do
-  factory :reaction do
+  factory :pew do
     emotion
-    question
     user
 
     status 'active'

@@ -12,10 +12,10 @@ RSpec.describe User, type: :model do
     expect(subject.uuid).to match(@uuid_regex)
   end
 
-  it 'check reaction counters' do
-    reaction = create(:reaction)
+  it 'check pew counters' do
+    pew = create(:pew)
 
-    expect(reaction.user.reactions_count).to eq(1)
+    expect(pew.user.pews_count).to eq(1)
   end
 
   it 'check comment counters' do

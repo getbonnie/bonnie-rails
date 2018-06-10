@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :devices, dependent: :destroy
-  has_many :reactions, dependent: :destroy
+  has_many :pews, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :notification_from, class_name: 'Notification', foreign_key: :user_id_from, inverse_of: :user_target, dependent: :destroy
   has_one_attached :avatar
@@ -23,8 +23,8 @@ class User < ApplicationRecord
     self.status ||= :pending
   end
 
-  def reactions_count
-    Reaction.active.where(user_id: id).count
+  def pews_count
+    Pew.active.where(user_id: id).count
   end
 
   def comments_count

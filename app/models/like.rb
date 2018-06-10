@@ -4,9 +4,13 @@ class Like < ApplicationRecord
   belongs_to :likable, polymorphic: true
 
   LIKABLE_TYPES = %w[
-    Reaction
+    Pew
     Comment
   ].freeze
 
   validates :likable_type, inclusion: { in: LIKABLE_TYPES }
+
+  def self.likable_types
+    LIKABLE_TYPES
+  end
 end

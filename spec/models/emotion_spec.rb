@@ -22,9 +22,9 @@ RSpec.describe Emotion, type: :model do
     expect(comment.emotion.comments_count).to eq(1)
   end
 
-  it 'check reaction counter' do
-    reaction = create(:reaction)
+  it 'check pew counter' do
+    pew = create(:pew)
 
-    expect(reaction.emotion.reactions_count).to eq(1)
+    expect(pew.emotion.pews_count).to eq(1)
   end
 end

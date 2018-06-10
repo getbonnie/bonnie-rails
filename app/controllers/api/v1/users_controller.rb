@@ -1,6 +1,6 @@
 #
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :fetch_user, only: %i[show questions reactions]
+  before_action :fetch_user, only: %i[show pews]
 
   def show
     render  json: @user,
@@ -43,22 +43,22 @@ class Api::V1::UsersController < Api::V1::BaseController
             scope: pass_scope
   end
 
-  def reactions
+  def pews
     page = params.fetch(:page, 1)
     per = params.fetch(:per, 10)
-    reactions = @user.reactions.order(created_at: :desc).page(page).per(per)
+    pews = @user.pews.order(created_at: :desc).page(page).per(per)
 
-    render  json: reactions,
+    render  json: pews,
             root: :data,
-            each_serializer: Api::V1::Reactions::ReactionSerializer,
-            meta: meta_attributes(reactions),
+            each_serializer: Api::V1::Pews::PewSerializer,
+            meta: meta_attributes(pews),
             scope: pass_scope
   end
 
   private
 
   def fetch_user
-    @user = User.find_by(uuid: params.fetch(:uuid))
+    @user = User.active.find_by(uuid: params.fetch(:uuid))
     api_error(status: 404, errors: 'User missing') and return false unless @user
   end
 end

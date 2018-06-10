@@ -10,8 +10,8 @@ RSpec.describe Notification, type: :model do
 
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
-    subject.user_id_from = create(:user).id
-    subject.type = :like
+    subject.from_id = create(:user).id
+    subject.kind = :like
     expect(subject).to be_valid
 
     subject.save!

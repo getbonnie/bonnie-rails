@@ -1,11 +1,11 @@
 #
-class Api::V1::Reactions::ReactionBasicSerializer < Api::BaseSerializer
-  belongs_to :user, serializer: Api::V1::Users::UserSerializer
-
+class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
   attributes  :uuid,
               :emotion_id,
               :likes_count,
               :comments_count,
+              :duration,
+              :hashtag,
               :created_at
 
   attribute :sound do

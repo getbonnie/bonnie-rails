@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 #
-RSpec.describe Classification, type: :model do
+RSpec.describe Pew, type: :model do
   subject { described_class.new }
 
   it 'is not valid without valid attributes' do
@@ -9,16 +9,12 @@ RSpec.describe Classification, type: :model do
   end
 
   it 'is valid with valid attributes' do
-    subject.name = 'name'
+    subject.user_id = create(:user).id
+    subject.emotion_id = create(:emotion).id
     expect(subject).to be_valid
 
     subject.save!
-    expect(subject.active?).to be true
-  end
-
-  it 'check question counter' do
-    question = create(:question)
-
-    expect(question.classification.questions_count).to eq(1)
+    expect(subject.pending?).to be true
+    expect(subject.uuid).to match(@uuid_regex)
   end
 end

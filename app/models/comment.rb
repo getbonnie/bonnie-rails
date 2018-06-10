@@ -4,7 +4,7 @@ class Comment < ApplicationRecord
 
   belongs_to :user
   belongs_to :emotion
-  belongs_to :reaction
+  belongs_to :pew
   belongs_to :comment, optional: true
   has_many :comments, dependent: :destroy
   has_many :likes, as: :likable, dependent: :destroy, inverse_of: :likable
