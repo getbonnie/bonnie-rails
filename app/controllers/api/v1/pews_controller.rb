@@ -17,10 +17,12 @@ class Api::V1::PewsController < Api::V1::BaseController
 
   def create
     pew_params = params.require(:pew).permit(
+      :hashtag,
       :emotion_id,
       :sound,
       :duration
     ).tap do |i|
+      i.require(:hashtag)
       i.require(:emotion_id)
       i.require(:duration)
       i.require(:sound) unless Rails.env.development?
