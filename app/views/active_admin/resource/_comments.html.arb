@@ -1,5 +1,6 @@
 panel 'Comments' do
   table_for data.comments do
+    column :id
     column :comment do |item|
       div do
         span item.emotion.name
@@ -22,6 +23,10 @@ panel 'Comments' do
     end
     column :status do |item|
       status_tag item.status if item.status
+    end
+    column :actions do |item|
+      span auto_link item, 'View'
+      span link_to 'Edit', edit_comment_path(item.id)
     end
   end
 end
