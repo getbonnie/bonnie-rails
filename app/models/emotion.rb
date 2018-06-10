@@ -5,7 +5,6 @@ class Emotion < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
-  has_one_attached :illustration
 
   enum status: {
     pending: 0,
