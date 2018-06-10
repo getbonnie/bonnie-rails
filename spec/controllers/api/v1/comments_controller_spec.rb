@@ -21,8 +21,11 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
 
   it 'posts successfully' do
     pew = create(:pew)
+
+    # First comment
     comment = create(:comment, pew_id: pew.id)
 
+    # Related comment
     payload = {
       uuid: pew.uuid,
       comment: {
@@ -36,6 +39,8 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     post :create, params: payload
 
     expect(response.status).to eq(200)
+
+    expect(pew.reload.comments_count).to eq(2)
   end
 
   it 'fails post with previous comment missing' do
