@@ -10,8 +10,11 @@ RSpec.describe Like, type: :model do
 
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
-    subject.likable_id = create(:reaction).id
-    subject.likable_type = 'Reaction'
+    subject.likable = create(:pew)
     expect(subject).to be_valid
+  end
+
+  it 'is has types' do
+    expect(Like.likable_types.size).to be > 0
   end
 end

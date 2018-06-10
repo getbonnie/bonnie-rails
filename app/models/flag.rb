@@ -16,7 +16,7 @@ class Flag < ApplicationRecord
   }.freeze
 
   FLAGABLE_TYPES = %w[
-    Reaction
+    Pew
     Comment
   ].freeze
 

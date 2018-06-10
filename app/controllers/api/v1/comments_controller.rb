@@ -1,11 +1,12 @@
 #
 class Api::V1::CommentsController < Api::V1::BaseController
-  before_action :load_reaction, only: %i[index_reactions create_reaction]
+  before_action :fetch_pew, only: %i[index create]
+  before_action :fetch_comment, only: %i[create]
 
-  def index_reactions
+  def index
     page = params.fetch(:page, 1)
     per = params.fetch(:per, 10)
-    comments = @reaction.comments.active.order(id: :desc).page(page).per(per)
+    comments = @pew.comments.active.order(id: :asc).page(page).per(per)
 
     render  json: comments,
             root: :data,
@@ -14,39 +15,18 @@ class Api::V1::CommentsController < Api::V1::BaseController
             scope: pass_scope
   end
 
-  def create_reaction
-    comment_params = params.require(:comment).permit(
-      :sound,
-      :comment_uuid,
-      :emotion_id
-    ).tap do |i|
-      i.require(:sound)
-      i.require(:emotion_id)
-    end
-
-    comment_id = nil
-    if comment_params.fetch(:comment_uuid, nil)
-      parent_comment = Comment.active
-                              .where(reaction_id: @reaction.id)
-                              .find_by(uuid: comment_params.fetch(:comment_uuid))
-
-      if parent_comment.blank?
-        api_error(status: 500, errors: 'Previous comment missing') and return false
-      end
-
-      comment_id = parent_comment.id
-    end
-
+  def create
     payload = {
       user_id: current_user.id,
-      reaction_id: @reaction.id,
-      comment_id: comment_id,
-      emotion_id: comment_params.fetch(:emotion_id),
-      sound: comment_params.fetch(:sound)
+      pew_id: @pew.id,
+      comment_id: @comment_id,
+      emotion_id: @comment_params.fetch(:emotion_id),
+      sound: @comment_params.fetch(:sound)
     }
     comment = Comment.create(payload)
 
-    api_error(status: 500, errors: comment.errors) and return false unless comment.valid?
+    api_error(status: 500, errors: comment.errors) and return false unless
+      comment.valid?
 
     render  json: comment,
             root: :data,
@@ -56,10 +36,37 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   private
 
-  def load_reaction
-    @reaction = Reaction.active.find_by(uuid: params.fetch(:uuid))
+  def fetch_pew
+    @pew = Pew.active.find_by(uuid: params.fetch(:uuid))
 
-    return if @reaction
-    api_error(status: 404, errors: 'Reaction missing') and return false
+    return if @pew
+
+    api_error(status: 404, errors: 'Pew missing') and return false
+  end
+
+  def fetch_comment
+    @comment_params = params.require(:comment).permit(
+      :sound,
+      :comment_uuid,
+      :emotion_id
+    ).tap do |i|
+      i.require(:sound)
+      i.require(:emotion_id)
+    end
+
+    comment_uuid = @comment_params.fetch(:comment_uuid, nil)
+    @comment_id = nil
+
+    return unless comment_uuid
+
+    parent_comment = Comment.active
+                            .where(pew_id: @pew.id)
+                            .find_by(uuid: comment_uuid)
+
+    if parent_comment.blank?
+      api_error(status: 500, errors: 'Prev comment missing') and return false
+    end
+
+    @comment_id = parent_comment.id
   end
 end

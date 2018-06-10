@@ -23,8 +23,6 @@ ActiveAdmin.register User do
     column :name do |item|
       auto_link item, item.name
     end
-    column 'Reactions', :reactions_count
-    column 'Comments', :comments_count
     column :status do |item|
       status_tag item.status if item.status
     end

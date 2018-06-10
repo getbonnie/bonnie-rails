@@ -7,7 +7,9 @@ class Api::V1::Comments::CommentSerializer < Api::BaseSerializer
               :created_at
 
   attribute :sound do
-    Rails.application.routes.url_helpers.rails_blob_url(object.sound) if object.sound.attachment
+    if object.sound.attachment
+      Rails.application.routes.url_helpers.rails_blob_url(object.sound)
+    end
   end
 
   attribute :in_reply_to do

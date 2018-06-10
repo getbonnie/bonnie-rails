@@ -8,12 +8,12 @@ RSpec.describe 'BaseController' do
   end
 
   it 'meta_attributes with collection' do
-    create_list(:topic, 30)
+    create_list(:user, 30)
 
     base = Api::BaseController.new
-    topics = Topic.page(2).per(10)
+    users = User.page(2).per(10)
 
-    result = base.meta_attributes(topics, test: 1)
+    result = base.meta_attributes(users, test: 1)
 
     expect(result[:test]).to eq(1)
     expect(result[:current_page]).to eq(2)

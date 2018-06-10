@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::UsersController, type: :controller do
   it 'fails with no header' do
     get :me
+
     expect(response.status).to eq(401)
   end
 
@@ -11,27 +12,28 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     user = create(:user)
     user.avatar.attach(fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png'))
     emotion = create(:emotion)
-    create(:reaction, emotion_id: emotion.id)
+    create(:pew, emotion_id: emotion.id)
 
     request.headers[:user] = user.id
     get :me
+
     expect(response.status).to eq(200)
   end
 
   it 'get success' do
-    user = create(:user)
-
-    request.headers[:user] = user.id
+    request.headers[:user] = create(:user).id
     get :show, params: { uuid: create(:user).uuid }
+
     expect(response.status).to eq(200)
   end
 
-  it 'get reactions' do
+  it 'get pews' do
     user = create(:user)
-    create_list(:reaction, 3, user_id: user.id)
+    create_list(:pew, 3, user_id: user.id)
 
     request.headers[:user] = user.id
-    get :reactions, params: { uuid: create(:user).uuid }
+    get :pews, params: { uuid: user.uuid }
+
     expect(response.status).to eq(200)
   end
 

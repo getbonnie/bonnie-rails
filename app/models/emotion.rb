@@ -20,8 +20,8 @@ class Emotion < ApplicationRecord
     self.status ||= :pending
   end
 
-  def reactions_count
-    Reaction.active.where(emotion_id: id).count
+  def pews_count
+    Pew.active.where(emotion_id: id).count
   end
 
   def comments_count

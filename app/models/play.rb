@@ -4,9 +4,13 @@ class Play < ApplicationRecord
   belongs_to :playable, polymorphic: true
 
   PLAYABLE_TYPES = %w[
-    Reaction
+    Pew
     Comment
   ].freeze
 
   validates :playable_type, inclusion: { in: PLAYABLE_TYPES }
+
+  def self.playable_types
+    PLAYABLE_TYPES
+  end
 end
