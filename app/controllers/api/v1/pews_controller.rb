@@ -17,10 +17,12 @@ class Api::V1::PewsController < Api::V1::BaseController
 
   def create
     pew_params = params.require(:pew).permit(
+      :hashtag,
       :emotion_id,
       :sound,
       :duration
     ).tap do |i|
+      i.require(:hashtag)
       i.require(:emotion_id)
       i.require(:duration)
       i.require(:sound) unless Rails.env.development?
@@ -48,6 +50,16 @@ class Api::V1::PewsController < Api::V1::BaseController
             root: :data,
             serializer: Api::V1::Pews::PewSerializer,
             scope: pass_scope
+  end
+
+  def delete
+    pew = Pew.active.find_by(uuid: params.fetch(:uuid), user: current_user)
+
+    api_error(status: 404, errors: 'Pew missing') and return false unless pew
+
+    pew.destroy
+
+    render json: { data: true }
   end
 
 end

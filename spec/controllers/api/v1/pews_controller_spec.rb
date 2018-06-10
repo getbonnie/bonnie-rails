@@ -2,6 +2,15 @@ require 'rails_helper'
 
 #
 RSpec.describe Api::V1::PewsController, type: :controller do
+  it 'deletes' do
+    pew = create(:pew)
+
+    request.headers[:user] = pew.user.id
+    delete :delete, params: { uuid: pew.uuid }
+
+    expect(response.status).to eq(200)
+  end
+
   it 'works' do
     create_list(:pew, 3)
 
@@ -26,6 +35,7 @@ RSpec.describe Api::V1::PewsController, type: :controller do
   it 'creates' do
     payload = {
       pew: {
+        hashtag: 'neymar',
         emotion_id: create(:emotion).id,
         duration: 100,
         sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
