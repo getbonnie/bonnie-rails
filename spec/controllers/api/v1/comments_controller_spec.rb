@@ -28,6 +28,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       comment: {
         emotion_id: create(:emotion).id,
         comment_uuid: comment.uuid,
+        duration: 100,
         sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
       }
     }
@@ -44,6 +45,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       uuid: pew.uuid,
       comment: {
         emotion_id: create(:emotion).id,
+        duration: 100,
         comment_uuid: 'Error',
         sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
       }
