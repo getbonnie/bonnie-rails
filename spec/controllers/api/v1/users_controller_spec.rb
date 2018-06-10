@@ -2,6 +2,15 @@ require 'rails_helper'
 
 #
 RSpec.describe Api::V1::UsersController, type: :controller do
+  it 'suspends account' do
+    user = create(:user)
+    request.headers[:user] = user.id
+    put :suspend
+
+    expect(response.status).to eq(200)
+    expect(user.reload.status).to eq('suspended')
+  end
+
   it 'fails with no header' do
     get :me
 

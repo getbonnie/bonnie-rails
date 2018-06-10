@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         delete '/likes/:type/:uuid', to: 'likes#delete', as: :delete_like
         get    '/me', to: 'users#me', as: :me
         put    '/me', to: 'users#update', as: :update_me
+        put    '/me/suspend', to: 'users#suspend', as: :suspend_me
         get    '/pews', to: 'pews#index', as: :pews
         post   '/pews', to: 'pews#create', as: :create_pew
         get    '/pews/:uuid', to: 'pews#show', as: :get_pew

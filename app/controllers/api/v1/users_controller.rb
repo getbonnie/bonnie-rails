@@ -43,6 +43,12 @@ class Api::V1::UsersController < Api::V1::BaseController
             scope: pass_scope
   end
 
+  def suspend
+    current_user.update(status: :suspended)
+
+    render json: { data: true }
+  end
+
   def pews
     page = params.fetch(:page, 1)
     per = params.fetch(:per, 10)
