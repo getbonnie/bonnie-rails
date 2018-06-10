@@ -52,4 +52,14 @@ class Api::V1::PewsController < Api::V1::BaseController
             scope: pass_scope
   end
 
+  def delete
+    pew = Pew.active.find_by(uuid: params.fetch(:uuid), user: current_user)
+
+    api_error(status: 404, errors: 'Pew missing') and return false unless pew
+
+    pew.destroy
+
+    render json: { data: true }
+  end
+
 end
