@@ -1,9 +1,9 @@
 #
 class Landing::BaseController < ApplicationController
   META_TAGS = {
-    'title' => 'Parliament',
+    'title' => 'Pew',
     'description' => '',
-    'keywords' => %w[parliament vc investment],
+    'keywords' => %w[pew],
     'charset' => 'utf-8',
     'viewport' => 'width=device-width, initial-scale=1',
     # 'icon' => [
@@ -22,7 +22,7 @@ class Landing::BaseController < ApplicationController
     #   { 'rel' => 'apple-touch-icon-precomposed', 'sizes' => '76x76', 'href' => '/apple-touch-icon-76x76.png' },
     #   { 'rel' => 'apple-touch-icon-precomposed', 'sizes' => '152x152', 'href' => '/apple-touch-icon-152x152.png' }
     # ],
-    # 'application-name' => 'Bonnie',
+    # 'application-name' => 'Pew',
     # 'msapplication-TileColor' => '#32e4c6',
     # 'msapplication-square70x70logo' => '/mstile-70x70.png',
     # 'msapplication-square150x150logo' => '/mstile-150x150.png',
@@ -31,7 +31,7 @@ class Landing::BaseController < ApplicationController
     # 'google-site-verification' => 'a2hy1nwgPOgPMsXIFAV7-0YERuzAqwcDSqmqj_t6lyI',
     # 'fb:app_id' => '289683661390900',
     # 'og' => {
-    #   'title' => 'Bonnie',
+    #   'title' => 'Pew',
     #   'type' => 'website',
     #   'description' => '',
     #   'url' => Rails.application.secrets.domain_url,

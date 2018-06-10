@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   unless Rails.env.test?
-    constraints(->(req) { req.host.match(/(dev\.)?bobonn\.(here|io)$/) }) do
+    constraints(->(req) { req.host.match(/(bo\.|bo-dev\.|dev\.)?(bobonn|piou)\.(here|io|cool)$/) }) do
       devise_for :admin_users, ActiveAdmin::Devise.config
       ActiveAdmin.routes(self)
     end
