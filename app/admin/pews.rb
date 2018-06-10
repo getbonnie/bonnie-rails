@@ -8,6 +8,7 @@ ActiveAdmin.register Pew do
                 :hashtag,
                 :sound
 
+  filter :hashtag_eq
   filter :status, as: :select, collection: proc { Pew.statuses }
 
   index do
