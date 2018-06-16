@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     namespace :api, path: '/' do
       namespace :v1 do
         post   '/auth', to: 'auth#check', as: :auth
+        post   '/follows/:uuid', to: 'follows#create', as: :follows
+        delete '/follows/:uuid', to: 'follows#delete', as: :delete_follows
         post   '/likes/:type/:uuid', to: 'likes#create', as: :like
         delete '/likes/:type/:uuid', to: 'likes#delete', as: :delete_like
         get    '/me', to: 'users#me', as: :me

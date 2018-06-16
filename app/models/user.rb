@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :pews, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :notification_from, class_name: 'Notification', foreign_key: :user_id_from, inverse_of: :user_target, dependent: :destroy
+  has_many :followed_by, class_name: 'Follower', foreign_key: :followed_id, inverse_of: :followed, dependent: :destroy
   has_one_attached :avatar
 
   enum status: {
