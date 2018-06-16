@@ -68,4 +68,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     expect(user.latitude).to eq(1)
     expect(user.longitude).to eq(2)
   end
+
+  it 'get followers' do
+    user = create(:user)
+    create_list(:follower, 3, followed_id: user.id)
+
+    request.headers[:user] = create(:user).id
+    get :followers, params: { uuid: user.uuid }
+
+    expect(response.status).to eq(200)
+  end
+
+  it 'get following' do
+    user = create(:user)
+    create_list(:follower, 3, user_id: user.id)
+
+    request.headers[:user] = create(:user).id
+    get :following, params: { uuid: user.uuid }
+
+    expect(response.status).to eq(200)
+  end
 end

@@ -1,6 +1,6 @@
 #
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :fetch_user, only: %i[show pews]
+  before_action :fetch_user, only: %i[show pews followers following]
 
   def show
     render  json: @user,
@@ -58,6 +58,31 @@ class Api::V1::UsersController < Api::V1::BaseController
             root: :data,
             each_serializer: Api::V1::Pews::PewSerializer,
             meta: meta_attributes(pews),
+            scope: pass_scope
+  end
+
+  def followers
+    page = params.fetch(:page, 1)
+    per = params.fetch(:per, 10)
+
+    users = @user.followed_by.order(created_at: :desc).page(page).per(per)
+
+    render  json: users,
+            root: :data,
+            each_serializer: Api::V1::Followers::FollowerSerializer,
+            meta: meta_attributes(users),
+            scope: pass_scope
+  end
+
+  def following
+    page = params.fetch(:page, 1)
+    per = params.fetch(:per, 10)
+    users = @user.following.order(created_at: :desc).page(page).per(per)
+
+    render  json: users,
+            root: :data,
+            each_serializer: Api::V1::Followers::FollowingSerializer,
+            meta: meta_attributes(users),
             scope: pass_scope
   end
 

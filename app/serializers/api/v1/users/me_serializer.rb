@@ -1,5 +1,5 @@
 #
-class Api::V1::Users::MeSerializer < Api::V1::Users::UserRootSerializer
+class Api::V1::Users::MeSerializer < Api::V1::Users::UserSerializer
   attributes  :status,
               :notify_ads,
               :notify_comments,
