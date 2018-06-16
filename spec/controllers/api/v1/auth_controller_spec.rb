@@ -6,7 +6,8 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     payload = {
       auth: {
         uid: 'wrong_uid',
-        id_token: 'id_token'
+        id_token: 'id_token',
+        phoneNumber: '+3300000'
       }
     }
     post :check, params: payload
@@ -18,7 +19,8 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     payload = {
       auth: {
         uid: 'uid',
-        id_token: 'id_token'
+        id_token: 'id_token',
+        phoneNumber: '+3300000'
       }
     }
     post :check, params: payload
@@ -26,7 +28,7 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     user = User.first
 
     expect(user.ref_firebase).to eq('uid')
-    expect(user.phone).to eq('phoneNumber')
+    expect(user.phone).to eq('+3300000')
 
     jwt = JSON.parse(response.body).dig('data', 'jwt')
 
