@@ -36,6 +36,8 @@ Rails.application.routes.draw do
         post   '/plays/:type/:uuid', to: 'plays#create', as: :play
         get    '/users/:uuid', to: 'users#show', as: :user
         get    '/users/:uuid/pews', to: 'users#pews', as: :user_pews
+        get    '/users/:uuid/followers', to: 'users#followers', as: :user_followers
+        get    '/users/:uuid/following', to: 'users#following', as: :user_following
       end
     end
   end

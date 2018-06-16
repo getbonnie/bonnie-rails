@@ -5,8 +5,8 @@ RSpec.describe Follower, type: :model do
   subject { described_class.new }
 
   it 'is valid with valid attributes' do
-    subject.user = create(:user)
-    subject.followed = create(:user)
+    subject.following = create(:user)
+    subject.follower = create(:user)
     expect(subject).to be_valid
   end
 end

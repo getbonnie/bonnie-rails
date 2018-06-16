@@ -5,7 +5,7 @@ class Api::V1::FollowsController < Api::V1::BaseController
   def create
     payload = {
       user_id: current_user.id,
-      followed: @user
+      following: @user
     }
     follows = Follower.first_or_create(payload)
 
@@ -18,7 +18,7 @@ class Api::V1::FollowsController < Api::V1::BaseController
   def delete
     payload = {
       user_id: current_user.id,
-      followed: @user
+      following: @user
     }
     follows = Follower.find_by(payload)
 
