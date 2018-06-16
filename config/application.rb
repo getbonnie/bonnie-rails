@@ -34,7 +34,8 @@ module PewApp
 
     config.time_zone = 'Paris'
 
-    origin = Rails.env.production? ? 'pew.cool' : '*'
+    origin = '*'
+    # origin = Rails.env.production? ? 'pew.cool' : '*'
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
