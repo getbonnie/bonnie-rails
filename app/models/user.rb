@@ -31,4 +31,12 @@ class User < ApplicationRecord
   def comments_count
     Comment.active.where(user_id: id).count
   end
+
+  def following_count
+    Follower.where(user_id: id).count
+  end
+
+  def followed_count
+    Follower.where(followed_id: id).count
+  end
 end
