@@ -52,19 +52,12 @@ RSpec.configure do |config|
     ).to_return(
       status: 200,
       body: {
-        isNewUser: true,
-        providerId: 'phone',
-        operationType: 'signIn',
-        user: {
-          displayName: nil,
-          email: nil,
-          emailVerified: false,
-          isAnonymous: false,
-          phoneNumber: 'phoneNumber',
-          photoURL: nil,
-          refreshToken: 'refreshToken',
-          uid: 'uid'
-        }
+        users: [
+          {
+            localId: 'uid',
+            phoneNumber: '+3300000'
+          }
+        ]
       }.to_json,
       headers: {
         'Content-Type' => 'application/json'

@@ -4,11 +4,13 @@ class Api::V1::AuthController < Api::V1::BaseController
 
   def check
     auth_params = params.require(:auth).permit(
-      :uid,
-      :id_token
+      :id_token,
+      :phoneNumber,
+      :uid
     ).tap do |i|
-      i.require(:uid)
       i.require(:id_token)
+      i.require(:phoneNumber)
+      i.require(:uid)
     end
 
     firebase = get_firebase_id(auth_params)
@@ -35,16 +37,19 @@ class Api::V1::AuthController < Api::V1::BaseController
 
     # Bypass Firebase for local usage
     firebase_data = FirebaseLib.verification(id_token)
-    firebase_id = firebase_data.fetch('user').fetch('uid')
+    firebase_data = firebase_data.fetch('users')[0]
+
+    firebase_id = firebase_data.fetch('localId')
+    phoneNumber = firebase_data.fetch('phoneNumber')
 
     # Compare Ids from JSON and from Firebase
-    return nil if auth_params.fetch(:uid) != firebase_id
+    return nil if auth_params.fetch(:uid) != firebase_id || auth_params.fetch(:phoneNumber) != phoneNumber
 
-    firebase_data.fetch('user')
+    firebase_data
   end
 
   def first_or_create_user(firebase)
-    uid = firebase.fetch('uid')
+    uid = firebase.fetch('localId')
 
     user = User.find_by(ref_firebase: uid)
 
