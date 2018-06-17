@@ -8,7 +8,7 @@ class Api::V1::HashtagsController < Api::V1::BaseController
     hashtags = Pew.active
                   .where.not(hashtag: nil)
     if keyword
-      hashtags = hashtags.where('hashtag LIKE ?', "%#{Arel.sql(keyword)}%")
+      hashtags = hashtags.where('hashtag LIKE ?', "%#{keyword}%")
     end
 
     hashtags = hashtags.group(:hashtag)
