@@ -1,6 +1,7 @@
 #
 class Api::V1::UsersController < Api::V1::BaseController
   before_action :fetch_user, only: %i[show pews followers following]
+  before_action :fetch_pagination, only: %i[pews followers following]
 
   def show
     render  json: @user,
@@ -72,9 +73,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def pews
-    page = params.fetch(:page, 1)
-    per = params.fetch(:per, 10)
-    pews = @user.pews.order(created_at: :desc).page(page).per(per)
+    pews = @user.pews.order(created_at: :desc).page(@page).per(@per)
 
     render  json: pews,
             root: :data,
@@ -84,10 +83,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def followers
-    page = params.fetch(:page, 1)
-    per = params.fetch(:per, 10)
-
-    users = @user.followed_by.order(created_at: :desc).page(page).per(per)
+    users = @user.followed_by.order(created_at: :desc).page(@page).per(@per)
 
     render  json: users,
             root: :data,
@@ -97,9 +93,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def following
-    page = params.fetch(:page, 1)
-    per = params.fetch(:per, 10)
-    users = @user.following.order(created_at: :desc).page(page).per(per)
+    users = @user.following.order(created_at: :desc).page(@page).per(@per)
 
     render  json: users,
             root: :data,
@@ -113,5 +107,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   def fetch_user
     @user = User.active.find_by(uuid: params.fetch(:uuid))
     api_error(status: 404, errors: 'User missing') and return false unless @user
+  end
+
+  def fetch_pagination
+    @page = params.fetch(:page, 1)
+    @per = params.fetch(:per, 10)
   end
 end
