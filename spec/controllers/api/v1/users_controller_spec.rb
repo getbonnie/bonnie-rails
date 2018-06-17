@@ -71,7 +71,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   it 'fails with similar name' do
     create(:user, name: 'my_name')
-    user = create(:user, name: 'my_name')
+    user = create(:user, name: 'my_other_name')
 
     payload = {
       user: {
@@ -117,12 +117,30 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   it 'activates with all errors' do
     create(:user, name: 'my_name')
 
-    user = create(:user, status: :pending, name: 'my_name', birthdate: nil)
+    user = create(:user, status: :pending, birthdate: nil)
 
     request.headers[:user] = user.id
     get :activate
 
     expect(response.status).to eq(500)
-    expect(JSON.parse(response.body)['errors'].length).to eq(3)
+    expect(JSON.parse(response.body)['errors'].length).to eq(2)
+  end
+
+  it 'name available' do
+    create(:user, name: 'my_name')
+    request.headers[:user] = create(:user).id
+    get :name_available, params: { name: 'my_other_name' }
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)).to eq(true)
+  end
+
+  it 'name non available' do
+    create(:user, name: 'my_name')
+    request.headers[:user] = create(:user).id
+    get :name_available, params: { name: 'my_name' }
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)).to eq(false)
   end
 end

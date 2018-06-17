@@ -61,6 +61,10 @@ class Api::V1::UsersController < Api::V1::BaseController
             scope: pass_scope
   end
 
+  def name_available
+    render json: !current_user.similar_name?(params.fetch(:name, nil))
+  end
+
   def suspend
     current_user.update(status: :suspended)
 

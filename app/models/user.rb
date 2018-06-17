@@ -59,6 +59,6 @@ class User < ApplicationRecord
   end
 
   def similar_name?(new_name)
-    User.where.not(id: id).find_by(name: new_name).present?
+    User.where.not(id: id).where('lower(name) = ?', new_name.downcase).present?
   end
 end

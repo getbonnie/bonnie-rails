@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         get    '/users/:uuid/pews', to: 'users#pews', as: :user_pews
         get    '/users/:uuid/followers', to: 'users#followers', as: :user_followers
         get    '/users/:uuid/following', to: 'users#following', as: :user_following
+        get    '/name_available', to: 'users#name_available', as: :name_available
       end
     end
   end
