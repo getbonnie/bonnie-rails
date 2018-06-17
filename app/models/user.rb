@@ -52,7 +52,7 @@ class User < ApplicationRecord
     errors.push('Name') if name.blank?
     errors.push('Picture') unless avatar.attachment
 
-    return errors if errors.length > 0
+    return errors if errors.length.positive?
 
     update(status: :active)
     true

@@ -7,16 +7,13 @@ class Api::V1::HashtagsController < Api::V1::BaseController
 
     hashtags = Pew.active
                   .where.not(hashtag: nil)
-    if keyword
-      hashtags = hashtags.where('hashtag LIKE ?', "%#{Arel.sql(keyword)}%")
-    end
-
+    hashtags = hashtags.where('hashtag LIKE ?', "%#{keyword}%") if keyword
     hashtags = hashtags.group(:hashtag)
                        .order(Arel.sql('COUNT(id) DESC'))
                        .page(page)
                        .per(per)
                        .count(:id)
 
-    render  json: { data: hashtags }
+    render json: { data: hashtags }
   end
 end
