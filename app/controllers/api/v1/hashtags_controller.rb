@@ -17,6 +17,6 @@ class Api::V1::HashtagsController < Api::V1::BaseController
                        .per(per)
                        .count(:id)
 
-    render  json: { data: hashtags }
+    render json: { data: hashtags }
   end
 end

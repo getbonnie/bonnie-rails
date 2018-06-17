@@ -14,8 +14,8 @@ class Api::V1::LikesController < Api::V1::BaseController
   def delete
     like = Like.find_by(@payload)
 
-    api_error(status: 500, errors: 'Like missing') and return false unless
-      like.present?
+    api_error(status: 500, errors: 'Like missing') and return false if
+      like.blank?
 
     like.destroy
 
@@ -33,7 +33,6 @@ class Api::V1::LikesController < Api::V1::BaseController
               elsif params.fetch(:type) == 'comment'
                 fetch_comment
               end
-
 
     @payload = {
       user_id: current_user.id,

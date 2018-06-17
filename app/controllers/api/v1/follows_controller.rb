@@ -14,8 +14,8 @@ class Api::V1::FollowsController < Api::V1::BaseController
   def delete
     follows = Follower.find_by(@payload)
 
-    api_error(status: 500, errors: 'Like missing') and return false unless
-      follows.present?
+    api_error(status: 500, errors: 'Like missing') and return false if
+      follows.blank?
 
     follows.destroy
 
