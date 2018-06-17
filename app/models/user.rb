@@ -25,6 +25,10 @@ class User < ApplicationRecord
     self.status ||= :pending
   end
 
+  def age
+    ((Time.zone.today - birthdate) / 365).floor if birthdate
+  end
+
   def pews_count
     Pew.active.where(user_id: id).count
   end
@@ -39,5 +43,22 @@ class User < ApplicationRecord
 
   def followed_count
     Follower.where(followed_id: id).count
+  end
+
+  def activate
+    errors = []
+    errors.push('Username') if similar_name?(name)
+    errors.push('Age') if birthdate.blank? || age < 13
+    errors.push('Name') if name.blank?
+    errors.push('Picture') unless avatar.attachment
+
+    return errors if errors.length > 0
+
+    update(status: :active)
+    true
+  end
+
+  def similar_name?(new_name)
+    User.where.not(id: id).find_by(name: new_name).present?
   end
 end
