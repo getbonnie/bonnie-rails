@@ -69,6 +69,20 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     expect(user.longitude).to eq(2)
   end
 
+  it 'fails with similar name' do
+    create(:user, name: 'my_name')
+    user = create(:user, name: 'my_other_name')
+
+    payload = {
+      user: {
+        name: 'my_name'
+      }
+    }
+    request.headers[:user] = user.id
+    put :update, params: payload
+    expect(response.status).to eq(500)
+  end
+
   it 'get followers' do
     user = create(:user)
     create_list(:follower, 3, followed_id: user.id)
@@ -87,5 +101,46 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     get :following, params: { uuid: user.uuid }
 
     expect(response.status).to eq(200)
+  end
+
+  it 'activates successfully' do
+    user = create(:user, status: :pending)
+    user.avatar = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png')
+    user.save
+
+    request.headers[:user] = user.id
+    get :activate
+
+    expect(response.status).to eq(200)
+  end
+
+  it 'activates with all errors' do
+    create(:user, name: 'my_name')
+
+    user = create(:user, status: :pending, birthdate: nil)
+
+    request.headers[:user] = user.id
+    get :activate
+
+    expect(response.status).to eq(500)
+    expect(JSON.parse(response.body)['errors'].length).to eq(2)
+  end
+
+  it 'name available' do
+    create(:user, name: 'my_name')
+    request.headers[:user] = create(:user).id
+    get :name_available, params: { name: 'my_other_name' }
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)).to eq(true)
+  end
+
+  it 'name non available' do
+    create(:user, name: 'my_name')
+    request.headers[:user] = create(:user).id
+    get :name_available, params: { name: 'my_name' }
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)).to eq(false)
   end
 end

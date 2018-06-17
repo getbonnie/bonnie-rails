@@ -4,6 +4,7 @@ FactoryBot.define do
       "name #{n}"
     end
 
+    birthdate '1976/11/11'
     status 'active'
   end
 end

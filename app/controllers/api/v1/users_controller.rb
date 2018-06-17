@@ -31,16 +31,38 @@ class Api::V1::UsersController < Api::V1::BaseController
       :notify_likes,
       :avatar
     )
-    user = User.find_by(id: current_user.id)
-    api_error(status: 404, errors: 'User missing') and return false unless user
 
-    user.update(user_params)
-    api_error(status: 500, errors: user.errors) and return false unless user.valid?
+    # Checking duplicate username
+    username = user_params.fetch(:name, nil)
+    if username
+      same_username = current_user.similar_name?(username)
+      api_error(status: 500, errors: 'Name already exists') and return false if same_username.present?
+    end
 
-    render  json: user,
+    current_user.update(user_params)
+    api_error(status: 500, errors: current_user.errors) and return false unless current_user.valid?
+
+    render  json: current_user,
             root: :data,
             serializer: Api::V1::Users::UserSerializer,
             scope: pass_scope
+  end
+
+  def activate
+    user = User.pending.find_by(id: current_user.id)
+    api_error(status: 500, errors: 'User not available') and return false unless user
+
+    activated = user.activate
+    api_error(status: 500, errors: activated) and return false unless activated == true
+
+    render  json: user,
+            root: :data,
+            serializer: Api::V1::Users::MeSerializer,
+            scope: pass_scope
+  end
+
+  def name_available
+    render json: !current_user.similar_name?(params.fetch(:name, nil))
   end
 
   def suspend

@@ -22,10 +22,12 @@ Rails.application.routes.draw do
         post   '/auth', to: 'auth#check', as: :auth
         post   '/follows/:uuid', to: 'follows#create', as: :follows
         delete '/follows/:uuid', to: 'follows#delete', as: :delete_follows
+        get    '/hashtags', to: 'hashtags#index', as: :hashtags
         post   '/likes/:type/:uuid', to: 'likes#create', as: :like
         delete '/likes/:type/:uuid', to: 'likes#delete', as: :delete_like
         get    '/me', to: 'users#me', as: :me
         put    '/me', to: 'users#update', as: :update_me
+        put    '/me/activate', to: 'users#activate', as: :activate_me
         put    '/me/suspend', to: 'users#suspend', as: :suspend_me
         get    '/pews', to: 'pews#index', as: :pews
         post   '/pews', to: 'pews#create', as: :create_pew
@@ -38,6 +40,7 @@ Rails.application.routes.draw do
         get    '/users/:uuid/pews', to: 'users#pews', as: :user_pews
         get    '/users/:uuid/followers', to: 'users#followers', as: :user_followers
         get    '/users/:uuid/following', to: 'users#following', as: :user_following
+        get    '/name_available', to: 'users#name_available', as: :name_available
       end
     end
   end
