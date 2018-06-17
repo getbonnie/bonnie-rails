@@ -5,11 +5,11 @@ class Api::V1::AuthController < Api::V1::BaseController
   def check
     auth_params = params.require(:auth).permit(
       :id_token,
-      :phoneNumber,
+      :phone_number,
       :uid
     ).tap do |i|
       i.require(:id_token)
-      i.require(:phoneNumber)
+      i.require(:phone_number)
       i.require(:uid)
     end
 
@@ -40,10 +40,10 @@ class Api::V1::AuthController < Api::V1::BaseController
     firebase_data = firebase_data.fetch('users')[0]
 
     firebase_id = firebase_data.fetch('localId')
-    phoneNumber = firebase_data.fetch('phoneNumber')
+    phone_number = firebase_data.fetch('phoneNumber')
 
     # Compare Ids from JSON and from Firebase
-    return nil if auth_params.fetch(:uid) != firebase_id || auth_params.fetch(:phoneNumber) != phoneNumber
+    return nil if auth_params.fetch(:uid) != firebase_id || auth_params.fetch(:phone_number) != phone_number
 
     firebase_data
   end

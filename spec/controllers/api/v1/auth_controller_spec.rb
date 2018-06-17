@@ -7,7 +7,7 @@ RSpec.describe Api::V1::AuthController, type: :controller do
       auth: {
         uid: 'wrong_uid',
         id_token: 'id_token',
-        phoneNumber: '+3300000'
+        phone_number: '+3300000'
       }
     }
     post :check, params: payload
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::AuthController, type: :controller do
       auth: {
         uid: 'uid',
         id_token: 'id_token',
-        phoneNumber: '+3300000'
+        phone_number: '+3300000'
       }
     }
     post :check, params: payload
