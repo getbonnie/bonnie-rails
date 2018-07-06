@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   unless Rails.env.test?
-    constraints(->(req) { req.host.match(/(bo\.|bo-dev\.|dev\.)?(bobonn|piou)\.(here|io|cool)$/) }) do
+    constraints(->(req) { req.host.match(/(bo|bo-dev)?\.piou\.(here|cool)$/) }) do
       devise_for :admin_users, ActiveAdmin::Devise.config
       ActiveAdmin.routes(self)
     end
@@ -10,13 +10,13 @@ Rails.application.routes.draw do
     get ':any', to: redirect(subdomain: nil, path: '/%{any}'), any: /.*/
   end
 
-  constraints(->(req) { req.host.match(/^(dev\.)(getbonnie|pew)\.(here|cool|com)$/) }) do
+  constraints(->(req) { req.host.match(/^(dev\.)?pew\.(here|cool)$/) }) do
     namespace :landing, path: '/' do
       get '/', to: 'welcome#root', as: :root
     end
   end
 
-  constraints(->(req) { req.host.match(/^(api|api-dev)?\.(getbonnie|pew)\.(here|cool|io)$/) }) do
+  constraints(->(req) { req.host.match(/^(api|api-dev)?\.(pew|piou)\.(here|cool)$/) }) do
     namespace :api, path: '/' do
       namespace :v1 do
         post   '/auth', to: 'auth#check', as: :auth

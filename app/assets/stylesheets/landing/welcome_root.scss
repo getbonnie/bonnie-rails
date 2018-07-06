@@ -1,0 +1,65 @@
+$gray-cod: #1b1b1b;
+$blue-picton: #3babf1;
+$yellow-gorse: #fff146;
+$white: #fff;
+
+body {
+  background-color: $blue-picton;
+  color: $white;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 50px);
+  text-align: center;
+}
+
+.content {
+}
+
+.logo {
+  display: block;
+  margin: 20px auto 0;
+  max-width: 60%;
+}
+
+.available {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 40px 0 20px;
+}
+
+.button {
+  background-color: $yellow-gorse;
+  border-radius: 28px;
+  color: $gray-cod;
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto 15px;
+  max-width: 80%;
+  opacity: .7;
+  padding: 13px;
+  text-align: center;
+  width: 290px;
+}
+
+.footer {
+  align-items: flex-end;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+}
+
+.copyright {
+  color: $white;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}

@@ -12,5 +12,5 @@ Rails.application.config.assets.precompile += %w[
   boilerplate.css
   normalize.css
 
-  landing/welcome_owl.css
+  landing/welcome_root.css
 ]
