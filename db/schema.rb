@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_11_003948) do
+ActiveRecord::Schema.define(version: 2018_06_17_064646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,36 +67,21 @@ ActiveRecord::Schema.define(version: 2018_05_11_003948) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.string "color"
-    t.integer "questions_count", default: 0, null: false
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["status"], name: "index_categories_on_status"
-  end
-
-  create_table "classifications", force: :cascade do |t|
-    t.string "name"
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["status"], name: "index_classifications_on_status"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.uuid "uuid"
-    t.bigint "reaction_id"
+    t.bigint "pew_id"
+    t.bigint "user_id"
     t.bigint "comment_id"
     t.bigint "emotion_id"
-    t.bigint "user_id"
     t.integer "status"
+    t.integer "duration"
+    t.integer "plays_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["emotion_id"], name: "index_comments_on_emotion_id"
-    t.index ["reaction_id"], name: "index_comments_on_reaction_id"
+    t.index ["pew_id", "status", "created_at"], name: "index_comments_on_pew_id_and_status_and_created_at"
+    t.index ["pew_id"], name: "index_comments_on_pew_id"
     t.index ["status"], name: "index_comments_on_status"
     t.index ["user_id"], name: "index_comments_on_user_id"
     t.index ["uuid"], name: "index_comments_on_uuid", unique: true
@@ -122,13 +107,20 @@ ActiveRecord::Schema.define(version: 2018_05_11_003948) do
     t.string "flagable_type"
     t.bigint "flagable_id"
     t.bigint "user_id"
-    t.integer "type"
+    t.integer "kind"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["flagable_type", "flagable_id"], name: "index_flags_on_flagable_type_and_flagable_id"
     t.index ["status"], name: "index_flags_on_status"
     t.index ["user_id"], name: "index_flags_on_user_id"
+  end
+
+  create_table "followers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "likes", force: :cascade do |t|
@@ -139,17 +131,40 @@ ActiveRecord::Schema.define(version: 2018_05_11_003948) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "type"
+    t.integer "kind"
+    t.string "notificationable_type"
+    t.bigint "notificationable_id"
     t.bigint "user_id"
-    t.bigint "user_id_from"
+    t.bigint "from_id"
     t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["from_id"], name: "index_notifications_on_from_id"
+    t.index ["notificationable_type", "notificationable_id"], name: "notificationable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
-    t.index ["user_id_from"], name: "index_notifications_on_user_id_from"
+  end
+
+  create_table "pews", force: :cascade do |t|
+    t.uuid "uuid"
+    t.bigint "user_id"
+    t.string "hashtag"
+    t.bigint "emotion_id"
+    t.integer "status"
+    t.integer "duration"
+    t.integer "comments_count", default: 0, null: false
+    t.integer "plays_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["emotion_id"], name: "index_pews_on_emotion_id"
+    t.index ["hashtag", "status", "created_at"], name: "index_pews_on_hashtag_and_status_and_created_at"
+    t.index ["status"], name: "index_pews_on_status"
+    t.index ["user_id"], name: "index_pews_on_user_id"
+    t.index ["uuid"], name: "index_pews_on_uuid", unique: true
   end
 
   create_table "plays", force: :cascade do |t|
@@ -159,82 +174,29 @@ ActiveRecord::Schema.define(version: 2018_05_11_003948) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["playable_type", "playable_id"], name: "index_plays_on_playable_type_and_playable_id"
-  end
-
-  create_table "questions", force: :cascade do |t|
-    t.uuid "uuid"
-    t.bigint "topic_id"
-    t.string "short"
-    t.string "long"
-    t.integer "status"
-    t.integer "reactions_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "classification_id"
-    t.index ["status"], name: "index_questions_on_status"
-    t.index ["topic_id"], name: "index_questions_on_topic_id"
-    t.index ["uuid"], name: "index_questions_on_uuid", unique: true
-  end
-
-  create_table "reactions", force: :cascade do |t|
-    t.uuid "uuid"
-    t.bigint "question_id"
-    t.bigint "user_id"
-    t.bigint "emotion_id"
-    t.integer "comments_count", default: 0, null: false
-    t.integer "plays", default: 0, null: false
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["emotion_id"], name: "index_reactions_on_emotion_id"
-    t.index ["question_id"], name: "index_reactions_on_question_id"
-    t.index ["status"], name: "index_reactions_on_status"
-    t.index ["user_id"], name: "index_reactions_on_user_id"
-    t.index ["uuid"], name: "index_reactions_on_uuid", unique: true
-  end
-
-  create_table "topics", force: :cascade do |t|
-    t.uuid "uuid"
-    t.integer "questions_count", default: 0, null: false
-    t.string "name"
-    t.string "content"
-    t.integer "status"
-    t.string "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "tag"
-    t.index ["category_id"], name: "index_topics_on_category_id"
-    t.index ["status"], name: "index_topics_on_status"
-    t.index ["uuid"], name: "index_topics_on_uuid", unique: true
+    t.index ["user_id"], name: "index_plays_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.uuid "uuid"
     t.string "name"
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date "birthdate"
+    t.string "city"
+    t.decimal "latitude", precision: 10, scale: 8
+    t.decimal "longitude", precision: 11, scale: 8
     t.string "phone"
     t.string "ref_firebase"
     t.boolean "notify_comments"
     t.boolean "notify_likes"
     t.boolean "notify_features"
     t.boolean "notify_ads"
+    t.datetime "last_connected_at"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_name_unique", unique: true
     t.index ["status"], name: "index_users_on_status"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
-  add_foreign_key "comments", "comments"
-  add_foreign_key "comments", "emotions"
-  add_foreign_key "comments", "reactions"
-  add_foreign_key "comments", "users"
-  add_foreign_key "devices", "users"
-  add_foreign_key "flags", "users"
-  add_foreign_key "notifications", "users"
-  add_foreign_key "notifications", "users", column: "user_id_from"
-  add_foreign_key "questions", "classifications"
-  add_foreign_key "questions", "topics"
-  add_foreign_key "reactions", "emotions"
-  add_foreign_key "reactions", "questions"
-  add_foreign_key "reactions", "users"
 end

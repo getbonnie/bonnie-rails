@@ -31,9 +31,9 @@ RSpec.configure do |config|
     # and `failure_message` of custom matchers include text for helper methods
     # defined using `chain`, e.g.:
     #     be_bigger_than(2).and_smaller_than(4).description
-    #     # => "be bigger than 2 and smaller than 4"
+    #     # => 'be bigger than 2 and smaller than 4'
     # ...rather than:
-    #     # => "be bigger than 2"
+    #     # => 'be bigger than 2'
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
@@ -52,20 +52,23 @@ RSpec.configure do |config|
     ).to_return(
       status: 200,
       body: {
-        isNewUser: true,
-        providerId: 'phone',
-        operationType: 'signIn',
-        user: {
-          displayName: nil,
-          email: nil,
-          emailVerified: false,
-          isAnonymous: false,
-          phoneNumber: 'phoneNumber',
-          photoURL: nil,
-          refreshToken: 'refreshToken',
-          uid: 'uid'
-        }
+        users: [
+          {
+            localId: 'uid',
+            phoneNumber: '+3300000'
+          }
+        ]
       }.to_json,
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
+
+    stub_request(
+      :post, 'https://oauth2.googleapis.com/token'
+    ).to_return(
+      status: 200,
+      body: {}.to_json,
       headers: {
         'Content-Type' => 'application/json'
       }

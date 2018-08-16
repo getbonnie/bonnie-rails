@@ -11,11 +11,12 @@ RSpec.describe Comment, type: :model do
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
     subject.emotion_id = create(:emotion).id
-    subject.reaction_id = create(:reaction).id
+    subject.duration = 100
+    subject.pew_id = create(:pew).id
     expect(subject).to be_valid
 
     subject.save!
-    expect(subject.pending?).to be true
+    expect(subject.active?).to be true
     expect(subject.uuid).to match(@uuid_regex)
   end
 end

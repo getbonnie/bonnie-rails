@@ -4,6 +4,6 @@ FactoryBot.define do
       "emotion #{n}"
     end
 
-    status 'active'
+    status { 'active' }
   end
 end

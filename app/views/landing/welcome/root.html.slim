@@ -1,8 +1,13 @@
 = content_for :stylesheet
   = stylesheet_link_tag "#{params[:controller]}_#{params[:action]}"
 
-pre
-  |  /\_/\
-    ((@v@))
-    ():::()
-     VV-VV
+.container
+  .content
+    img.logo src="/landing/pew-logo.svg"
+
+    .available Bientôt sur
+    .button iPhone
+    .button Android
+
+.footer
+  .copyright © Bonnie SAS

@@ -17,7 +17,7 @@ require 'sprockets/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Parliament
+module PewApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -34,7 +34,8 @@ module Parliament
 
     config.time_zone = 'Paris'
 
-    origin = Rails.env.production? ? 'prmlt.com' : '*'
+    origin = '*'
+    # origin = Rails.env.production? ? 'pew.cool' : '*'
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do

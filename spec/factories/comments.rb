@@ -1,9 +1,10 @@
 FactoryBot.define do
   factory :comment do
-    reaction
+    pew
     emotion
     user
 
-    status 'active'
+    duration { 100 }
+    status { 'active' }
   end
 end

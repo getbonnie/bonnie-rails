@@ -1,3 +1,10 @@
+exclude_paths:
+  - "app/admin/"
+  - "spec/"
+  - "config/"
+  - "coverage/"
+  - "db/"
+  - "vendor/"
 checks:
   argument-count:
     enabled: false
@@ -44,10 +51,3 @@ ratings:
   paths:
   - "app/**"
   - "**.rb"
-exclude_paths:
-  - "app/admin/"
-  - "spec/"
-  - "config/"
-  - "coverage/"
-  - "db/"
-  - "vendor/"

@@ -10,8 +10,11 @@ RSpec.describe Play, type: :model do
 
   it 'is valid with valid attributes' do
     subject.user_id = create(:user).id
-    subject.playable_id = create(:reaction).id
-    subject.playable_type = 'Reaction'
+    subject.playable = create(:pew)
     expect(subject).to be_valid
+  end
+
+  it 'is has types' do
+    expect(Play.playable_types.size).to be > 0
   end
 end

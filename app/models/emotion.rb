@@ -1,10 +1,10 @@
 #
 class Emotion < ApplicationRecord
   before_save :default_values
+  after_commit :upload_cache
 
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
-  has_one_attached :illustration
 
   enum status: {
     pending: 0,
@@ -19,8 +19,8 @@ class Emotion < ApplicationRecord
     self.status ||= :pending
   end
 
-  def reactions_count
-    Reaction.active.where(emotion_id: id).count
+  def pews_count
+    Pew.active.where(emotion_id: id).count
   end
 
   def comments_count

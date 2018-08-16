@@ -1,7 +1,3 @@
-@import 'components/question';
-@import 'components/question_small';
-@import 'components/topic';
-
 .row-image {
   td {
     align-items: center;
@@ -10,5 +6,19 @@
     img {
       margin-right: 10px;
     }
+  }
+}
+
+.status_tag {
+  &.pending {
+    background-color: LightSlateGrey;
+  }
+
+  &.active {
+    background-color: YellowGreen;
+  }
+
+  &.deleted {
+    background-color: OrangeRed;
   }
 }
