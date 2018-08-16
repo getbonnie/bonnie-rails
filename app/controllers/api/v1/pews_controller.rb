@@ -19,13 +19,13 @@ class Api::V1::PewsController < Api::V1::BaseController
     pew_params = params.require(:pew).permit(
       :hashtag,
       :emotion_id,
-      :sound,
+      :sound_base64,
       :duration
     ).tap do |i|
       i.require(:hashtag)
       i.require(:emotion_id)
       i.require(:duration)
-      i.require(:sound) unless Rails.env.development?
+      i.require(:sound_base64) unless Rails.env.development?
     end
 
     payload = pew_params.merge(user_id: current_user.id)
