@@ -33,12 +33,13 @@ RSpec.describe Api::V1::PewsController, type: :controller do
   end
 
   it 'creates' do
+    content = Base64.strict_encode64(open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read))
     payload = {
       pew: {
         hashtag: 'neymar',
         emotion_id: create(:emotion).id,
         duration: 100,
-        sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
+        sound_base64: "data:audio/aac;base64,#{content}"
       }
     }
     request.headers[:user] = create(:user).id
