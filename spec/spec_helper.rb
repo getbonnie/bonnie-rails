@@ -65,7 +65,7 @@ RSpec.configure do |config|
     )
 
     stub_request(
-      :post, 'https://accounts.google.com/o/oauth2/token'
+      :post, 'https://oauth2.googleapis.com/token'
     ).to_return(
       status: 200,
       body: {}.to_json,
