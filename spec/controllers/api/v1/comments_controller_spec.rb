@@ -25,6 +25,10 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     # First comment
     comment = create(:comment, pew_id: pew.id)
 
+    content = Base64.strict_encode64(
+      File.open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read)
+    )
+
     # Related comment
     payload = {
       uuid: pew.uuid,
@@ -32,7 +36,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         emotion_id: create(:emotion).id,
         comment_uuid: comment.uuid,
         duration: 100,
-        sound: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.wav'), 'audio/wav')
+        sound_base64: "data:audio/aac;base64,#{content}"
       }
     }
     request.headers[:user] = create(:user).id
