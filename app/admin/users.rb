@@ -48,6 +48,8 @@ ActiveAdmin.register User do
         status_tag 'features' if item.notify_features
         status_tag 'ads' if item.notify_ads
       end
+      row :phone
+      row :ref_firebase
       row :jwt do |item|
         JwtTokenLib.encode(uuid: item.uuid)
       end
