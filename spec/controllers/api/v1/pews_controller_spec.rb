@@ -33,7 +33,9 @@ RSpec.describe Api::V1::PewsController, type: :controller do
   end
 
   it 'creates' do
-    content = Base64.strict_encode64(open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read))
+    content = Base64.strict_encode64(
+      File.open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read)
+    )
     payload = {
       pew: {
         hashtag: 'neymar',

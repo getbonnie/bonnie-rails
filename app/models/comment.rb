@@ -1,5 +1,8 @@
 #
 class Comment < ApplicationRecord
+  attr_accessor :sound_base64
+
+  after_create :set_attachment
   before_save :default_values
   after_commit :recount
 
@@ -26,9 +29,26 @@ class Comment < ApplicationRecord
   end
 
   def recount
+    return false if pew.nil?
+
     # Update count
     pew.update(
       comments_count: Comment.active.where(pew: pew).count
     )
+  end
+
+  private
+
+  def set_attachment
+    mime = 'audio/aac'
+
+    return false unless decode_file(sound_base64, mime)
+
+    sound.attach(
+      io: File.open(filepath),
+      filename: filename,
+      content_type: mime
+    )
+    FileUtils.rm(filepath)
   end
 end
