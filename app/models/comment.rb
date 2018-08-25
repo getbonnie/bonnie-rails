@@ -29,6 +29,8 @@ class Comment < ApplicationRecord
   end
 
   def recount
+    return false if pew.nil?
+
     # Update count
     pew.update(
       comments_count: Comment.active.where(pew: pew).count
