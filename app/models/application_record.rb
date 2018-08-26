@@ -13,7 +13,8 @@ class ApplicationRecord < ActiveRecord::Base
     return false if raw_base64.nil?
 
     extension = mime.split('/')[1]
-    base64 = /^data:#{mime};base64,(.+)$/.match(raw_base64)
+
+    base64 = %r{^data:#{mime};base64,(.+)$}.match(raw_base64)
     if base64.nil? || base64.length != 2
       errors.add(:base, 'Wrong base64 format')
     end

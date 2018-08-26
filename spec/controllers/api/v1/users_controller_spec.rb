@@ -49,13 +49,17 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   it 'updates' do
     user = create(:user)
 
+    content = Base64.strict_encode64(
+      File.open(Rails.root.join('spec', 'fixtures', 'test.jpeg'), &:read)
+    )
+
     payload = {
       user: {
         name: 'changed_name',
         birthdate: '13/11/1976',
         latitude: '1',
         longitude: '2',
-        avatar: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'), 'image/png')
+        avatar_base64: "data:image/jpeg;base64,#{content}"
       }
     }
     request.headers[:user] = user.id
