@@ -1,5 +1,8 @@
 #
 class User < ApplicationRecord
+  attr_accessor :avatar_base64
+
+  after_save :set_attachment
   before_save :default_values
 
   has_many :comments, dependent: :destroy
@@ -19,6 +22,19 @@ class User < ApplicationRecord
   }.freeze
 
   validates :status, allow_nil: true, inclusion: { in: statuses }
+
+  def set_attachment
+    mime = 'image/jpeg'
+
+    return false unless decode_file(avatar_base64, mime)
+
+    avatar.attach(
+      io: File.open(filepath),
+      filename: filename,
+      content_type: mime
+    )
+    FileUtils.rm(filepath)
+  end
 
   def default_values
     self.uuid ||= SecureRandom.uuid

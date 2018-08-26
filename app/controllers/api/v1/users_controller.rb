@@ -30,7 +30,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       :notify_comments,
       :notify_features,
       :notify_likes,
-      :avatar
+      :avatar_base64
     )
 
     # Checking duplicate username
