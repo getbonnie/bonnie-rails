@@ -32,7 +32,7 @@ class GoogleCloud
     end
 
     @firestore = Google::Cloud::Firestore.new(
-      project_id: 'bonnie-app',
+      project_id: 'pew-app',
       credentials: GOOGLE_KEY_FILE
     )
   end
