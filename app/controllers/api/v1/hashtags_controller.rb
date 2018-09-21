@@ -14,6 +14,11 @@ class Api::V1::HashtagsController < Api::V1::BaseController
                        .per(per)
                        .count(:id)
 
-    render json: { data: hashtags }
+    content = []
+    hashtags.each do |tag|
+      content.push(name: tag[0], count: tag[1])
+    end
+
+    render json: { data: content }
   end
 end
