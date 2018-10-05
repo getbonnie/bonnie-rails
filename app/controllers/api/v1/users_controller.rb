@@ -73,7 +73,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def pews
-    pews = @user.pews.order(created_at: :desc).page(@page).per(@per)
+    pews = @user.pews.active.order(created_at: :desc).page(@page).per(@per)
 
     render  json: pews,
             root: :data,

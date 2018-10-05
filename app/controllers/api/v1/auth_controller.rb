@@ -37,6 +37,14 @@ class Api::V1::AuthController < Api::V1::BaseController
 
     # Bypass Firebase for local usage
     firebase_data = FirebaseLib.verification(id_token)
+    # firebase_data = {
+    #   'users' => [
+    #     {
+    #       'localId' => 'uid',
+    #       'phoneNumber' => '+3300000'
+    #     }
+    #   ]
+    # }
     firebase_data = firebase_data.fetch('users')[0]
 
     firebase_id = firebase_data.fetch('localId')
