@@ -15,7 +15,7 @@ RSpec.describe Pew, type: :model do
     expect(subject).to be_valid
 
     subject.save!
-    expect(subject.pending?).to be true
+    expect(subject.active?).to be true
     expect(subject.uuid).to match(@uuid_regex)
   end
 end

@@ -37,6 +37,6 @@ class Pew < ApplicationRecord
 
   def default_values
     self.uuid ||= SecureRandom.uuid
-    self.status ||= :pending
+    self.status ||= :active
   end
 end
