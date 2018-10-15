@@ -1,10 +1,11 @@
-#
+# !
 class Comment < ApplicationRecord
   attr_accessor :sound_base64
 
   after_create :set_attachment
   before_save :default_values
   after_commit :recount
+  after_commit :notify
 
   belongs_to :user
   belongs_to :emotion
@@ -13,6 +14,7 @@ class Comment < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, as: :likable, dependent: :destroy, inverse_of: :likable
   has_many :plays, as: :playable, dependent: :destroy, inverse_of: :playable
+  has_many :notifications, as: :notificationable, dependent: :destroy, inverse_of: :notificationable
   has_one_attached :sound
 
   enum status: {
@@ -50,5 +52,28 @@ class Comment < ApplicationRecord
       content_type: mime
     )
     FileUtils.rm(filepath)
+  end
+
+  def notify
+    current_user = user
+    current_pew = pew
+
+    if current_user.id != current_pew.user_id
+      Notification.create(
+        kind: :comment,
+        notificationable: current_pew,
+        from: current_user,
+        user_id: current_pew.user_id
+      )
+    end
+
+    return false if comment_id.blank?
+
+    Notification.create(
+      kind: :comment,
+      notificationable: self,
+      from: current_user,
+      user_id: comment.user_id
+    )
   end
 end

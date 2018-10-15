@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::PewsController < Api::V1::BaseController
   def index
     page = params.fetch(:page, 1)

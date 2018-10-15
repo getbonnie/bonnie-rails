@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::AuthController < Api::V1::BaseController
   skip_before_action :authenticate_request!, only: %i[check]
 

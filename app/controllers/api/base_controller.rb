@@ -1,11 +1,11 @@
-#
+# !
 class Api::BaseController < ActionController::API
   rescue_from ActionController::ParameterMissing, with: :render_parameter_missing
   unless Rails.application.config.consider_all_requests_local
   end
 
-  def render_parameter_missing(e)
-    render json: Api::ErrorSerializer.new(500, e).as_json, status: 500 and return false
+  def render_parameter_missing(err)
+    render json: Api::ErrorSerializer.new(500, err).as_json, status: :internal_server_error and return false
   end
 
   def meta_attributes(collection, extra_meta = {})

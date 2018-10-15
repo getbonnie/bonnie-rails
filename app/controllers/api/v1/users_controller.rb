@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::UsersController < Api::V1::BaseController
   before_action :fetch_user, only: %i[show pews followers following]
   before_action :fetch_pagination, only: %i[pews followers following]

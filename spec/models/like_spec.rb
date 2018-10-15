@@ -1,6 +1,5 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Like, type: :model do
   subject { described_class.new }
 

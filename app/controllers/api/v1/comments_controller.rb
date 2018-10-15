@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::CommentsController < Api::V1::BaseController
   before_action :fetch_pew, only: %i[index create]
   before_action :fetch_comment, only: %i[create]

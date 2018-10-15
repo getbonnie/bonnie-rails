@@ -1,6 +1,5 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Api::V1::LikesController, type: :controller do
   it 'works with pew' do
     pew = create(:pew, user_id: create(:user).id)
@@ -11,6 +10,7 @@ RSpec.describe Api::V1::LikesController, type: :controller do
     expect(response.status).to eq(200)
 
     expect(pew.reload.likes_count).to eq(1)
+    expect(Notification.where(kind: :like).count).to eq(1)
   end
 
   it 'works with commments' do
@@ -22,6 +22,7 @@ RSpec.describe Api::V1::LikesController, type: :controller do
     expect(response.status).to eq(200)
 
     expect(comment.reload.likes_count).to eq(1)
+    expect(Notification.where(kind: :like).count).to eq(1)
   end
 
   it 'destroys' do

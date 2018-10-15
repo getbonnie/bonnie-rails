@@ -1,6 +1,5 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Pew, type: :model do
   subject { described_class.new }
 
