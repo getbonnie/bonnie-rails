@@ -5,7 +5,10 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
   belongs_to :comment, serializer: Api::V1::Comments::CommentRootSerializer
 
   attributes  :kind,
-              :created_at
+              :created_at,
+              :seen,
+              :sent,
+              :clicked
 
   def pew
     if object.notificationable_type == 'Pew'
