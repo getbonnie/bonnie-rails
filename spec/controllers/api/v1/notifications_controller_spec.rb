@@ -22,4 +22,30 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
     expect(response.status).to eq(200)
     expect(JSON.parse(response.body)['data'].length).to eq(10)
   end
+
+  it 'marks as seen' do
+    user = create(:user)
+    create_list(:notification, 10, user_id: user.id)
+
+    request.headers[:user] = user.id
+    put :seen
+
+    expect(response.status).to eq(200)
+    expect(Notification.where(seen: true).count).to eq(10)
+  end
+
+  it 'marks as clicked' do
+    user = create(:user)
+
+    create_list(:notification, 2, user_id: user.id)
+    notification = Notification.where(user: user).first
+
+    request.headers[:user] = user.id
+    put :clicked, params: { id: notification.id }
+
+    expect(response.status).to eq(200)
+    clicked_notification = Notification.where(clicked: true).count
+
+    expect(clicked_notification).to eq(1)
+  end
 end

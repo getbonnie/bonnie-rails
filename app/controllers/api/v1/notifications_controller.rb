@@ -19,4 +19,16 @@ class Api::V1::NotificationsController < Api::V1::BaseController
       data: { count: unseen }
     }
   end
+
+  def seen
+    Notification.where(user: current_user, seen: false).update(seen: true)
+
+    render json: true
+  end
+
+  def clicked
+    Notification.where(id: params.fetch(:id), user: current_user).update_all(seen: true, clicked: true)
+
+    render json: true
+  end
 end
