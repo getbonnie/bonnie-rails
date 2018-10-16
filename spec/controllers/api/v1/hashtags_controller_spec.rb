@@ -1,6 +1,5 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Api::V1::HashtagsController, type: :controller do
   it 'works' do
     create_list(:pew, 10)
