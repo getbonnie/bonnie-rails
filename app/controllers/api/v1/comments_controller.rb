@@ -66,9 +66,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
                             .where(pew_id: @pew.id)
                             .find_by(uuid: comment_uuid)
 
-    if parent_comment.blank?
-      api_error(status: 500, errors: 'Prev comment missing') and return false
-    end
+    api_error(status: 500, errors: 'Prev comment missing') and return false if parent_comment.blank?
 
     @comment_id = parent_comment.id
   end
