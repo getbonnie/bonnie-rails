@@ -29,9 +29,7 @@ class Api::V1::PlaysController < Api::V1::BaseController
                 fetch_comment
               end
 
-    if @object.blank?
-      api_error(status: 500, errors: 'Object missing') and return false
-    end
+    api_error(status: 500, errors: 'Object missing') and return false if @object.blank?
   end
 
   def fetch_pew

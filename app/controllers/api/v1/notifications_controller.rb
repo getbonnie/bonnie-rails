@@ -1,11 +1,22 @@
 # !
 class Api::V1::NotificationsController < Api::V1::BaseController
   def index
-    notifications = Notification.where(user: current_user).order(id: :desc)
+    page = params.fetch(:page, 1)
+    per = params.fetch(:per, 10)
+
+    notifications = Notification.where(user: current_user).order(id: :desc).page(page).per(per)
 
     render  json: notifications,
             root: :data,
             each_serializer: Api::V1::Notifications::NotificationSerializer,
             scope: pass_scope
+  end
+
+  def count
+    unseen = Notification.where(user: current_user, seen: false).count
+
+    render  json: {
+      data: { count: unseen }
+    }
   end
 end
