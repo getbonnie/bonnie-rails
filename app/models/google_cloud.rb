@@ -1,6 +1,6 @@
 require 'singleton'
 require 'google/cloud/firestore'
-#
+# !
 class GoogleCloud
   include Singleton
   include ActiveModel::Model

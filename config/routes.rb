@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         get    '/users/:uuid/followers', to: 'users#followers', as: :user_followers
         get    '/users/:uuid/following', to: 'users#following', as: :user_following
         get    '/name_available', to: 'users#name_available', as: :name_available
+        get    '/notifications', to: 'notifications#index', as: :notifications
       end
     end
   end
