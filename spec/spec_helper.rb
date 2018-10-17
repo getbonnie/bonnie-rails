@@ -1,5 +1,5 @@
 require 'webmock/rspec'
-# require 'simplecov'
+require 'simplecov'
 SimpleCov.start
 
 # if ENV['CI'] == 'true'

@@ -32,6 +32,7 @@ group :development, :test do
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
