@@ -28,11 +28,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'codecov', require: false
   gem 'factory_bot_rails'
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
