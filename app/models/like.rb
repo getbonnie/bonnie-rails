@@ -23,7 +23,7 @@ class Like < ApplicationRecord
 
     # Update count
     likable.update(
-      likes_count: Like.where(likable: likable).count
+      likes_count: Like.unscope(where: :user_id).count
     )
   end
 
