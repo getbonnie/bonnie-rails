@@ -3,7 +3,7 @@ class Api::V1::LikesController < Api::V1::BaseController
   before_action :fetch_source, only: %i[create delete]
 
   def create
-    like = Like.first_or_create(@payload)
+    like = Like.where(@payload).first_or_create
 
     api_error(status: 500, errors: like.errors) and return false unless
       like.valid?
