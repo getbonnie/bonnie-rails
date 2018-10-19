@@ -21,9 +21,13 @@ class Like < ApplicationRecord
   def recount
     return false if likable.destroyed?
 
+    counter = Like.unscoped
+                  .where(likable_type: likable.class.name)
+                  .where(likable_id: likable.id).count
+
     # Update count
     likable.update(
-      likes_count: Like.unscope(where: :user_id).count
+      likes_count: counter
     )
   end
 

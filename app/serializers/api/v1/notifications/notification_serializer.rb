@@ -4,7 +4,8 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
   belongs_to :pew, serializer: Api::V1::Pews::PewRootSerializer
   belongs_to :comment, serializer: Api::V1::Comments::CommentRootSerializer
 
-  attributes  :kind,
+  attributes  :uuid,
+              :kind,
               :created_at,
               :seen,
               :sent,
