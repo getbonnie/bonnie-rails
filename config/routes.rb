@@ -44,7 +44,7 @@ Rails.application.routes.draw do
         get    '/notifications', to: 'notifications#index', as: :notifications
         get    '/notifications/count', to: 'notifications#count', as: :notifications_count
         put    '/notifications/seen', to: 'notifications#seen', as: :notifications_seen
-        put    '/notifications/clicked/:id', to: 'notifications#clicked', as: :notifications_clicked
+        put    '/notifications/clicked/:uuid', to: 'notifications#clicked', as: :notifications_clicked
       end
     end
   end

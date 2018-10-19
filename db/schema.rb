@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_16_120459) do
+ActiveRecord::Schema.define(version: 2018_10_19_151844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 2018_10_16_120459) do
     t.boolean "seen", default: false, null: false
     t.boolean "sent", default: false, null: false
     t.boolean "clicked", default: false, null: false
+    t.uuid "uuid"
     t.index ["from_id"], name: "index_notifications_on_from_id"
     t.index ["notificationable_type", "notificationable_id"], name: "notificationable"
     t.index ["user_id"], name: "index_notifications_on_user_id"

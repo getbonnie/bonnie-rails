@@ -27,7 +27,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   end
 
   def clicked
-    Notification.where(id: params.fetch(:id), user: current_user).update_all(seen: true, clicked: true)
+    Notification.where(uuid: params.fetch(:uuid), user: current_user).update_all(seen: true, clicked: true)
 
     render json: true
   end

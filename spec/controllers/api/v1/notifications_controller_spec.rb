@@ -41,7 +41,7 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
     notification = Notification.where(user: user).first
 
     request.headers[:user] = user.id
-    put :clicked, params: { id: notification.id }
+    put :clicked, params: { uuid: notification.uuid }
 
     expect(response.status).to eq(200)
     clicked_notification = Notification.where(clicked: true).count
