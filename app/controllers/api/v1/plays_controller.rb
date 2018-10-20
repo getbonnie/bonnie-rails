@@ -34,7 +34,6 @@ class Api::V1::PlaysController < Api::V1::BaseController
 
   def fetch_pew
     Pew.active
-       .where.not(user_id: current_user.id)
        .find_by(uuid: params.fetch(:uuid))
   end
 
