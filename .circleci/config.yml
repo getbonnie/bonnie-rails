@@ -5,7 +5,7 @@ jobs:
       CC_TEST_REPORTER_ID: d1101fcdba41b05f7eb0d4e9cc2df081bc5cdc94b6ca8e9800a28eaec88b4cec
       TEST_REPORT_PATH: "test_results"
     docker:
-      - image: circleci/ruby:2.5.3-node-browsers
+      - image: circleci/ruby:2.5.0-node-browsers
         environment:
           RAILS_ENV: test
           BUNDLE_JOBS: 3
