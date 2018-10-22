@@ -17,6 +17,10 @@ class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
     object.plays.where(user: current_user).present?
   end
 
+  attribute :commented do
+    object.comments.where(user: current_user).present?
+  end
+
   attribute :sound do
     Rails.application.routes.url_helpers.rails_blob_url(object.sound) if object.sound.attachment
   end
