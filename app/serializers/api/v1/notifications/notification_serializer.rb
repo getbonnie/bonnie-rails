@@ -9,7 +9,8 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
               :created_at,
               :seen,
               :sent,
-              :clicked
+              :clicked,
+              :phrase
 
   def pew
     if object.notificationable_type == 'Pew'
