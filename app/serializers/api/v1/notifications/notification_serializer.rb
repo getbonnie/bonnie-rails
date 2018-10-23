@@ -1,6 +1,6 @@
 # !
 class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
-  belongs_to :user, serializer: Api::V1::Users::UserSerializer
+  belongs_to :from, serializer: Api::V1::Users::UserSerializer
   belongs_to :pew, serializer: Api::V1::Pews::PewRootSerializer
   belongs_to :comment, serializer: Api::V1::Comments::CommentRootSerializer
 
