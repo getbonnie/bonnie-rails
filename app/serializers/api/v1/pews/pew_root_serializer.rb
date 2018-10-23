@@ -4,17 +4,12 @@ class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
               :emotion_id,
               :likes_count,
               :comments_count,
-              :plays_count,
               :duration,
               :hashtag,
               :created_at
 
   attribute :liked do
     object.likes.where(user: current_user).present?
-  end
-
-  attribute :played do
-    object.plays.where(user: current_user).present?
   end
 
   attribute :commented do
