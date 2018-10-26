@@ -64,4 +64,18 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
 
     expect(response.status).to eq(500)
   end
+
+  it 'deletes a comment' do
+    comment = create(:comment)
+
+    payload = {
+      uuid: comment.pew.uuid,
+      comment_uuid: comment.uuid
+    }
+    request.headers[:user] = comment.user.id
+    delete :delete, params: payload
+
+    expect(response.status).to eq(200)
+    expect(Comment.find_by(id: comment.id)).to be_nil
+  end
 end

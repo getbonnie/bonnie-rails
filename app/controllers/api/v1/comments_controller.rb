@@ -1,6 +1,6 @@
 # !
 class Api::V1::CommentsController < Api::V1::BaseController
-  before_action :fetch_pew, only: %i[index create]
+  before_action :fetch_pew, only: %i[index create delete]
   before_action :fetch_comment, only: %i[create]
 
   def index
@@ -33,6 +33,16 @@ class Api::V1::CommentsController < Api::V1::BaseController
             root: :data,
             serializer: Api::V1::Comments::CommentSerializer,
             scope: pass_scope
+  end
+
+  def delete
+    comment = @pew.comments.find_by(uuid: params.fetch(:comment_uuid), user: current_user)
+
+    api_error(status: 404, errors: 'Comment missing') and return false unless comment
+
+    comment.destroy
+
+    render json: { data: true }
   end
 
   private
