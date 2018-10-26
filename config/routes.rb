@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         delete '/pews/:uuid', to: 'pews#delete', as: :delete_pew
         get    '/pews/:uuid/comments', to: 'comments#index', as: :comments
         post   '/pews/:uuid/comments', to: 'comments#create', as: :comment
+        delete '/pews/:uuid/comments/:comment_uuid', to: 'comments#delete', as: :delete_comment
         post   '/plays/:type/:uuid', to: 'plays#create', as: :play
         get    '/users/:uuid', to: 'users#show', as: :user
         get    '/users/:uuid/pews', to: 'users#pews', as: :user_pews

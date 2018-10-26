@@ -40,8 +40,8 @@ class Api::V1::UsersController < Api::V1::BaseController
       api_error(status: 500, errors: 'Name already exists') and return false if same_username.present?
     end
 
-    current_user.update(user_params)
-    api_error(status: 500, errors: current_user.errors) and return false unless current_user.valid?
+    api_error(status: 500, errors: current_user.errors) and return false unless
+      current_user.update(user_params).present?
 
     render  json: current_user,
             root: :data,
