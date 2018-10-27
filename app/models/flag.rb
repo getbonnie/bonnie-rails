@@ -6,8 +6,9 @@ class Flag < ApplicationRecord
   belongs_to :flagable, polymorphic: true
 
   enum kind: {
-    behavior: 1,
-    spam: 1
+    rules: 1,
+    behavior: 2,
+    spam: 3
   }.freeze
 
   enum status: {

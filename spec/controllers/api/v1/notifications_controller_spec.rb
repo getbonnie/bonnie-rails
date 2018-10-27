@@ -48,4 +48,15 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
 
     expect(clicked_notification).to eq(1)
   end
+
+  it 'counts' do
+    user = create(:user)
+
+    create_list(:notification, 2, user_id: user.id)
+    request.headers[:user] = user.id
+    get :count
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)['data']['count']).to eq(2)
+  end
 end
