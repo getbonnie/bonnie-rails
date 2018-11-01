@@ -20,9 +20,7 @@ ActiveAdmin.register User do
     column :avatar do |item|
       render partial: 'active_admin/components/avatar', locals: { avatar: item.avatar, size: :s }
     end
-    column :name do |item|
-      auto_link item, item.name
-    end
+    column :name
     column :status do |item|
       status_tag item.status if item.status
     end
