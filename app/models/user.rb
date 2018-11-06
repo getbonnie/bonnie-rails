@@ -1,4 +1,4 @@
-#
+# !
 class User < ApplicationRecord
   attr_accessor :avatar_base64
 

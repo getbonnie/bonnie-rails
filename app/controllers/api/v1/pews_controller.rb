@@ -55,7 +55,7 @@ class Api::V1::PewsController < Api::V1::BaseController
 
     api_error(status: 404, errors: 'Pew missing') and return false unless pew
 
-    pew.destroy
+    pew.update(status: :deleted)
 
     render json: { data: true }
   end
