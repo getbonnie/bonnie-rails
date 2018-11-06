@@ -4,7 +4,7 @@ class Emotion < ApplicationRecord
   after_commit :upload_cache
 
   has_many :comments, dependent: :destroy
-  has_many :reactions, dependent: :destroy
+  has_many :pews, dependent: :destroy
 
   enum status: {
     pending: 0,
