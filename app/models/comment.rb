@@ -4,8 +4,8 @@ class Comment < ApplicationRecord
 
   after_create :set_attachment
   before_save :default_values
-  after_commit :recount
-  after_commit :notify
+  after_commit :recount, on: %i[create update]
+  after_commit :notify, on: %i[create update]
 
   belongs_to :user
   belongs_to :emotion
@@ -61,7 +61,7 @@ class Comment < ApplicationRecord
     if current_user.id != current_pew.user_id
       Notification.create(
         kind: :comment,
-        notificationable: current_pew,
+        notificationable: self,
         from: current_user,
         user_id: current_pew.user_id
       )

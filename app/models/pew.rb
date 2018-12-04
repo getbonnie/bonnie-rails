@@ -4,6 +4,7 @@ class Pew < ApplicationRecord
 
   after_create :set_attachment
   before_save :default_values
+  before_destroy :clean_fast
 
   belongs_to :user
   belongs_to :emotion
@@ -39,5 +40,15 @@ class Pew < ApplicationRecord
   def default_values
     self.uuid ||= SecureRandom.uuid
     self.status ||= :active
+  end
+
+  def clean_fast
+    notifications.delete_all
+    plays.delete_all
+    likes.delete_all
+    comments.each do |comment|
+      comment.plays.delete_all
+      comment.likes.delete_all
+    end
   end
 end
