@@ -14,7 +14,9 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
 
   attribute :comment_position do
     if object.notificationable_type == 'Comment'
-      object.notificationable.comments.where(' id < ? ', object.id).count
+      object.notificationable.pew.comments.where(' id <= ? ', object.notificationable.id).count
+    else
+      0
     end
   end
 
