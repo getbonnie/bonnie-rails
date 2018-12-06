@@ -12,6 +12,14 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
               :clicked,
               :phrase
 
+  attribute :comment_position do
+    if object.notificationable_type == 'Comment'
+      object.notificationable.pew.comments.where(' id <= ? ', object.notificationable.id).count
+    else
+      0
+    end
+  end
+
   def pew
     if object.notificationable_type == 'Pew'
       object.notificationable

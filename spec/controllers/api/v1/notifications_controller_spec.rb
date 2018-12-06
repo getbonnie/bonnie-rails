@@ -59,4 +59,18 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
     expect(response.status).to eq(200)
     expect(JSON.parse(response.body)['data']['count']).to eq(2)
   end
+
+  it 'counts comments before' do
+    pew = create(:pew)
+
+    create_list(:comment, 3, pew: pew)
+
+    request.headers[:user] = pew.user.id
+    get :index
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)['data'][0]['comment_position']).to eq(3)
+    expect(JSON.parse(response.body)['data'][1]['comment_position']).to eq(2)
+    expect(JSON.parse(response.body)['data'][2]['comment_position']).to eq(1)
+  end
 end

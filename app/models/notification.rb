@@ -34,15 +34,15 @@ class Notification < ApplicationRecord
   def verb
     if kind == 'comment'
       if notificationable_type == 'Pew'
-        "a commenté votre Pew dans ##{notificationable.hashtag}"
+        "commenté votre Pew dans ##{notificationable.hashtag}"
       elsif notificationable_type == 'Comment'
-        "a répondu à votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
+        "répondu à votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
       end
     elsif kind == 'like'
       if notificationable_type == 'Pew'
-        "a aimé votre Pew dans ##{notificationable.hashtag}"
+        "aimé votre Pew dans ##{notificationable.hashtag}"
       elsif notificationable_type == 'Comment'
-        "a aimé votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
+        "aimé votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
       end
     end
   end
