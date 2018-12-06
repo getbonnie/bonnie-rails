@@ -8,7 +8,6 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
               :kind,
               :created_at,
               :seen,
-              :sent,
               :clicked,
               :phrase
 
