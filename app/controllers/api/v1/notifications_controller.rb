@@ -9,6 +9,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
     render  json: notifications,
             root: :data,
             each_serializer: Api::V1::Notifications::NotificationSerializer,
+            meta: meta_attributes(notifications),
             scope: pass_scope
   end
 
