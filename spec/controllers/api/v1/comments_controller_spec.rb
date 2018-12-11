@@ -44,7 +44,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     expect(response.status).to eq(200)
 
     expect(pew.reload.comments_count).to eq(2)
-    expect(Notification.count).to eq(3)
+    expect(Notification.count).to eq(2)
   end
 
   it 'fails post with previous comment missing' do
