@@ -58,7 +58,8 @@ class Comment < ApplicationRecord
     current_user = user
     current_pew = pew
 
-    if current_user.id != current_pew.user_id
+    # No notification for the Pew owner
+    if current_user.id != current_pew.user_id && comment_id.blank?
       Notification.create(
         kind: :comment,
         notificationable: self,
