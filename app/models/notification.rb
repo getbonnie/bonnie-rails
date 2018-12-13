@@ -11,7 +11,14 @@ class Notification < ApplicationRecord
     like: 2
   }.freeze
 
+  enum mode: {
+    owner: 1,
+    reply: 2,
+    subscription: 3
+  }.freeze
+
   validates :kind, inclusion: { in: kinds }
+  validates :mode, inclusion: { in: modes }
 
   def default_values
     self.uuid ||= SecureRandom.uuid
@@ -33,16 +40,18 @@ class Notification < ApplicationRecord
 
   def verb
     if kind == 'comment'
-      if notificationable_type == 'Pew'
-        "commenté votre Pew dans ##{notificationable.hashtag}"
-      elsif notificationable_type == 'Comment'
-        "répondu à votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
+      if mode == 'owner'
+        "commenté votre Pew dans ##{notificationable.pew.hashtag}"
+      elsif mode == 'subscription'
+        "également commenté un Pew dans ##{notificationable.pew.hashtag}"
+      elsif mode == 'reply'
+        "vous a répondu dans ##{notificationable.pew.hashtag}"
       end
     elsif kind == 'like'
       if notificationable_type == 'Pew'
         "aimé votre Pew dans ##{notificationable.hashtag}"
       elsif notificationable_type == 'Comment'
-        "aimé votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
+        "aimé votre commentaire dans ##{notificationable.pew.hashtag}"
       end
     end
   end

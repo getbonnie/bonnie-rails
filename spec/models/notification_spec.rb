@@ -12,6 +12,7 @@ RSpec.describe Notification, type: :model do
     subject.user_id = create(:user).id
     subject.from_id = create(:user).id
     subject.kind = :like
+    subject.mode = :owner
     expect(subject).to be_valid
 
     subject.save!

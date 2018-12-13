@@ -1,6 +1,6 @@
 # !
 class Like < ApplicationRecord
-  after_create :notify
+  after_create :notify_users
   after_commit :recount
 
   belongs_to :user
@@ -31,7 +31,9 @@ class Like < ApplicationRecord
     )
   end
 
-  def notify
+  private
+
+  def notify_users
     current_user = user
 
     if likable_type == 'Pew'
@@ -39,7 +41,8 @@ class Like < ApplicationRecord
         kind: :like,
         notificationable: likable,
         from: current_user,
-        user_id: likable.user_id
+        user_id: likable.user_id,
+        mode: :owner
       )
     end
 
@@ -49,7 +52,8 @@ class Like < ApplicationRecord
       kind: :like,
       notificationable: likable,
       from: current_user,
-      user_id: likable.user_id
+      user_id: likable.user_id,
+      mode: :owner
     )
   end
 end

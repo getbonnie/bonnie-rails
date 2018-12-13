@@ -5,5 +5,6 @@ FactoryBot.define do
     user
 
     kind { 1 }
+    mode { :subscription }
   end
 end
