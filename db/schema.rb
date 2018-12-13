@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_145718) do
+ActiveRecord::Schema.define(version: 2018_12_12_143649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -135,6 +135,13 @@ ActiveRecord::Schema.define(version: 2018_11_06_145718) do
     t.datetime "updated_at", null: false
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "notification_subscriptions", force: :cascade do |t|
+    t.bigint "pew_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", force: :cascade do |t|

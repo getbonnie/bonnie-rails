@@ -5,6 +5,8 @@ class Comment < ApplicationRecord
   after_create :set_attachment
   before_save :default_values
   after_commit :recount, on: %i[create update]
+  after_commit :subscribe, on: %i[create]
+  after_commit :unsubscribe, on: %i[destroy]
   after_commit :notify, on: %i[create update]
 
   belongs_to :user
@@ -76,5 +78,13 @@ class Comment < ApplicationRecord
       from: current_user,
       user_id: comment.user_id
     )
+  end
+
+  def subscribe
+    NotificationSubscription.where(pew: pew, user: user).first_or_create
+  end
+
+  def unsubscribe
+    NotificationSubscription.where(pew: pew, user: user).delete_all
   end
 end

@@ -12,6 +12,7 @@ class Pew < ApplicationRecord
   has_many :likes, as: :likable, dependent: :destroy, inverse_of: :likable
   has_many :plays, as: :playable, dependent: :destroy, inverse_of: :playable
   has_many :notifications, as: :notificationable, dependent: :destroy, inverse_of: :notificationable
+  has_many :notification_subscriptions, dependent: :destroy
   has_one_attached :sound
 
   enum status: {
@@ -44,6 +45,7 @@ class Pew < ApplicationRecord
 
   def clean_fast
     notifications.delete_all
+    notification_subscriptions.delete_all
     plays.delete_all
     likes.delete_all
     comments.each do |comment|

@@ -3,7 +3,7 @@ class Api::V1::FollowsController < Api::V1::BaseController
   before_action :fetch_user, only: %i[create delete]
 
   def create
-    follows = Follower.first_or_create(@payload)
+    follows = Follower.where(@payload).first_or_create
 
     api_error(status: 500, errors: follows.errors) and return false unless
       follows.valid?
