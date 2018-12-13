@@ -19,34 +19,40 @@ Rails.application.routes.draw do
   constraints(->(req) { req.host.match(/^(api|api-dev)?\.(pew|piou)\.(here|cool)$/) }) do
     namespace :api, path: '/' do
       namespace :v1 do
-        post   '/auth', to: 'auth#check', as: :auth
-        post   '/follows/:uuid', to: 'follows#create', as: :follows
-        delete '/follows/:uuid', to: 'follows#delete', as: :delete_follows
-        get    '/hashtags', to: 'hashtags#index', as: :hashtags
-        post   '/likes/:type/:uuid', to: 'likes#create', as: :like
-        delete '/likes/:type/:uuid', to: 'likes#delete', as: :delete_like
-        get    '/me', to: 'users#me', as: :me
-        put    '/me', to: 'users#update', as: :update_me
-        put    '/me/activate', to: 'users#activate', as: :activate_me
-        put    '/me/suspend', to: 'users#suspend', as: :suspend_me
-        get    '/pews', to: 'pews#index', as: :pews
-        post   '/pews', to: 'pews#create', as: :create_pew
-        get    '/pews/:uuid', to: 'pews#show', as: :get_pew
-        delete '/pews/:uuid', to: 'pews#delete', as: :delete_pew
-        get    '/pews/:uuid/comments', to: 'comments#index', as: :comments
-        post   '/pews/:uuid/comments', to: 'comments#create', as: :comment
-        delete '/pews/:uuid/comments/:comment_uuid', to: 'comments#delete', as: :delete_comment
-        post   '/plays/:type/:uuid', to: 'plays#create', as: :play
-        get    '/users/:uuid', to: 'users#show', as: :user
-        get    '/users/:uuid/pews', to: 'users#pews', as: :user_pews
-        get    '/users/:uuid/followers', to: 'users#followers', as: :user_followers
-        get    '/users/:uuid/following', to: 'users#following', as: :user_following
-        get    '/name_available', to: 'users#name_available', as: :name_available
-        get    '/notifications', to: 'notifications#index', as: :notifications
-        get    '/notifications/count', to: 'notifications#count', as: :notifications_count
-        put    '/notifications/seen', to: 'notifications#seen', as: :notifications_seen
-        put    '/notifications/clicked/:uuid', to: 'notifications#clicked', as: :notifications_clicked
-        post   '/flags', to: 'flags#create', as: :flags
+        post   '/auth', to: 'auth#check'
+        post   '/follows/:uuid', to: 'follows#create'
+        delete '/follows/:uuid', to: 'follows#delete'
+        get    '/hashtags', to: 'hashtags#index'
+        post   '/likes/:type/:uuid', to: 'likes#create'
+        delete '/likes/:type/:uuid', to: 'likes#delete'
+        get    '/me', to: 'users#me'
+        put    '/me', to: 'users#update'
+        put    '/me/activate', to: 'users#activate'
+        put    '/me/suspend', to: 'users#suspend'
+        get    '/pews', to: 'pews#index'
+        post   '/pews', to: 'pews#create'
+        get    '/pews/:uuid', to: 'pews#show'
+        delete '/pews/:uuid', to: 'pews#delete'
+        get    '/pews/:uuid/comments', to: 'comments#index'
+        post   '/pews/:uuid/comments', to: 'comments#create'
+        delete '/pews/:uuid/comments/:comment_uuid', to: 'comments#delete'
+
+        # Subscriptions
+        delete '/subscriptions/pew/:uuid', to: 'subscriptions#unfollow_pew'
+        delete '/subscriptions/my_pew/:uuid', to: 'subscriptions#unfollow_my_pew'
+        delete '/subscriptions/my_comment/:uuid', to: 'subscriptions#unfollow_my_comment'
+
+        post   '/plays/:type/:uuid', to: 'plays#create'
+        get    '/users/:uuid', to: 'users#show'
+        get    '/users/:uuid/pews', to: 'users#pews'
+        get    '/users/:uuid/followers', to: 'users#followers'
+        get    '/users/:uuid/following', to: 'users#following'
+        get    '/name_available', to: 'users#name_available'
+        get    '/notifications', to: 'notifications#index'
+        get    '/notifications/count', to: 'notifications#count'
+        put    '/notifications/seen', to: 'notifications#seen'
+        put    '/notifications/clicked/:uuid', to: 'notifications#clicked'
+        post   '/flags', to: 'flags#create'
       end
     end
   end

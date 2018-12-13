@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_162312) do
+ActiveRecord::Schema.define(version: 2018_12_13_190434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(version: 2018_12_13_162312) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "uuid"
+    t.index ["user_id", "pew_id"], name: "index_notification_subscriptions_on_user_id_and_pew_id", unique: true
   end
 
   create_table "notifications", force: :cascade do |t|
