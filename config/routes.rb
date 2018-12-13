@@ -39,8 +39,7 @@ Rails.application.routes.draw do
 
         # Subscriptions
         delete '/subscriptions/pew/:uuid', to: 'subscriptions#unfollow_pew'
-        delete '/subscriptions/my_pew/:uuid', to: 'subscriptions#unfollow_my_pew'
-        delete '/subscriptions/my_comment/:uuid', to: 'subscriptions#unfollow_my_comment'
+        delete '/subscriptions/comment/:uuid', to: 'subscriptions#unfollow_comment'
 
         post   '/plays/:type/:uuid', to: 'plays#create'
         get    '/users/:uuid', to: 'users#show'

@@ -12,21 +12,11 @@ RSpec.describe Api::V1::SubscriptionsController, type: :controller do
     expect(NotificationSubscription.count).to eq(0)
   end
 
-  it 'deletes pew sub' do
-    pew = create(:pew)
-
-    request.headers[:user] = pew.user_id
-    delete :unfollow_my_pew, params: { uuid: pew.uuid }
-
-    expect(response.status).to eq(200)
-    expect(pew.reload.notify).to eq(false)
-  end
-
   it 'deletes comment sub' do
     comment = create(:comment)
 
     request.headers[:user] = comment.user_id
-    delete :unfollow_my_comment, params: { uuid: comment.uuid }
+    delete :unfollow_comment, params: { uuid: comment.uuid }
 
     expect(response.status).to eq(200)
     expect(comment.reload.notify).to eq(false)
