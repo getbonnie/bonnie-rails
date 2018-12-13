@@ -14,17 +14,7 @@ class Api::V1::SubscriptionsController < Api::V1::BaseController
     render json: true
   end
 
-  def unfollow_my_pew
-    subscription = Pew.find_by(user: current_user, uuid: params.fetch(:uuid))
-
-    api_error(status: 404, errors: 'Pew missing') and return false if subscription.blank?
-
-    subscription.update(notify: false)
-
-    render json: true
-  end
-
-  def unfollow_my_comment
+  def unfollow_comment
     subscription = Comment.find_by(user: current_user, uuid: params.fetch(:uuid))
 
     api_error(status: 404, errors: 'Comment missing') and return false if subscription.blank?
