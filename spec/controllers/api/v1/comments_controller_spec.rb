@@ -25,6 +25,13 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     comment = create(:comment, pew_id: pew.id)
     expect(NotificationSubscription.count).to eq(1)
 
+    # Notification for the owner
+    expect(Notification.count).to eq(1)
+    expect(Notification.last.mode).to eq('owner')
+
+    # Reset notifications
+    Notification.delete_all
+
     content = Base64.strict_encode64(
       File.open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read)
     )
@@ -47,14 +54,42 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     expect(response.status).to eq(200)
 
     expect(pew.reload.comments_count).to eq(2)
-    expect(Notification.count).to eq(2)
+
+    # Notification for the comment replied to owner
+    expect(Notification.count).to eq(1)
+    expect(Notification.last.mode).to eq('reply')
     expect(NotificationSubscription.count).to eq(2)
 
+    # Reset notifications
+    Notification.delete_all
+
     # Same user, should keep subscription to 2
+    payload = {
+      uuid: pew.uuid,
+      comment: {
+        emotion_id: create(:emotion).id,
+        duration: 100,
+        sound_base64: "data:audio/aac;base64,#{content}"
+      }
+    }
+
     request.headers[:user] = user.id
     post :create, params: payload
 
+    # Notification the owner and the first comment author
+    expect(Notification.count).to eq(2)
     expect(NotificationSubscription.count).to eq(2)
+
+    # Reset notifications
+    Notification.delete_all
+
+    # New user
+    request.headers[:user] = create(:user).id
+    post :create, params: payload
+
+    # Notification the owner and the 2 comment author
+    expect(Notification.count).to eq(3)
+    expect(NotificationSubscription.count).to eq(3)
   end
 
   it 'fails post with previous comment missing' do

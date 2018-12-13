@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_12_143649) do
+ActiveRecord::Schema.define(version: 2018_12_13_162312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_143649) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notify", default: true
     t.index ["emotion_id"], name: "index_comments_on_emotion_id"
     t.index ["pew_id", "status", "created_at"], name: "index_comments_on_pew_id_and_status_and_created_at"
     t.index ["pew_id"], name: "index_comments_on_pew_id"
@@ -156,6 +157,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_143649) do
     t.boolean "sent", default: false, null: false
     t.boolean "clicked", default: false, null: false
     t.uuid "uuid"
+    t.integer "mode"
     t.index ["from_id"], name: "index_notifications_on_from_id"
     t.index ["notificationable_type", "notificationable_id"], name: "notificationable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -173,6 +175,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_143649) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notify", default: true
     t.index ["emotion_id"], name: "index_pews_on_emotion_id"
     t.index ["hashtag", "status", "created_at"], name: "index_pews_on_hashtag_and_status_and_created_at"
     t.index ["status"], name: "index_pews_on_status"

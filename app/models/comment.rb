@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
   after_commit :recount, on: %i[create update]
   after_commit :subscribe, on: %i[create]
   after_commit :unsubscribe, on: %i[destroy]
-  after_commit :notify, on: %i[create update]
+  after_commit :notify_users, on: %i[create update]
 
   belongs_to :user
   belongs_to :emotion
@@ -56,29 +56,13 @@ class Comment < ApplicationRecord
     FileUtils.rm(filepath)
   end
 
-  def notify
-    current_user = user
-    current_pew = pew
-
-    # No notification for the Pew owner
-    if current_user.id != current_pew.user_id && comment_id.blank?
-      Notification.create(
-        kind: :comment,
-        notificationable: self,
-        from: current_user,
-        user_id: current_pew.user_id
-      )
-    end
-
-    return false if comment_id.blank?
-
-    Notification.create(
-      kind: :comment,
-      notificationable: self,
-      from: current_user,
-      user_id: comment.user_id
-    )
+  def notify_users
+    notify_pew_author
+    notify_reply
+    notify_subscriptions
   end
+
+  private
 
   def subscribe
     NotificationSubscription.where(pew: pew, user: user).first_or_create
@@ -86,5 +70,57 @@ class Comment < ApplicationRecord
 
   def unsubscribe
     NotificationSubscription.where(pew: pew, user: user).delete_all
+  end
+
+  def notify_pew_author
+    # No notification if the comment if from the Pew owner
+    # No notification if it's a reply
+    # No notification if the pew owner don't want to be notified
+    return false if user.id == pew.user_id || comment_id.present? || !pew.notify
+
+    Notification.create(
+      kind: :comment,
+      notificationable: self,
+      from: user,
+      user_id: pew.user_id,
+      mode: :owner
+    )
+  end
+
+  def notify_subscriptions
+    # Build subscriptions
+    subscriptions = NotificationSubscription.where(pew: pew)
+                                            .where.not(user_id: pew.user_id)
+                                            .where.not(user_id: user.id)
+
+    subscriptions = subscriptions.where.not(user_id: comment.user_id) if comment_id.present?
+    return false unless subscriptions.present?
+
+    payload = []
+    subscriptions.pluck(:user_id).each do |user_id|
+      payload << {
+        kind: :comment,
+        notificationable: self,
+        from: user,
+        user_id: user_id,
+        mode: :subscription
+      }
+    end
+    return false unless payload.present?
+
+    Notification.create(payload)
+  end
+
+  def notify_reply
+    # Check if comment source exist and if notify?
+    return false if comment_id.blank? || !comment.notify
+
+    Notification.create(
+      kind: :comment,
+      notificationable: self,
+      from: user,
+      user_id: comment.user_id,
+      mode: :reply
+    )
   end
 end

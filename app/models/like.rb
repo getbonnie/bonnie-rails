@@ -39,7 +39,8 @@ class Like < ApplicationRecord
         kind: :like,
         notificationable: likable,
         from: current_user,
-        user_id: likable.user_id
+        user_id: likable.user_id,
+        mode: :owner
       )
     end
 
@@ -49,7 +50,8 @@ class Like < ApplicationRecord
       kind: :like,
       notificationable: likable,
       from: current_user,
-      user_id: likable.user_id
+      user_id: likable.user_id,
+      mode: :owner
     )
   end
 end
