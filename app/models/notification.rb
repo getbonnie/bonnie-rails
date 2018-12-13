@@ -51,7 +51,7 @@ class Notification < ApplicationRecord
       if notificationable_type == 'Pew'
         "aimé votre Pew dans ##{notificationable.hashtag}"
       elsif notificationable_type == 'Comment'
-        "aimé votre commentaire d'un Pew dans ##{notificationable.pew.hashtag}"
+        "aimé votre commentaire dans ##{notificationable.pew.hashtag}"
       end
     end
   end
