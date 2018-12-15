@@ -5,11 +5,17 @@ class Api::V1::SubscriptionsController < Api::V1::BaseController
 
     api_error(status: 404, errors: 'Pew missing') and return false if pew.blank?
 
-    subscription = NotificationSubscription.where(user: current_user, pew: pew)
+    # Deactivate notify on my own Pew
+    if pew.user_id == current_user.id
+      pew.update(notify: false)
 
-    api_error(status: 404, errors: 'Subscription missing') and return false if subscription.blank?
+    # Unsubscribe notify on other pews
+    else
+      subscription = NotificationSubscription.where(user: current_user, pew: pew)
 
-    subscription.destroy_all
+      api_error(status: 404, errors: 'Subscription missing') and return false if subscription.blank?
+      subscription.destroy_all
+    end
 
     render json: true
   end
