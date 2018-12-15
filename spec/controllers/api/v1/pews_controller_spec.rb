@@ -6,6 +6,8 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     pew_id = pew.id
     user = pew.user
 
+    create(:comment, pew: pew)
+
     Like.create(likable: pew, user: user)
     expect(Notification.where(kind: :like).count).to eq(1)
 

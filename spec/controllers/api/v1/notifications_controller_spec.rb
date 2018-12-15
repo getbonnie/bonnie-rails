@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Api::V1::NotificationsController, type: :controller do
   it 'works' do
     user = create(:user)
-    create_list(:notification, 10, user_id: user.id)
+    create_list(:notification, 8, user_id: user.id)
+    create(:notification, user_id: user.id, mode: :reply)
+    create(:notification, user_id: user.id, mode: :owner, notificationable: create(:pew, user: user), kind: :like)
 
     request.headers[:user] = user.id
     get :index
