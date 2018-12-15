@@ -8,7 +8,8 @@ class Api::V1::Notifications::NotificationSerializer < Api::BaseSerializer
               :kind,
               :created_at,
               :clicked,
-              :phrase
+              :phrase,
+              :mode
 
   attribute :comment_position do
     if object.notificationable_type == 'Comment'
