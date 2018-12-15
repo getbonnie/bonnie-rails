@@ -25,33 +25,25 @@ class Notification < ApplicationRecord
   end
 
   def phrase
-    subject + verb
+    "#{from.name} #{action}"
   end
 
   private
 
-  def subject
-    if from.id == user.id
-      'Vous avez '
-    else
-      "#{from.name} a "
-    end
-  end
-
-  def verb
+  def action
     if kind == 'comment'
       if mode == 'owner'
-        "commenté votre Pew dans ##{notificationable.pew.hashtag}"
+        "a commenté votre Pew dans ##{notificationable.pew.hashtag}"
       elsif mode == 'subscription'
-        "également commenté un Pew dans ##{notificationable.pew.hashtag}"
+        "a également commenté un Pew dans ##{notificationable.pew.hashtag}"
       elsif mode == 'reply'
         "vous a répondu dans ##{notificationable.pew.hashtag}"
       end
     elsif kind == 'like'
       if notificationable_type == 'Pew'
-        "aimé votre Pew dans ##{notificationable.hashtag}"
+        "a aimé votre Pew dans ##{notificationable.hashtag}"
       elsif notificationable_type == 'Comment'
-        "aimé votre commentaire dans ##{notificationable.pew.hashtag}"
+        "a aimé votre commentaire dans ##{notificationable.pew.hashtag}"
       end
     end
   end
