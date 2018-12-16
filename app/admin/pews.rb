@@ -14,7 +14,7 @@ ActiveAdmin.register Pew do
   index do
     id_column
     column :hashtag do |item|
-      "##{item.hashtag}"
+      status_tag item.hashtag.truncate(15)
     end
     column :pew do |item|
       div do
