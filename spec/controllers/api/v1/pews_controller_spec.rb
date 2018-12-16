@@ -4,14 +4,14 @@ RSpec.describe Api::V1::PewsController, type: :controller do
   it 'deletes with notifications' do
     pew = create(:pew)
     pew_id = pew.id
-    user = pew.user
+    user = create(:user)
 
     create(:comment, pew: pew)
 
     Like.create(likable: pew, user: user)
     expect(Notification.where(kind: :like).count).to eq(1)
 
-    request.headers[:user] = user.id
+    request.headers[:user] = pew.user.id
     delete :delete, params: { uuid: pew.uuid }
 
     expect(response.status).to eq(200)

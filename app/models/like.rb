@@ -34,24 +34,30 @@ class Like < ApplicationRecord
   private
 
   def notify_users
-    current_user = user
+    notify_pew
+    notify_comment
+  end
 
-    if likable_type == 'Pew'
-      Notification.create(
-        kind: :like,
-        notificationable: likable,
-        from: current_user,
-        user_id: likable.user_id,
-        mode: :owner
-      )
-    end
 
-    return false unless likable_type == 'Comment'
+  def notify_pew
+    return false unless likable_type == 'Pew' && likable.user_id != user.id
 
     Notification.create(
       kind: :like,
       notificationable: likable,
-      from: current_user,
+      from: user,
+      user_id: likable.user_id,
+      mode: :owner
+    )
+  end
+
+  def notify_comment
+    return false unless likable_type == 'Comment' && likable.user_id != user.id
+
+    Notification.create(
+      kind: :like,
+      notificationable: likable,
+      from: user,
       user_id: likable.user_id,
       mode: :owner
     )

@@ -7,7 +7,7 @@ class Api::V1::PlaysController < Api::V1::BaseController
       user_id: current_user.id,
       playable: @object
     }
-    play = Play.create(payload)
+    play = Play.where(payload).first_or_create
 
     api_error(status: 500, errors: play.errors) and return false unless play.valid?
 
