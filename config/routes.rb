@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     namespace :api, path: '/' do
       namespace :v1 do
         post   '/auth', to: 'auth#check'
+
+        put    '/devices', to: 'devices#touch'
+
         post   '/follows/:uuid', to: 'follows#create'
         delete '/follows/:uuid', to: 'follows#delete'
         get    '/hashtags', to: 'hashtags#index'

@@ -10,6 +10,7 @@ RSpec.describe Device, type: :model do
 
   it 'is valid with valid attributes' do
     subject.reference = 'UUID'
+    subject.token = 'UUID'
     subject.user_id = create(:user).id
     expect(subject).to be_valid
   end

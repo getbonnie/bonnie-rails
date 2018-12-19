@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_190434) do
+ActiveRecord::Schema.define(version: 2018_12_19_142709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -92,9 +92,11 @@ ActiveRecord::Schema.define(version: 2018_12_13_190434) do
 
   create_table "devices", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "reference"
+    t.string "reference", limit: 40
+    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["reference"], name: "index_devices_on_reference", unique: true
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
