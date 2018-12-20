@@ -53,6 +53,16 @@ ActiveAdmin.register User do
       end
       row :uuid
     end
+
+    panel 'Devices' do
+      table_for user.devices.order(id: :desc) do
+        column :id
+        column :reference
+        column :token do |item|
+          item.token.truncate(100)
+        end
+      end
+    end
   end
 
   form do |f|
