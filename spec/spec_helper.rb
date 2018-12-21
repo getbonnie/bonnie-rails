@@ -47,6 +47,10 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+
+    #==========================================================================
+    # Firebase Auth
+    #==========================================================================
     stub_request(
       :any, %r{.*googleapis.com\/identitytoolkit\/v3\/relyingparty\/getAccountInfo.*}
     ).to_return(
@@ -64,6 +68,9 @@ RSpec.configure do |config|
       }
     )
 
+    #==========================================================================
+    # Google Auth
+    #==========================================================================
     stub_request(
       :post, 'https://oauth2.googleapis.com/token'
     ).to_return(
@@ -73,6 +80,30 @@ RSpec.configure do |config|
         'Content-Type' => 'application/json'
       }
     )
+
+    #==========================================================================
+    # Firebase Cloud Messenging
+    #==========================================================================
+    stub_request(
+      :post, 'https://fcm.googleapis.com/fcm/send'
+    ).to_return(
+      status: 200,
+      body: {
+          "multicast_id": 8561026517744054130,
+          "success": 1,
+          "failure": 1,
+          "canonical_ids": 0,
+          "results": [
+              {
+                  "error": "InvalidRegistration"
+              }
+          ]
+      }.to_json,
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
+
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will

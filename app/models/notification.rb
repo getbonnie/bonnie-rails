@@ -1,6 +1,7 @@
 # !
 class Notification < ApplicationRecord
   before_save :default_values
+  after_create :send_notifications
 
   belongs_to :user
   belongs_to :from, class_name: 'User', foreign_key: :from_id, inverse_of: :notification_from
@@ -45,6 +46,12 @@ class Notification < ApplicationRecord
       elsif notificationable_type == 'Comment'
         "a aimé votre commentaire dans ##{notificationable.pew.hashtag}"
       end
+    end
+  end
+
+  def send_notifications
+    user.devices.each do |device|
+      self.sent == true if FcmLib.success?(device.token, phrase)
     end
   end
 end
