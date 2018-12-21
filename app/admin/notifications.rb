@@ -9,7 +9,11 @@ ActiveAdmin.register Notification do
   # Re-send
   member_action :resend, method: :get do
     resource.user.devices.each do |device|
-      resource.update(sent: true) if FcmLib.success?(device.token, resource.phrase)
+      resource.update(sent: true) if FcmLib.success?(
+        device.token,
+        resource.phrase,
+        resource.user.notifications.where(seen: false).count
+      )
     end
 
     redirect_to notifications_path, notice: 'Resent !'
