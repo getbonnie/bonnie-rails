@@ -13,15 +13,15 @@ ActiveAdmin.register Pew do
 
   index do
     id_column
-    column :hashtag do |item|
-      status_tag item.hashtag.truncate(15)
-    end
     column :pew do |item|
-      div do
-        span item.emotion.name
+      div class: 'username' do
+        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :xs }
         span auto_link item, item.user.name
       end
-      div audio_tag(url_for(item.sound), controls: true) if item.sound.attached?
+      div audio_tag(url_for(item.sound), controls: true, class: :player) if item.sound.attached?
+    end
+    column :hashtag do |item|
+      status_tag item.hashtag.truncate(15)
     end
     column :likes, :likes_count
     column :plays, :plays_count
@@ -38,17 +38,22 @@ ActiveAdmin.register Pew do
   show do
     attributes_table do
       row :user
-      row :emotion
+      row :emotion do |item|
+        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :s }
+      end
       row :hashtag do |item|
-        "##{item.hashtag}"
+        status_tag "##{item.hashtag}"
       end
       if pew.sound.attached?
         row :pew do |item|
-          audio_tag(url_for(item.sound), controls: true)
+          audio_tag(url_for(item.sound), controls: true, class: :player)
         end
       end
       row :status do |item|
         status_tag item.status if item.status
+      end
+      row :duration do |item|
+        "#{(item.duration/1000).round(1)} s." if item.duration
       end
       row :likes_count
       row :comments_count
