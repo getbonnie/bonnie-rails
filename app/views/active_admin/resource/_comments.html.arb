@@ -2,11 +2,11 @@ panel 'Comments' do
   table_for data.comments do
     column :id
     column :comment do |item|
-      div do
-        span item.emotion.name
+      div class: 'username' do
+        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :xs }
         span auto_link item, item.user.name
       end
-      div audio_tag(url_for(item.sound), controls: true) if item.sound.attached?
+      div audio_tag(url_for(item.sound), controls: true, class: :player) if item.sound.attached?
     end
     column :in_reply_to do |item|
       if item.comment
