@@ -1,7 +1,13 @@
 FactoryBot.define do
-  factory :user_image do
+  factory :device do
     user
 
-    reference { 'UUID' }
+    sequence :reference do |n|
+      "reference #{n}"
+    end
+
+    sequence :token do |n|
+      "token #{n}"
+    end
   end
 end
