@@ -51,7 +51,11 @@ class Notification < ApplicationRecord
 
   def send_notifications
     user.devices.each do |device|
-      self.update(sent: true) if FcmLib.success?(device.token, phrase)
+      self.update(sent: true) if FcmLib.success?(
+        device.token,
+        phrase,
+        user.notifications.where(seen: false).count
+      )
     end
   end
 end
