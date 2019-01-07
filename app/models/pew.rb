@@ -3,6 +3,7 @@ class Pew < ApplicationRecord
   attr_accessor :sound_base64
 
   after_create :set_attachment
+  after_create_commit :send_to_topic
   before_save :default_values
   before_destroy :clean_fast
 
@@ -52,5 +53,9 @@ class Pew < ApplicationRecord
       comment.plays.delete_all
       comment.likes.delete_all
     end
+  end
+
+  def send_to_topic
+    FcmLib.send_to_topic('pews', self)
   end
 end
