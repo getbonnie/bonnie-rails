@@ -59,7 +59,7 @@ ActiveAdmin.register User do
         column :id
         column :reference
         column :token do |item|
-          item.token.truncate(100)
+          item.token
         end
       end
     end
