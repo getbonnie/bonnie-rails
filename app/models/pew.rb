@@ -61,7 +61,7 @@ class Pew < ApplicationRecord
       self,
       serializer: Api::V1::Pews::PewSerializer
     )
-    FcmLib.send_to_topic('pews', serializer)
+    FcmLib.send_to_topic('pews', serializer.to_json)
   end
 
   def send_fcm_counts
