@@ -9,11 +9,19 @@ class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
               :created_at
 
   attribute :liked do
-    object.likes.where(user: current_user).present?
+    if current_user
+      object.likes.where(user: current_user).present?
+    else
+      false
+    end
   end
 
   attribute :commented do
-    object.comments.where(user: current_user).present?
+    if current_user
+      object.comments.where(user: current_user).present?
+    else
+      false
+    end
   end
 
   attribute :sound do
@@ -21,6 +29,10 @@ class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
   end
 
   attribute :played do
-    object.plays.where(user_id: current_user.id).first.present?
+    if current_user
+      object.plays.where(user_id: current_user.id).first.present?
+    else
+      false
+    end
   end
 end
