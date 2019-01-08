@@ -58,6 +58,6 @@ class Notification < ApplicationRecord
       )
     end
 
-    FcmLib.send_to_topic("notification_#{user.uuid}", true, :notifications)
+    FcmLib.send_to_topic("notification_#{user.uuid}", { reload: true }.as_json, :notifications)
   end
 end
