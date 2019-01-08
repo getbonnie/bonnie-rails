@@ -61,6 +61,6 @@ class Notification < ApplicationRecord
   end
 
   def send_push
-    FcmLib.send_to_topic("notification_#{user.uuid.gsub!('-', '_')}", { reload: true }.as_json, :notifications)
+    FcmLib.send_to_topic("notification_#{user.uuid.gsub('-', '_')}", { reload: true }.as_json, :notifications)
   end
 end

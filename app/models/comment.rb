@@ -131,6 +131,6 @@ class Comment < ApplicationRecord
       serializer: Api::V1::Comments::CommentSerializer
     )
 
-    FcmLib.send_to_topic("pew_#{pew.uuid.gsub!('-', '_')}", serializer.as_json, :pew)
+    FcmLib.send_to_topic("pew_#{pew.uuid.gsub('-', '_')}", serializer.as_json, :pew)
   end
 end
