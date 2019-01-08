@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
 
   after_create :set_attachment
   before_save :default_values
+  after_create_commit :send_push
   after_commit :recount, on: %i[create update]
   after_commit :subscribe, on: %i[create]
   after_commit :unsubscribe, on: %i[destroy]
@@ -122,5 +123,14 @@ class Comment < ApplicationRecord
       user_id: comment.user_id,
       mode: :reply
     )
+  end
+
+  def send_push
+    serializer = ActiveModelSerializers::SerializableResource.new(
+      self,
+      serializer: Api::V1::Comments::CommentSerializer
+    )
+
+    FcmLib.send_to_topic("pew_#{pew.uuid.gsub!('-', '_')}", serializer.as_json, :pew)
   end
 end

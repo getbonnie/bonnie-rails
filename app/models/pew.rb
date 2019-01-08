@@ -3,7 +3,7 @@ class Pew < ApplicationRecord
   attr_accessor :sound_base64
 
   after_create :set_attachment
-  after_create_commit :send_fcm_pew
+  after_create_commit :send_push
   before_save :default_values
   before_destroy :clean_fast
 
@@ -55,7 +55,7 @@ class Pew < ApplicationRecord
     end
   end
 
-  def send_fcm_pew
+  def send_push
     serializer = ActiveModelSerializers::SerializableResource.new(
       self,
       serializer: Api::V1::Pews::PewSerializer
