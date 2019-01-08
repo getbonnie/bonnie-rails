@@ -4,7 +4,6 @@ class Pew < ApplicationRecord
 
   after_create :set_attachment
   after_create_commit :send_fcm_pew
-  after_update_commit :send_fcm_counts
   before_save :default_values
   before_destroy :clean_fast
 
@@ -61,18 +60,7 @@ class Pew < ApplicationRecord
       self,
       serializer: Api::V1::Pews::PewSerializer
     )
-    FcmLib.send_to_topic('pews', serializer.to_json)
-  end
 
-  def send_fcm_counts
-    FcmLib.send_to_topic(
-      "pew_#{uuid}",
-      {
-        data: {
-          likes_count: likes_count,
-          comments_count: comments_count
-        }
-      }
-    )
+    FcmLib.send_to_topic('pews', serializer.as_json, :pews)
   end
 end
