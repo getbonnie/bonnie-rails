@@ -2,6 +2,7 @@
 class Notification < ApplicationRecord
   before_save :default_values
   after_create :send_notifications
+  after_create_commit :send_push
 
   belongs_to :user
   belongs_to :from, class_name: 'User', foreign_key: :from_id, inverse_of: :notification_from
@@ -51,11 +52,15 @@ class Notification < ApplicationRecord
 
   def send_notifications
     user.devices.each do |device|
-      self.update(sent: true) if FcmLib.success?(
+      self.update(sent: true) if FcmLib.send_notification_success?(
         device.token,
         phrase,
         user.notifications.where(seen: false).count
       )
     end
+  end
+
+  def send_push
+    FcmLib.send_to_topic("notification_#{user.uuid.gsub('-', '_')}", { reload: true }.as_json, :notifications)
   end
 end

@@ -3,8 +3,7 @@ class Pew < ApplicationRecord
   attr_accessor :sound_base64
 
   after_create :set_attachment
-  after_create_commit :send_fcm_pew
-  after_update_commit :send_fcm_counts
+  after_create_commit :send_push
   before_save :default_values
   before_destroy :clean_fast
 
@@ -56,23 +55,12 @@ class Pew < ApplicationRecord
     end
   end
 
-  def send_fcm_pew
+  def send_push
     serializer = ActiveModelSerializers::SerializableResource.new(
       self,
       serializer: Api::V1::Pews::PewSerializer
     )
-    FcmLib.send_to_topic('pews', serializer.to_json)
-  end
 
-  def send_fcm_counts
-    FcmLib.send_to_topic(
-      "pew_#{uuid}",
-      {
-        data: {
-          likes_count: likes_count,
-          comments_count: comments_count
-        }
-      }
-    )
+    FcmLib.send_to_topic('pews', serializer.as_json, :pews)
   end
 end
