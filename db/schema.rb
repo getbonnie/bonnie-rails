@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_142709) do
+ActiveRecord::Schema.define(version: 2019_02_14_171956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -129,6 +129,15 @@ ActiveRecord::Schema.define(version: 2018_12_19_142709) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "hashtags", force: :cascade do |t|
+    t.bigint "pew_id"
+    t.string "tag", limit: 40
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_hashtags_on_created_at"
+    t.index ["tag"], name: "index_hashtags_on_tag"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.string "likable_type"
     t.bigint "likable_id"
@@ -170,7 +179,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_142709) do
   create_table "pews", force: :cascade do |t|
     t.uuid "uuid"
     t.bigint "user_id"
-    t.string "hashtag"
+    t.string "inline_hashtags"
     t.bigint "emotion_id"
     t.integer "status"
     t.integer "duration"
@@ -181,7 +190,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_142709) do
     t.datetime "updated_at", null: false
     t.boolean "notify", default: true
     t.index ["emotion_id"], name: "index_pews_on_emotion_id"
-    t.index ["hashtag", "status", "created_at"], name: "index_pews_on_hashtag_and_status_and_created_at"
+    t.index ["inline_hashtags", "status", "created_at"], name: "index_pews_on_inline_hashtags_and_status_and_created_at"
     t.index ["status"], name: "index_pews_on_status"
     t.index ["user_id"], name: "index_pews_on_user_id"
     t.index ["uuid"], name: "index_pews_on_uuid", unique: true
