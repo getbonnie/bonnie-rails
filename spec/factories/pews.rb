@@ -3,7 +3,7 @@ FactoryBot.define do
     emotion
     user
 
-    hashtag { 'neymar' }
+    inline_hashtags { 'neymar magueule' }
     duration { 100 }
     status { 'active' }
   end

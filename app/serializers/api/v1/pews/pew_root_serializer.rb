@@ -5,8 +5,11 @@ class Api::V1::Pews::PewRootSerializer < Api::BaseSerializer
               :likes_count,
               :comments_count,
               :duration,
-              :hashtag,
               :created_at
+
+  attribute :hashtags do
+    object.inline_hashtags
+  end
 
   attribute :liked do
     if current_user

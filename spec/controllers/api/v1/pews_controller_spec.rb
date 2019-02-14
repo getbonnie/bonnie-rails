@@ -47,7 +47,7 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     )
     payload = {
       pew: {
-        hashtag: 'neymar',
+        inline_hashtags: 'ney.mar #magueule',
         emotion_id: create(:emotion).id,
         duration: 100,
         sound_base64: "data:audio/aac;base64,#{content}"
@@ -57,6 +57,9 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     post :create, params: payload
 
     expect(response.status).to eq(200)
+    expect(Hashtag.count).to eq(2)
+    expect(Hashtag.first.tag).to eq('ney.mar')
+    expect(Hashtag.last.tag).to eq('magueule')
   end
 
   it 'gets pew with success' do
