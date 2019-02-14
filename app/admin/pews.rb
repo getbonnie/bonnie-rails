@@ -8,7 +8,7 @@ ActiveAdmin.register Pew do
                 :hashtag,
                 :sound
 
-  filter :hashtag_eq
+  filter :inline_hashtags
   filter :status, as: :select, collection: proc { Pew.statuses }
 
   index do
@@ -21,7 +21,7 @@ ActiveAdmin.register Pew do
       div audio_tag(url_for(item.sound), controls: true, class: :player) if item.sound.attached?
     end
     column :hashtag do |item|
-      status_tag item.hashtag.truncate(15)
+      status_tag item.first_hashtag.truncate(15)
     end
     column :likes, :likes_count
     column :plays, :plays_count
