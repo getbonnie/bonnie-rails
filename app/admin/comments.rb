@@ -10,7 +10,7 @@ ActiveAdmin.register Comment do
   index do
     id_column
     column :hashtag do |item|
-      "##{item.pew.hashtag}"
+      "#{item.pew.inline_hashtags}"
     end
     column :comment do |item|
       div do
@@ -35,7 +35,7 @@ ActiveAdmin.register Comment do
       row :user
       row :emotion
       row :pew do |item|
-        auto_link item.pew, "##{item.pew.hashtag} from #{item.pew.user.name}"
+        auto_link item.pew, "#{item.pew.inline_hashtags} from #{item.pew.user.name}"
       end
       row :in_reply_to do |item|
         if item.comment

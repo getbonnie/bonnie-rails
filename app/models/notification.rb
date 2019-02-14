@@ -35,17 +35,17 @@ class Notification < ApplicationRecord
   def action
     if kind == 'comment'
       if mode == 'owner'
-        "a commenté votre Pew dans ##{notificationable.pew.hashtag}"
+        "a commenté votre Pew dans ##{notificationable.pew.first_hashtag}"
       elsif mode == 'subscription'
-        "a également commenté un Pew dans ##{notificationable.pew.hashtag}"
+        "a également commenté un Pew dans ##{notificationable.pew.first_hashtag}"
       elsif mode == 'reply'
-        "vous a répondu dans ##{notificationable.pew.hashtag}"
+        "vous a répondu dans ##{notificationable.pew.first_hashtag}"
       end
     elsif kind == 'like'
       if notificationable_type == 'Pew'
-        "a aimé votre Pew dans ##{notificationable.hashtag}"
+        "a aimé votre Pew dans ##{notificationable.first_hashtag}"
       elsif notificationable_type == 'Comment'
-        "a aimé votre commentaire dans ##{notificationable.pew.hashtag}"
+        "a aimé votre commentaire dans ##{notificationable.pew.first_hashtag}"
       end
     end
   end
