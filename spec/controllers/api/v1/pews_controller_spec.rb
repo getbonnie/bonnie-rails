@@ -1,14 +1,23 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Api::V1::PewsController, type: :controller do
-  it 'deletes' do
+  it 'deletes with notifications' do
     pew = create(:pew)
+    pew_id = pew.id
+    user = create(:user)
+
+    create(:comment, pew: pew)
+
+    Like.create(likable: pew, user: user)
+    expect(Notification.where(kind: :like).count).to eq(1)
 
     request.headers[:user] = pew.user.id
     delete :delete, params: { uuid: pew.uuid }
 
     expect(response.status).to eq(200)
+
+    expect(Pew.find_by(id: pew_id)).to be_nil
+    expect(Notification.where(kind: :like).count).to eq(0)
   end
 
   it 'works' do
@@ -33,10 +42,12 @@ RSpec.describe Api::V1::PewsController, type: :controller do
   end
 
   it 'creates' do
-    content = Base64.strict_encode64(open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read))
+    content = Base64.strict_encode64(
+      File.open(Rails.root.join('spec', 'fixtures', 'test.aac'), &:read)
+    )
     payload = {
       pew: {
-        hashtag: 'neymar',
+        inline_hashtags: 'ney.mar #magueule',
         emotion_id: create(:emotion).id,
         duration: 100,
         sound_base64: "data:audio/aac;base64,#{content}"
@@ -46,6 +57,9 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     post :create, params: payload
 
     expect(response.status).to eq(200)
+    expect(Hashtag.count).to eq(2)
+    expect(Hashtag.first.tag).to eq('ney.mar')
+    expect(Hashtag.last.tag).to eq('magueule')
   end
 
   it 'gets pew with success' do

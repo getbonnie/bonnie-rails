@@ -1,0 +1,29 @@
+.component-emoji {
+  background-position: center;
+  background-size: cover;
+  color: #00ffff;
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+
+  &.size-l {
+    height: 100px;
+    width: 100px;
+  }
+
+  &.size-m {
+    height: 60px;
+    width: 60px;
+  }
+
+  &.size-s {
+    height: 30px;
+    width: 30px;
+  }
+
+  &.size-xs {
+    height: 20px;
+    width: 20px;
+  }
+}
+

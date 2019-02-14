@@ -1,6 +1,5 @@
 require 'rails_helper'
-
-#
+# !
 RSpec.describe Notification, type: :model do
   subject { described_class.new }
 
@@ -9,9 +8,11 @@ RSpec.describe Notification, type: :model do
   end
 
   it 'is valid with valid attributes' do
+    subject.notificationable = create(:pew)
     subject.user_id = create(:user).id
     subject.from_id = create(:user).id
     subject.kind = :like
+    subject.mode = :owner
     expect(subject).to be_valid
 
     subject.save!

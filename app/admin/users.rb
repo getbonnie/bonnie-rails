@@ -20,9 +20,7 @@ ActiveAdmin.register User do
     column :avatar do |item|
       render partial: 'active_admin/components/avatar', locals: { avatar: item.avatar, size: :s }
     end
-    column :name do |item|
-      auto_link item, item.name
-    end
+    column :name
     column :status do |item|
       status_tag item.status if item.status
     end
@@ -48,10 +46,22 @@ ActiveAdmin.register User do
         status_tag 'features' if item.notify_features
         status_tag 'ads' if item.notify_ads
       end
+      row :phone
+      row :ref_firebase
       row :jwt do |item|
         JwtTokenLib.encode(uuid: item.uuid)
       end
       row :uuid
+    end
+
+    panel 'Devices' do
+      table_for user.devices.order(id: :desc) do
+        column :id
+        column :reference
+        column :token do |item|
+          item.token
+        end
+      end
     end
   end
 

@@ -1,6 +1,6 @@
 require 'singleton'
 require 'google/cloud/firestore'
-#
+# !
 class GoogleCloud
   include Singleton
   include ActiveModel::Model
@@ -8,13 +8,13 @@ class GoogleCloud
   GOOGLE_KEY_FILE = '/tmp/google.json'.freeze
   GOOGLE_KEY = {
     'type': 'service_account',
-    'project_id': 'bonnie-app',
-    'client_email': 'bonnie-app@appspot.gserviceaccount.com',
-    'client_id': '117644502330643684410',
+    'project_id': 'pew-app',
+    'client_email': 'firebase-adminsdk-e006h@pew-app.iam.gserviceaccount.com',
+    'client_id': '110032369297184451678',
     'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-    'token_uri': 'https://accounts.google.com/o/oauth2/token',
+    'token_uri': 'https://oauth2.googleapis.com/token',
     'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-    'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/bonnie-app%40appspot.gserviceaccount.com'
+    'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-e006h%40pew-app.iam.gserviceaccount.com'
   }.freeze
 
   attr_accessor :firestore
@@ -32,7 +32,7 @@ class GoogleCloud
     end
 
     @firestore = Google::Cloud::Firestore.new(
-      project_id: 'bonnie-app',
+      project_id: 'pew-app',
       credentials: GOOGLE_KEY_FILE
     )
   end

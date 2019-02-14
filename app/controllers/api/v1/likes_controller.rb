@@ -1,14 +1,17 @@
-#
+# !
 class Api::V1::LikesController < Api::V1::BaseController
   before_action :fetch_source, only: %i[create delete]
 
   def create
-    like = Like.first_or_create(@payload)
+    like = Like.where(@payload).first_or_create
 
     api_error(status: 500, errors: like.errors) and return false unless
       like.valid?
 
-    render json: { data: true }
+    render  json: @object.reload,
+            root: :data,
+            serializer: @serializer,
+            scope: pass_scope
   end
 
   def delete
@@ -19,7 +22,10 @@ class Api::V1::LikesController < Api::V1::BaseController
 
     like.destroy
 
-    render json: { data: true }
+    render  json: @object.reload,
+            root: :data,
+            serializer: @serializer,
+            scope: pass_scope
   end
 
   private
@@ -28,11 +34,13 @@ class Api::V1::LikesController < Api::V1::BaseController
     api_error(status: 500, errors: 'Wrong type') and return false unless
       Like.likable_types.include? params.fetch(:type).capitalize
 
-    @object = if params.fetch(:type) == 'pew'
-                fetch_pew
-              elsif params.fetch(:type) == 'comment'
-                fetch_comment
-              end
+    if params.fetch(:type) == 'pew'
+      @object = fetch_pew
+      @serializer = Api::V1::Pews::PewCountsSerializer
+    elsif params.fetch(:type) == 'comment'
+      @object = fetch_comment
+      @serializer = Api::V1::Comments::CommentCountsSerializer
+    end
 
     @payload = {
       user_id: current_user.id,

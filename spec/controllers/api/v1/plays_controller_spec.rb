@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-#
+# !
 RSpec.describe Api::V1::PlaysController, type: :controller do
   it 'plays comment successfully' do
     comment = create(:comment)
@@ -22,6 +22,16 @@ RSpec.describe Api::V1::PlaysController, type: :controller do
     pew = create(:pew)
 
     request.headers[:user] = create(:user).id
+    post :create, params: { type: 'pew', uuid: pew.uuid }
+
+    expect(response.status).to eq(200)
+  end
+
+  it 'plays self pew successfully' do
+    user = create(:user)
+    pew = create(:pew, user_id: user.id)
+
+    request.headers[:user] = user.id
     post :create, params: { type: 'pew', uuid: pew.uuid }
 
     expect(response.status).to eq(200)

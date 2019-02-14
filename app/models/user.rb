@@ -1,12 +1,16 @@
-#
+# !
 class User < ApplicationRecord
+  attr_accessor :avatar_base64
+
+  after_save :set_attachment
   before_save :default_values
 
   has_many :comments, dependent: :destroy
   has_many :devices, dependent: :destroy
   has_many :pews, dependent: :destroy
   has_many :notifications, dependent: :destroy
-  has_many :notification_from, class_name: 'Notification', foreign_key: :user_id_from, inverse_of: :user_target, dependent: :destroy
+  has_many :notification_from, class_name: 'Notification', foreign_key: :from_id, inverse_of: :from, dependent: :destroy
+  has_many :notification_subscriptions, dependent: :destroy
   has_many :following, class_name: 'Follower', foreign_key: :user_id, inverse_of: :follower, dependent: :destroy
   has_many :followed_by, class_name: 'Follower', foreign_key: :followed_id, inverse_of: :following, dependent: :destroy
   has_one_attached :avatar
@@ -19,6 +23,19 @@ class User < ApplicationRecord
   }.freeze
 
   validates :status, allow_nil: true, inclusion: { in: statuses }
+
+  def set_attachment
+    mime = 'image/jpeg'
+
+    return false unless decode_file(avatar_base64, mime)
+
+    avatar.attach(
+      io: File.open(filepath),
+      filename: filename,
+      content_type: mime
+    )
+    FileUtils.rm(filepath)
+  end
 
   def default_values
     self.uuid ||= SecureRandom.uuid

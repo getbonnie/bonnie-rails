@@ -1,6 +1,6 @@
-#
+# !
 class Api::V1::CommentsController < Api::V1::BaseController
-  before_action :fetch_pew, only: %i[index create]
+  before_action :fetch_pew, only: %i[index create delete]
   before_action :fetch_comment, only: %i[create]
 
   def index
@@ -22,7 +22,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
       comment_id: @comment_id,
       emotion_id: @comment_params.fetch(:emotion_id),
       duration: @comment_params.fetch(:duration),
-      sound: @comment_params.fetch(:sound, nil)
+      sound_base64: @comment_params.fetch(:sound_base64, nil)
     }
     comment = Comment.create(payload)
 
@@ -33,6 +33,16 @@ class Api::V1::CommentsController < Api::V1::BaseController
             root: :data,
             serializer: Api::V1::Comments::CommentSerializer,
             scope: pass_scope
+  end
+
+  def delete
+    comment = @pew.comments.find_by(uuid: params.fetch(:comment_uuid), user: current_user)
+
+    api_error(status: 404, errors: 'Comment missing') and return false unless comment
+
+    comment.destroy
+
+    render json: { data: true }
   end
 
   private
@@ -47,12 +57,12 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   def fetch_comment
     @comment_params = params.require(:comment).permit(
-      :sound,
+      :sound_base64,
       :comment_uuid,
       :emotion_id,
       :duration
     ).tap do |i|
-      i.require(:sound) unless Rails.env.development?
+      i.require(:sound_base64) unless Rails.env.development?
       i.require(:emotion_id)
       i.require(:duration)
     end
@@ -66,9 +76,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
                             .where(pew_id: @pew.id)
                             .find_by(uuid: comment_uuid)
 
-    if parent_comment.blank?
-      api_error(status: 500, errors: 'Prev comment missing') and return false
-    end
+    api_error(status: 500, errors: 'Prev comment missing') and return false if parent_comment.blank?
 
     @comment_id = parent_comment.id
   end

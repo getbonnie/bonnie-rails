@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.4'
+ruby '2.5.0'
 
 gem 'active_model_serializers', '~> 0.10.7'
-gem 'activeadmin', '>= 1.2.1'
+gem 'activeadmin', '>= 1.4.3'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'country_select'
 gem 'devise', '~> 4.4.3'
+gem 'fcm'
 gem 'google-cloud-firestore'
 gem 'httparty'
 gem 'image_processing', '~> 1.2'
@@ -28,11 +29,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'codecov', require: false
   gem 'factory_bot_rails'
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 

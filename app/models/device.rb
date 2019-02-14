@@ -2,5 +2,5 @@
 class Device < ApplicationRecord
   belongs_to :user
 
-  validates :reference, presence: true
+  validates :reference, :token, presence: true
 end

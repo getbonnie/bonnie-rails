@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::UsersController < Api::V1::BaseController
   before_action :fetch_user, only: %i[show pews followers following]
   before_action :fetch_pagination, only: %i[pews followers following]
@@ -30,7 +30,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       :notify_comments,
       :notify_features,
       :notify_likes,
-      :avatar
+      :avatar_base64
     )
 
     # Checking duplicate username
@@ -40,8 +40,8 @@ class Api::V1::UsersController < Api::V1::BaseController
       api_error(status: 500, errors: 'Name already exists') and return false if same_username.present?
     end
 
-    current_user.update(user_params)
-    api_error(status: 500, errors: current_user.errors) and return false unless current_user.valid?
+    api_error(status: 500, errors: current_user.errors) and return false unless
+      current_user.update(user_params).present?
 
     render  json: current_user,
             root: :data,
@@ -73,7 +73,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def pews
-    pews = @user.pews.order(created_at: :desc).page(@page).per(@per)
+    pews = @user.pews.active.order(created_at: :desc).page(@page).per(@per)
 
     render  json: pews,
             root: :data,

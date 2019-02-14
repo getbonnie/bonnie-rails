@@ -10,9 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_17_064646) do
+ActiveRecord::Schema.define(version: 2019_02_14_171956) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gist"
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notify", default: true
     t.index ["emotion_id"], name: "index_comments_on_emotion_id"
     t.index ["pew_id", "status", "created_at"], name: "index_comments_on_pew_id_and_status_and_created_at"
     t.index ["pew_id"], name: "index_comments_on_pew_id"
@@ -89,9 +92,11 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
 
   create_table "devices", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "reference"
+    t.string "reference", limit: 40
+    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["reference"], name: "index_devices_on_reference", unique: true
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
@@ -100,6 +105,7 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "url"
     t.index ["status"], name: "index_emotions_on_status"
   end
 
@@ -123,6 +129,15 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "hashtags", force: :cascade do |t|
+    t.bigint "pew_id"
+    t.string "tag", limit: 40
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_hashtags_on_created_at"
+    t.index ["tag"], name: "index_hashtags_on_tag"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.string "likable_type"
     t.bigint "likable_id"
@@ -134,15 +149,28 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "notification_subscriptions", force: :cascade do |t|
+    t.bigint "pew_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "uuid"
+    t.index ["user_id", "pew_id"], name: "index_notification_subscriptions_on_user_id_and_pew_id", unique: true
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer "kind"
     t.string "notificationable_type"
     t.bigint "notificationable_id"
     t.bigint "user_id"
     t.bigint "from_id"
-    t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "seen", default: false, null: false
+    t.boolean "sent", default: false, null: false
+    t.boolean "clicked", default: false, null: false
+    t.uuid "uuid"
+    t.integer "mode"
     t.index ["from_id"], name: "index_notifications_on_from_id"
     t.index ["notificationable_type", "notificationable_id"], name: "notificationable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -151,7 +179,7 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
   create_table "pews", force: :cascade do |t|
     t.uuid "uuid"
     t.bigint "user_id"
-    t.string "hashtag"
+    t.string "inline_hashtags"
     t.bigint "emotion_id"
     t.integer "status"
     t.integer "duration"
@@ -160,8 +188,9 @@ ActiveRecord::Schema.define(version: 2018_06_17_064646) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notify", default: true
     t.index ["emotion_id"], name: "index_pews_on_emotion_id"
-    t.index ["hashtag", "status", "created_at"], name: "index_pews_on_hashtag_and_status_and_created_at"
+    t.index ["inline_hashtags", "status", "created_at"], name: "index_pews_on_inline_hashtags_and_status_and_created_at"
     t.index ["status"], name: "index_pews_on_status"
     t.index ["user_id"], name: "index_pews_on_user_id"
     t.index ["uuid"], name: "index_pews_on_uuid", unique: true

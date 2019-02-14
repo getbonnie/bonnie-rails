@@ -1,4 +1,4 @@
-#
+# !
 class Api::V1::PlaysController < Api::V1::BaseController
   before_action :fetch_source, only: %i[create]
 
@@ -7,7 +7,7 @@ class Api::V1::PlaysController < Api::V1::BaseController
       user_id: current_user.id,
       playable: @object
     }
-    play = Play.create(payload)
+    play = Play.where(payload).first_or_create
 
     api_error(status: 500, errors: play.errors) and return false unless play.valid?
 
@@ -29,14 +29,11 @@ class Api::V1::PlaysController < Api::V1::BaseController
                 fetch_comment
               end
 
-    if @object.blank?
-      api_error(status: 500, errors: 'Object missing') and return false
-    end
+    api_error(status: 500, errors: 'Object missing') and return false if @object.blank?
   end
 
   def fetch_pew
     Pew.active
-       .where.not(user_id: current_user.id)
        .find_by(uuid: params.fetch(:uuid))
   end
 
