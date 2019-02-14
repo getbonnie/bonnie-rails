@@ -27,7 +27,7 @@ class Pew < ApplicationRecord
   validates :status, allow_nil: true, inclusion: { in: statuses }
   validates :inline_hashtags, presence: true
 
-  def hashtag
+  def first_hashtag
     return if inline_hashtags.empty?
 
     (inline_hashtags.split)[0]
