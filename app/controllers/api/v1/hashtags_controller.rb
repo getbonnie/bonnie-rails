@@ -6,10 +6,11 @@ class Api::V1::HashtagsController < Api::V1::BaseController
     keyword = params.fetch(:keyword, nil)
 
     hashtags = Hashtag.select(:tag)
-    hashtags = hashtags.where('tag LIKE ?', "%#{keyword}%") if keyword
+    hashtags = hashtags.where('lower_tag LIKE ?', "%#{keyword.downcase}%") if keyword
     hashtags = hashtags.page(page)
                        .per(per)
                        .group(:tag)
+                       .order('COUNT(tag) DESC')
                        .count
 
     content = []

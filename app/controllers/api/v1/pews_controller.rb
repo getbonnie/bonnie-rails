@@ -6,7 +6,7 @@ class Api::V1::PewsController < Api::V1::BaseController
     hashtag = params.fetch(:hashtag, nil)
 
     pews = Pew.active.order(id: :desc).page(page).per(per)
-    pews = pews.joins(:hashtags).where('hashtags.tag = ?', hashtag) if hashtag
+    pews = pews.joins(:hashtags).where('hashtags.lower_tag = ?', hashtag.downcase) if hashtag
 
     render  json: pews,
             root: :data,

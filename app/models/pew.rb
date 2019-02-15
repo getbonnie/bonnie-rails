@@ -54,7 +54,7 @@ class Pew < ApplicationRecord
     Hashtag.where(pew: self).delete_all
 
     array_hashtags.each do |hashtag|
-      Hashtag.create(pew: self, tag: hashtag)
+      Hashtag.create(pew: self, tag: hashtag, lower_tag: hashtag.downcase)
     end
   end
 
