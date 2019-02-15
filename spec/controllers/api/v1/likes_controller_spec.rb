@@ -8,6 +8,8 @@ RSpec.describe Api::V1::LikesController, type: :controller do
     user1 = create(:user)
     create_like(pew1, user1, 1, 1)
 
+    expect(Notification.last.user_id).to eq(pew1.user_id)
+
     user2 = create(:user)
     create_like(pew1, user2, 2, 2)
 
@@ -23,6 +25,8 @@ RSpec.describe Api::V1::LikesController, type: :controller do
   it 'works with commments' do
     comment = create(:comment, user_id: create(:user).id)
 
+    expect(Notification.where(kind: :like).count).to eq(0)
+
     request.headers[:user] = create(:user).id
     post :create, params: { type: 'comment', uuid: comment.uuid }
 
@@ -30,6 +34,7 @@ RSpec.describe Api::V1::LikesController, type: :controller do
 
     expect(comment.reload.likes_count).to eq(1)
     expect(Notification.where(kind: :like).count).to eq(1)
+    expect(Notification.where(kind: :like).last.user_id).to eq(comment.user_id)
   end
 
   it 'destroys' do
