@@ -8,7 +8,7 @@ class Comment < ApplicationRecord
   after_commit :recount, on: %i[create update destroy]
   after_commit :subscribe, on: %i[create]
   after_commit :unsubscribe, on: %i[destroy]
-  after_commit :notify_users, on: %i[create update]
+  after_commit :notify_users, on: %i[create]
 
   belongs_to :user
   belongs_to :emotion
