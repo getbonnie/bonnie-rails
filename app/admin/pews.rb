@@ -5,7 +5,7 @@ ActiveAdmin.register Pew do
   permit_params :user_id,
                 :emotion_id,
                 :status,
-                :hashtag,
+                :inline_hashtags,
                 :sound
 
   filter :inline_hashtags
@@ -21,7 +21,11 @@ ActiveAdmin.register Pew do
       div audio_tag(url_for(item.sound), controls: true, class: :player) if item.sound.attached?
     end
     column :hashtag do |item|
-      status_tag item.first_hashtag.truncate(15)
+      div do
+        item.inline_hashtags.split.each do |hashtag|
+          div status_tag "##{hashtag}"
+        end
+      end
     end
     column :likes, :likes_count
     column :plays, :plays_count
@@ -41,8 +45,12 @@ ActiveAdmin.register Pew do
       row :emotion do |item|
         render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :s }
       end
-      row :hashtag do |item|
-        status_tag "##{item.hashtag}"
+      row :hashtags do |item|
+        div do
+          item.hashtags.each do |hashtag|
+            span status_tag "##{hashtag.tag}"
+          end
+        end
       end
       if pew.sound.attached?
         row :pew do |item|
@@ -68,7 +76,7 @@ ActiveAdmin.register Pew do
     f.inputs do
       f.input :sound, as: :file
       f.input :user_id, as: :select, collection: User.all.map { |i| [i.name, i.id] }, include_blank: false
-      f.input :hashtag
+      f.input :inline_hashtags
       f.input :emotion_id, as: :select, collection: Emotion.all.map { |i| [i.name, i.id] }, include_blank: false
       f.input :status, as: :select, collection: Pew.statuses.keys, include_blank: false
     end
