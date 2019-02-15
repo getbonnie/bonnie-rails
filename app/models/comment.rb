@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
   after_create :set_attachment
   before_save :default_values
   after_create_commit :send_push
-  after_commit :recount, on: %i[create update]
+  after_commit :recount, on: %i[create update destroy]
   after_commit :subscribe, on: %i[create]
   after_commit :unsubscribe, on: %i[destroy]
   after_commit :notify_users, on: %i[create update]
@@ -37,7 +37,7 @@ class Comment < ApplicationRecord
     return false if pew.nil?
 
     # Update count
-    pew.update(
+    Pew.where(id: pew.id).update(
       comments_count: Comment.active.where(pew: pew).count
     )
   end
