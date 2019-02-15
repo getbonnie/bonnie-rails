@@ -10,7 +10,7 @@ class Api::V1::HashtagsController < Api::V1::BaseController
     hashtags = hashtags.page(page)
                        .per(per)
                        .group(:tag)
-                       .order('COUNT(tag) DESC')
+                       .order(Arel.sql('COUNT(tag) DESC'))
                        .count
 
     content = []

@@ -112,6 +112,9 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
 
   it 'deletes a comment' do
     comment = create(:comment)
+    pew = comment.pew
+
+    expect(pew.reload.comments_count).to eq(1)
 
     payload = {
       uuid: comment.pew.uuid,
@@ -122,6 +125,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
 
     expect(response.status).to eq(200)
     expect(Comment.find_by(id: comment.id)).to be_nil
+    expect(pew.reload.comments_count).to eq(0)
     expect(NotificationSubscription.count).to eq(0)
   end
 end
