@@ -42,24 +42,28 @@ class Like < ApplicationRecord
   def notify_pew
     return false unless likable_type == 'Pew' && likable.user_id != user.id
 
-    Notification.create(
+    payload = {
       kind: :like,
       notificationable: likable,
       from: user,
       user_id: likable.user_id,
       mode: :owner
-    )
+    }
+
+    Notification.where(payload).first_or_create
   end
 
   def notify_comment
     return false unless likable_type == 'Comment' && likable.user_id != user.id
 
-    Notification.create(
+    payload = {
       kind: :like,
       notificationable: likable,
       from: user,
       user_id: likable.user_id,
       mode: :owner
-    )
+    }
+
+    Notification.create(payload).first_or_create
   end
 end
