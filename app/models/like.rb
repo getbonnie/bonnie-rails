@@ -64,6 +64,6 @@ class Like < ApplicationRecord
       mode: :owner
     }
 
-    Notification.create(payload).first_or_create
+    Notification.where(payload).first_or_create
   end
 end
