@@ -59,4 +59,25 @@ class Api::V1::PewsController < Api::V1::BaseController
 
     render json: { data: true }
   end
+
+  def update
+    pew_params = params.require(:pew).permit(
+      :inline_hashtags,
+      :emotion_id
+    ).tap do |i|
+      i.require(:inline_hashtags)
+      i.require(:emotion_id)
+    end
+
+    pew = Pew.active.find_by(uuid: params.fetch(:uuid), user: current_user)
+
+    api_error(status: 404, errors: 'Pew missing') and return false unless pew
+
+    pew.update(pew_params)
+
+    render  json: pew.reload,
+            root: :data,
+            serializer: Api::V1::Pews::PewSerializer,
+            scope: pass_scope
+  end
 end

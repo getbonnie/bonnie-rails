@@ -71,6 +71,25 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     expect(response.status).to eq(200)
   end
 
+  it 'edit pew with success' do
+    pew = create(:pew)
+    emotion = create(:emotion)
+
+    payload = {
+      pew: {
+        inline_hashtags: 'wesh ma gueule',
+        emotion_id: emotion.id
+      }
+    }
+
+    request.headers[:user] = pew.user.id
+    get :update, params: { uuid: pew.uuid }.merge(payload)
+
+    expect(response.status).to eq(200)
+    expect(pew.reload.inline_hashtags).to eq('wesh ma gueule')
+    expect(pew.reload.emotion_id).to eq(emotion.id)
+  end
+
   it 'fails getting pew' do
     request.headers[:user] = create(:user).id
     get :show, params: { uuid: 'MISSING' }
