@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         post   '/pews', to: 'pews#create'
         get    '/pews/:uuid', to: 'pews#show'
         delete '/pews/:uuid', to: 'pews#delete'
+        put    '/pews/:uuid', to: 'pews#update'
         get    '/pews/:uuid/comments', to: 'comments#index'
         post   '/pews/:uuid/comments', to: 'comments#create'
         delete '/pews/:uuid/comments/:comment_uuid', to: 'comments#delete'
