@@ -64,10 +64,7 @@ class Api::V1::PewsController < Api::V1::BaseController
     pew_params = params.require(:pew).permit(
       :inline_hashtags,
       :emotion_id
-    ).tap do |i|
-      i.require(:inline_hashtags)
-      i.require(:emotion_id)
-    end
+    )
 
     pew = Pew.active.find_by(uuid: params.fetch(:uuid), user: current_user)
 
