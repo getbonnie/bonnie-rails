@@ -51,8 +51,8 @@ class Notification < ApplicationRecord
   end
 
   def send_notifications
-    return if user.notify_likes && like?
-    return if user.notify_comments && comment?
+    return if !user.notify_likes && like?
+    return if !user.notify_comments && comment?
 
     user.devices.each do |device|
       self.update(sent: true) if FcmLib.send_notification_success?(
