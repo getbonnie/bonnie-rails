@@ -2,16 +2,23 @@
 ActiveAdmin.register Emotion do
   menu parent: 'Tools'
 
+  sortable
+  config.sort_order = 'position_asc'
+  config.paginate = false
+
   permit_params :name,
                 :status,
-                :url
+                :url,
+                :position
 
   filter :status, as: :select, collection: proc { Emotion.statuses }
 
   index do
     id_column
-    column :emoji do |item|
-      render partial: 'active_admin/components/emoji', locals: { url: item.url, size: :s }
+    sortable_handle_column
+    column :position
+    column :base64 do |item|
+      render partial: 'active_admin/components/emoji', locals: { url: item.emoji_image, size: :s }
     end
     column :name do |item|
       auto_link item, item.name
@@ -26,8 +33,8 @@ ActiveAdmin.register Emotion do
 
   show do
     attributes_table do
-      row :emoji do |item|
-        render partial: 'active_admin/components/emoji', locals: { url: item.url, size: :s }
+      row :base64 do |item|
+        render partial: 'active_admin/components/emoji', locals: { url: item.emoji_image, size: :s }
       end
       row :name
       row :status do |item|

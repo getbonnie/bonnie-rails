@@ -5,6 +5,8 @@ ruby '2.5.0'
 
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'activeadmin', '>= 1.4.3'
+gem 'activeadmin-sortable'
+gem 'acts_as_list'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'country_select'
