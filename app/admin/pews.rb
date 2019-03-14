@@ -15,7 +15,7 @@ ActiveAdmin.register Pew do
     id_column
     column :pew do |item|
       div class: 'username' do
-        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :xs }
+        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.emoji_image, size: :xs }
         span auto_link item, item.user.name
       end
       div audio_tag(url_for(item.sound), controls: true, class: :player) if item.sound.attached?
@@ -43,7 +43,7 @@ ActiveAdmin.register Pew do
     attributes_table do
       row :user
       row :emotion do |item|
-        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.url, size: :s }
+        render partial: 'active_admin/components/emoji', locals: { url: item.emotion.emoji_image, size: :s }
       end
       row :hashtags do |item|
         div do
