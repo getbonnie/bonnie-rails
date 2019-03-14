@@ -31,7 +31,7 @@ class Emotion < ApplicationRecord
 
   def convert_base64
     return if url.blank?
-    return if !saved_change_to_url? || emoji.blank?
+    return if !saved_change_to_url?
 
     image = open(url)
 
