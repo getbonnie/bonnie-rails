@@ -45,4 +45,5 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   Rails.application.routes.default_url_options[:host] = 'api-dev.pew.cool'
+  Rails.application.routes.default_url_options[:protocol] = 'https'
 end
