@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       namespace :v1 do
         post   '/auth', to: 'auth#check'
         get    '/emotions', to: 'emotions#index'
+        get    '/emotions/manifest', to: 'emotions#manifest'
 
         put    '/devices', to: 'devices#touch'
 
