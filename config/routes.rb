@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   constraints(->(req) { req.host.match(/^(dev\.)?pew\.(here|cool)$/) }) do
     namespace :landing, path: '/' do
-      get '/', to: 'welcome#root', as: :root
+      get '/', to: 'welcome#root'
+      get '/terms', to: 'welcome#terms'
     end
   end
 
