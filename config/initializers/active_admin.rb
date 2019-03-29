@@ -196,10 +196,10 @@ ActiveAdmin.setup do |config|
   #   config.register_stylesheet 'my_stylesheet.css'
   #
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
-  config.register_stylesheet 'https://cdn.plyr.io/3.4.7/plyr.css'
+  # config.register_stylesheet 'https://cdn.plyr.io/3.4.7/plyr.css'
   #
   # To load a javascript file:
-  config.register_javascript 'https://cdn.plyr.io/3.4.7/plyr.polyfilled.js'
+  # config.register_javascript 'https://cdn.plyr.io/3.4.7/plyr.polyfilled.js'
 
   # == CSV options
   #
