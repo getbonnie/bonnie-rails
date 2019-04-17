@@ -10,11 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_14_151552) do
+ActiveRecord::Schema.define(version: 2019_04_16_151104) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "btree_gist"
-  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -88,6 +86,17 @@ ActiveRecord::Schema.define(version: 2019_03_14_151552) do
     t.index ["status"], name: "index_comments_on_status"
     t.index ["user_id"], name: "index_comments_on_user_id"
     t.index ["uuid"], name: "index_comments_on_uuid", unique: true
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.uuid "uuid"
+    t.bigint "user_id"
+    t.string "name"
+    t.string "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "phone_number"], name: "index_contacts_on_user_id_and_phone_number", unique: true
+    t.index ["uuid"], name: "index_contacts_on_uuid"
   end
 
   create_table "devices", force: :cascade do |t|

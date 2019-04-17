@@ -6,6 +6,7 @@ class User < ApplicationRecord
   before_save :default_values
 
   has_many :comments, dependent: :destroy
+  has_many :contacts, dependent: :destroy
   has_many :devices, dependent: :destroy
   has_many :pews, dependent: :destroy
   has_many :notifications, dependent: :destroy

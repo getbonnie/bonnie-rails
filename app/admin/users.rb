@@ -63,6 +63,14 @@ ActiveAdmin.register User do
         end
       end
     end
+
+    panel 'Contacts' do
+      table_for user.contacts.order(id: :desc) do
+        column :id
+        column :name
+        column :phone_number
+      end
+    end
   end
 
   form do |f|
