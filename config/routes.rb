@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get    '/emotions', to: 'emotions#index'
         get    '/emotions/manifest', to: 'emotions#manifest'
 
+        get    '/contacts', to: 'contacts#index'
         post   '/contacts', to: 'contacts#import'
 
         put    '/devices', to: 'devices#touch'

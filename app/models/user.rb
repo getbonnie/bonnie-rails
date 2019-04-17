@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :notification_subscriptions, dependent: :destroy
   has_many :following, class_name: 'Follower', foreign_key: :user_id, inverse_of: :follower, dependent: :destroy
   has_many :followed_by, class_name: 'Follower', foreign_key: :followed_id, inverse_of: :following, dependent: :destroy
+  has_many :synced_contacts, class_name: 'Contact', primary_key: :phone, foreign_key: :phone_number, inverse_of: :synced_user, dependent: :destroy
   has_one_attached :avatar
 
   enum status: {

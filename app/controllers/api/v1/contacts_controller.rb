@@ -1,6 +1,18 @@
 # !
 class Api::V1::ContactsController < Api::V1::BaseController
 
+  def index
+    know_me = Contact.where(phone_number: current_user.phone).pluck(:user_id)
+    known = User.where(phone: current_user.contacts.pluck(:phone_number)).pluck(:id)
+
+    contacts = User.where(id: know_me + known)
+
+    render  json: contacts,
+            root: :data,
+            each_serializer: Api::V1::Users::UserSerializer,
+            scope: pass_scope
+  end
+
   def import
     contact_params = params.require(:contacts)
 
