@@ -42,6 +42,10 @@ class User < ApplicationRecord
   def default_values
     self.uuid ||= SecureRandom.uuid
     self.status ||= :pending
+    self.notify_comments ||= true
+    self.notify_likes ||= true
+    self.notify_features ||= true
+    self.notify_ads ||= true
   end
 
   def age
