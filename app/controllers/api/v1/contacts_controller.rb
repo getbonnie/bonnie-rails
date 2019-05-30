@@ -5,7 +5,7 @@ class Api::V1::ContactsController < Api::V1::BaseController
     know_me = Contact.where(phone_number: current_user.phone).pluck(:user_id)
     known = User.where(phone: current_user.contacts.pluck(:phone_number)).pluck(:id)
 
-    contacts = User.where(id: know_me + known)
+    contacts = User.active.where(id: know_me + known).where.not(id: current_user.id)
 
     render  json: contacts,
             root: :data,
