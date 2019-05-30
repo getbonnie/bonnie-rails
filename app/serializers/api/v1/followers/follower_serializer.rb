@@ -1,6 +1,6 @@
 #
 class Api::V1::Followers::FollowerSerializer < Api::BaseSerializer
-  belongs_to :user, serializer: Api::V1::Users::UserRootSerializer
+  belongs_to :user, serializer: Api::V1::Users::UserSerializer
 
   attributes  :id,
               :created_at
