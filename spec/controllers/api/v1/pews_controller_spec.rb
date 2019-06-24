@@ -20,13 +20,28 @@ RSpec.describe Api::V1::PewsController, type: :controller do
     expect(Notification.where(kind: :like).count).to eq(0)
   end
 
-  it 'works' do
+  it 'works following no one' do
     create_list(:pew, 3)
 
     request.headers[:user] = create(:user).id
     get :index
 
     expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)['data'].length).to eq(0)
+  end
+
+  it 'works following 1' do
+    current_user = create(:user).id
+    pew = create(:pew)
+
+    following = create(:follower, user_id: current_user, followed_id: pew.user_id)
+
+
+    request.headers[:user] = current_user
+    get :index
+
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body)['data'].length).to eq(1)
   end
 
   it 'fails for missing params' do
