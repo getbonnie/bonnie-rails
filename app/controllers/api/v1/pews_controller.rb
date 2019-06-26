@@ -5,7 +5,7 @@ class Api::V1::PewsController < Api::V1::BaseController
     per = params.fetch(:per, 10)
     hashtag = params.fetch(:hashtag, nil)
 
-    friends = current_user.following.pluck(:followed_id)
+    friends = current_user.following.pluck(:followed_id).push(current_user.id)
 
     pews = Pew.active.where(user_id: friends).order(id: :desc).page(page).per(per)
     pews = pews.joins(:hashtags).where('hashtags.lower_tag = ?', hashtag.downcase) if hashtag
