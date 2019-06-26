@@ -36,12 +36,14 @@ RSpec.describe Api::V1::PewsController, type: :controller do
 
     following = create(:follower, user_id: current_user, followed_id: pew.user_id)
 
+    # my Pew too
+    create(:pew, user_id: current_user)
 
     request.headers[:user] = current_user
     get :index
 
     expect(response.status).to eq(200)
-    expect(JSON.parse(response.body)['data'].length).to eq(1)
+    expect(JSON.parse(response.body)['data'].length).to eq(2)
   end
 
   it 'fails for missing params' do
